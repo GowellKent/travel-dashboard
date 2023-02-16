@@ -19,8 +19,8 @@
                                 <label for="provinsi" class="font-weight-bold">PROVINSI</label>
                                 <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
                                 <br />
-                                <select v-model="kota.tot_provinsi" v-on:change="getKota(kota.tot_provinsi)">
-                                    <option>Provinsi</option>
+                                <select class="form-select" v-model="kota.tot_provinsi" v-on:change="getKota(kota.tot_provinsi)" aria-label="Provinsi">
+                                    <!-- <option class="dropdown-item">Provinsi</option> -->
                                     <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
                                 </select>
 
@@ -34,8 +34,7 @@
                                 <label for="nama" class="font-weight-bold">NAMA</label>
                                 <br />
                                 <!-- <input type="text" class="form-control" v-model="kota.tot_nama" placeholder="Masukkan Kota"> -->
-                                <select v-model="kota.tot_nama">
-                                    <option>Kota/ Kabupaten</option>
+                                <select class="form-select" v-model="kota.tot_nama" aria-label="Kota/ Kabupaten">
                                     <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
                                 </select>
                                 <!-- validation -->
@@ -81,7 +80,6 @@ export default {
 
         setKotas(data) {
             this.kotas = data;
-            // console.log(data)
         },
 
         getKota(id) {
@@ -121,8 +119,6 @@ export default {
             let tot_kota = kota.tot_nama
             let tot_provinsi = kota.tot_provinsi.split("-")[1]
 
-            // console.log(131, tot_prseleovinsi)
-
             axios.post('http://localhost:8000/api/addObjek', {
                 tot_tjo_kode: tot_tjo_kode,
                 tot_nama: tot_nama,
@@ -132,14 +128,12 @@ export default {
             }).then(() => {
 
                 //redirect ke post index
-                // console.log(122, tot_provinsi)
                 router.push({
                     name: 'kota.index'
                 })
 
             }).catch(error => {
                 //assign state validation with error 
-                // console.log(129, kota.tot_provinsi)
                 validation.value = error.response.data
             })
 
@@ -158,7 +152,6 @@ export default {
         axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
             .then(ress => {
                 this.setProvs(ress.data.provinsi)
-                // console.log(ress.data.provinsi)
             })
             .catch(error => {
                 console.log(error)
