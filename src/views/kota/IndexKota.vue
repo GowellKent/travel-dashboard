@@ -6,13 +6,13 @@
                     <div class="card-body">
                         <h4>DATA KOTA DESTINASI</h4>
                         <hr>
-                        <router-link :to="{name: 'kota.create'}" class="btn btn-md btn-success">TAMBAH KOTA</router-link>
+                        <router-link :to="{ name: 'kota.create' }" class="btn btn-md btn-success">TAMBAH KOTA</router-link>
 
                         <table class="table table-striped table-bordered mt-4">
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">KOTA</th>
-                                    <th scope="col">NAMA</th>
+                                    <!-- <th scope="col">NAMA</th> -->
                                     <th scope="col">PROVINSI</th>
                                     <th scope="col">OPTIONS</th>
                                 </tr>
@@ -20,10 +20,12 @@
                             <tbody>
                                 <tr v-for="data in kotas" :key="data.tot_kode">
                                     <td>{{ data.tot_kota }}</td>
-                                    <td>{{ data.tot_nama }}</td>
+                                    <!-- <td>{{ data.tot_nama }}</td> -->
                                     <td>{{ data.tot_provinsi }}</td>
                                     <td class="text-center">
-                                        <router-link :to="{name: 'kota.edit', params:{id: data.tot_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link>
+                                        <router-link :to="{ name: 'kota.edit', params: { id: data.tot_kode } }"
+                                            class="btn btn-sm btn-primary mr-1">EDIT</router-link>
+                                        &nbsp;&nbsp;
                                         <button class="btn btn-sm btn-danger ml-1">DELETE</button>
                                     </td>
                                 </tr>
@@ -31,44 +33,75 @@
                         </table>
 
                     </div>
+
+                    <!-- <option v-for="data in provs" :key="data.id">{{ data.nama }}</option> -->
+
+                    <!-- <select v-model="provs">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="item in provs" :key="item.id">{{ item.nama }}</option>
+                        </select> -->
+
+                    <!-- <div>
+                        <button @click='toggleShow' class='anchor'>Select an Instrument</button>
+                        <div v-if='showMenu' class='menu'>
+                            <div class='menu-item' v-for='item in provs' :key="item.id" @click='itemClicked(item.nama)'>{{ item.nama }}</div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </template>
 
 <script>
+
+
+
 import axios from 'axios'
 // import { onMounted, ref } from 'vue'
 
 export default {
     data() {
-       return{
-          kotas: [],
-          searchTar:''
-       }
-   },
-   methods:{
-       setkotas(data){
-           this.kotas = data;
-       }},
+        return {
+            kotas: [],
+            searchTar: '',
+            provs: []
+        }
+    },
+    methods: {
+        setkotas(data) {
+            this.kotas = data;
+        },
+        setProvs(data) {
+            this.provs = data;
+        }
+    },
 
-    mounted(){
-       axios.get('http://localhost:8000/api/ListKota')
-        .then(res => {
-          this.setkotas(res.data),
-          console.log(res.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-   }
+    mounted() {
+        axios.get('http://localhost:8000/api/listKota')
+            .then(res => {
+                this.setkotas(res.data)
+                //   console.log(res.data)
+            })
+            .catch(error => {
+                console.log(error)
+            }),
+            axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
+                .then(ress => {
+                    this.setProvs(ress.data.provinsi)
+                    // console.log(ress.data.provinsi)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+    }
 
 }
 </script>
 
 <style>
-    body{
-        background: lightgray;
-    }
+body {
+    background: lightgray;
+}
 </style>
