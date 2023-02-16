@@ -1,4 +1,5 @@
 <template>
+    <navbar />
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -59,6 +60,7 @@
 
 import axios from 'axios'
 // import { onMounted, ref } from 'vue'
+import navbar from '@/components/NavBar.vue'
 
 export default {
     data() {
@@ -95,6 +97,9 @@ export default {
                     console.log(error)
                 })
 
+    },
+    components: {
+        navbar
     }
 
 }

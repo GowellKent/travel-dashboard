@@ -1,4 +1,5 @@
 <template>
+    <navbar />
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -55,15 +56,11 @@
 </template>
 
 <script>
-
-
-
-
-
-
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+
+import navbar from '@/components/NavBar.vue'
 
 export default {
 
@@ -156,6 +153,9 @@ export default {
             .catch(error => {
                 console.log(error)
             })
+    },
+    components: {
+        navbar
     }
 
 }
