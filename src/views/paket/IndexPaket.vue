@@ -15,7 +15,8 @@
                                     <th scope="col">NAMA</th>
                                     <th scope="col">DESKRIPSI</th>
                                     <th scope="col">HARGA</th>
-                                    <th scope="col">KOTA</th>
+                                    <th scope="col">ASAL</th>
+                                    <th scope="col">TUJUAN</th>
                                     <th scope="col">OPTIONS</th>
                                 </tr>
                             </thead>
@@ -25,9 +26,11 @@
                                     <td>{{ data.tph_nama }}</td>
                                     <td>{{ data.tph_deskripsi }}</td>
                                     <td>{{ data.tph_harga }}</td>
-                                    <td>{{ data.tph_kota }}</td>
+                                    <td>{{ data.tph_kota_asal }}</td>
+                                    <td>{{ data.tph_kota_destinasi }}</td>
                                     <td class="text-center">
                                         <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link>
+                                        &nbsp;&nbsp;
                                         <button class="btn btn-sm btn-danger ml-1">DELETE</button>
                                     </td>
                                 </tr>

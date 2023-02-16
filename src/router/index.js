@@ -4,6 +4,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 //define a routes
 const routes = [
     {
+        path: '/',
+        name: 'login.index',
+        component: () => import( /* webpackChunkName: "post.index" */ '@/views/login/IndexLogin.vue')
+    },
+    {
         path: '/kota',
         name: 'kota.index',
         component: () => import( /* webpackChunkName: "post.index" */ '@/views/kota/IndexKota.vue')

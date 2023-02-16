@@ -10,9 +10,15 @@ import 'jquery/dist/jquery.min'
 import 'popper.js/dist/popper.min'
 import 'bootstrap/dist/js/bootstrap.min'
 
+// import Toasted from 'vue-toasted';
+
 const app = createApp(App)
 
 //use vue router
 app.use(router)
+
+// app.use(Toasted, {
+//   duration: 1500
+// })
 
 app.mount('#app')
