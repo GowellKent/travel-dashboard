@@ -10,7 +10,7 @@
                                 <h4>TAMBAH PAKET</h4>
                             </div>
                             <div class="col right-align">
-                                <router-link :to="{ name: 'kota.index' }" class="btn btn-md btn-primary">BACK</router-link>
+                                <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary">BACK</router-link>
                             </div>
                         </div>
                         <hr>
