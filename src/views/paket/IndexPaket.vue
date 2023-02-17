@@ -13,6 +13,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">JENIS</th>
+                                    <th scope="col">TRIP</th>
                                     <th scope="col">NAMA</th>
                                     <th scope="col">DESKRIPSI</th>
                                     <th scope="col">HARGA</th>
@@ -24,6 +25,7 @@
                             <tbody>
                                 <tr v-for="data in pakets" :key="data.tph_kode">
                                     <td>{{ data.tph_tjp_kode }}</td>
+                                    <td>{{ data.tph_tjt_kode }}</td>
                                     <td>{{ data.tph_nama }}</td>
                                     <td>{{ data.tph_deskripsi }}</td>
                                     <td>{{ data.tph_harga }}</td>
@@ -37,7 +39,7 @@
                                         <router-link :to="{ name: 'paket.edit', params: { id: data.tph_kode } }"
                                             class="btn btn-sm btn-primary mr-1">EDIT</router-link>
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                        <button @click.prevent="postDelete(data.tph_kode)" class="btn btn-sm btn-danger ml-1">DELETE</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -80,7 +82,22 @@ export default {
                  console.log(error.response.data)
              })
             
-        }
+        },
+        postDelete(id) {
+            
+            //delete data post by ID
+            axios.get('http://localhost:8000/api/delPaket?tph_kode='+id)
+            .then(() => {
+                       
+                //splice posts 
+                // kotas.value.splice(kotas.value.indexOf(id), 1);
+                location.reload()
+         
+             }).catch(error => {
+                 console.log(error.response.data)
+             })
+         
+         }
     },
 
     mounted() {

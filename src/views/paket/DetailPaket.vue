@@ -6,15 +6,16 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-11">
-                                <h4>Detail Paket</h4> 
+                                <h4>Detail Paket</h4>
                             </div>
                             <div class="col right-align">
-                                <router-link :to="{ name: 'paket.index' }" class="btn btn-sm btn-success mr-1">Back</router-link>
+                                <router-link :to="{ name: 'paket.index', params:{id:post.kode}}"
+                                    class="btn btn-sm btn-success mr-1">Back</router-link>
                             </div>
                         </div>
                         <hr>
                         <!-- <div class="row">
-                                <div class="col"> -->
+                                            <div class="col"> -->
                         <form>
                             <fieldset disabled>
                                 <div class="form-group">
@@ -85,11 +86,19 @@
 
                             </fieldset>
                         </form>
-                       
+
                         <div class="card border-0 rounded shadow">
 
                             <div class="card-body">
-                                <h2>LIST OBJEK WISATA</h2>
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h2>LIST OBJEK WISATA</h2>
+                                    </div>
+                                    <div class="col">
+                                        <router-link :to="{ name: 'detail.create', params:{id:post.kode} }" class="btn btn-sm btn-primary mr-1">Add
+                                        </router-link>
+                                    </div>
+                                </div>
                                 <hr />
                                 <table class="table table-striped table-bordered mt-4">
                                     <thead class="thead-dark">
@@ -99,6 +108,7 @@
                                             <th scope="col">ALAMAT</th>
                                             <th scope="col">KOTA</th>
                                             <th scope="col">PROVINSI</th>
+                                            <th scope="col">OPTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,6 +118,10 @@
                                             <td>{{ data.tot_alamat }}</td>
                                             <td>{{ data.tot_kota }}</td>
                                             <td>{{ data.tot_provinsi }}</td>
+                                            <td>
+                                                <button @click.prevent="postDelete(data.tpd_kode)"
+                                                    class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -122,15 +136,30 @@
 </template>
 
 <script>
-
-
-
-
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 
 export default {
+
+    methods:{
+        postDelete(id) {
+            
+            //delete data post by ID
+            axios.get('http://localhost:8000/api/delPaketDet?tpd_kode='+id)
+            .then(() => {
+                       
+                //splice posts 
+                // kotas.value.splice(kotas.value.indexOf(id), 1);
+                location.reload()
+                // this.$router.push({name:'paket.detail', params:{id:this.$route.params.id}});
+         
+             }).catch(error => {
+                 console.log(error.response.data)
+             })
+         
+         }
+    },
 
     setup() {
 
@@ -159,6 +188,7 @@ export default {
         //mounted
         onMounted(() => {
 
+
             //get API from Laravel Backend
             axios.get(`http://localhost:8000/api/findPaket?tph_kode=${route.params.id}`)
                 .then(response => {
@@ -180,7 +210,6 @@ export default {
                 .then(response => {
 
                     //assign state posts with response data
-                    console.log(response.data)
                     post.details = response.data
 
                 }).catch(error => {

@@ -34,7 +34,7 @@ const routes = [
         component: () => import( /* webpackChunkName: "post.edit" */ '@/views/paket/IndexPaket.vue')
     },
     {
-        path: '/paketdet',
+        path: '/paketdet/:id',
         name: 'paket.detail',
         component: () => import( /* webpackChunkName: "post.edit" */ '@/views/paket/DetailPaket.vue')
     },
@@ -42,6 +42,11 @@ const routes = [
         path: '/createpaket',
         name: 'paket.create',
         component: () => import( /* webpackChunkName: "post.create" */ '@/views/paket/CreatePaket.vue')
+    },
+    {
+        path: '/createdetail',
+        name: 'detail.create',
+        component: () => import( /* webpackChunkName: "post.create" */ '@/views/paket/CreateDetail.vue')
     },
     {
         path: '/editpaket/:id',

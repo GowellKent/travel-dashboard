@@ -19,12 +19,18 @@
 
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Paket</label>
-                                <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
                                 <br />
                                 <select class="form-select" aria-label="Jenis Paket" v-model="paket.tph_tjp_kode">
-                                    <!-- <option class="dropdown-item">Provinsi</option> -->
                                     <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tjp_kode }}-{{
                                         data.tjp_deskripsi }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
+                                <br />
+                                <select class="form-select" aria-label="Jenis Trip" v-model="paket.tph_tjt_kode">
+                                    <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
+                                        data.tjt_nama }}</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -121,7 +127,8 @@ export default {
             provs: [],
             provs2: [],
             kotas: [],
-            kotas2: []
+            kotas2: [],
+            trips:[]
         }
     },
     methods: {
@@ -140,6 +147,9 @@ export default {
         },
         setJenis(data) {
             this.jenis = data;
+        },
+        setTrips(data) {
+            this.trips = data;
         },
 
         getKota(id) {
@@ -177,7 +187,8 @@ export default {
             tph_provinsi_tujuan: '',
             tph_kota_tujuan: '',
             tph_harga:'',
-            tph_deskripsi:''
+            tph_deskripsi:'',
+            tph_tjt_kode:''
         })
 
         //state validation
@@ -191,6 +202,7 @@ export default {
 
 
             let tph_tjp_kode = paket.tph_tjp_kode.split("-")[0]
+            let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
             let tph_nama = paket.tph_nama
             let tph_kota_asal = paket.tph_kota_asal
             let tph_kota_tujuan = paket.tph_kota_tujuan
@@ -199,6 +211,7 @@ export default {
 
             axios.post('http://localhost:8000/api/addPaket', {
                 tph_tjp_kode: tph_tjp_kode,
+                tph_tjt_kode: tph_tjt_kode,
                 tph_nama: tph_nama,
                 tph_kota_asal: tph_kota_asal,
                 tph_kota_destinasi: tph_kota_tujuan,
@@ -241,6 +254,13 @@ export default {
             axios.get('http://127.0.0.1:8000/api/jenisPaket')
                 .then(ress => {
                     this.setJenis(ress.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                }),
+            axios.get('http://127.0.0.1:8000/api/jenisTrip')
+                .then(ress => {
+                    this.setTrips(ress.data)
                 })
                 .catch(error => {
                     console.log(error)
