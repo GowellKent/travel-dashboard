@@ -33,8 +33,8 @@
                             <br />
                             <div class="form-group">
                                 <label for="nama" class="font-weight-bold">NAMA</label>
-                                <br />
                                 <!-- <input type="text" class="form-control" v-model="kota.tot_nama" placeholder="Masukkan Kota"> -->
+                                <br />
                                 <select class="form-select" v-model="kota.tot_nama" aria-label="Kota/ Kabupaten">
                                     <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
                                 </select>

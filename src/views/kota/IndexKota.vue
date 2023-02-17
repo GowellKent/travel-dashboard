@@ -27,7 +27,7 @@
                                         <router-link :to="{ name: 'kota.edit', params: { id: data.tot_kode } }"
                                             class="btn btn-sm btn-primary mr-1">EDIT</router-link>
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                        <button @click.prevent="postDelete(data.tot_kota)" class="btn btn-sm btn-danger ml-1">DELETE</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -76,7 +76,22 @@ export default {
         },
         setProvs(data) {
             this.provs = data;
-        }
+        },
+        postDelete(id) {
+            
+            //delete data post by ID
+            axios.get('http://localhost:8000/api/delKota?tot_kota='+id)
+            .then(() => {
+                       
+                //splice posts 
+                // kotas.value.splice(kotas.value.indexOf(id), 1);
+                location.reload()
+         
+             }).catch(error => {
+                 console.log(error.response.data)
+             })
+         
+         }  
     },
 
     mounted() {
@@ -98,6 +113,23 @@ export default {
                 })
 
     },
+//     setup() {
+//         //method delete
+// function postDelete(id) {
+            
+//             //delete data post by ID
+//             axios.get('http://localhost:8000/api/delKota/tot_kota'+id)
+//             .then(() => {
+                       
+//                 //splice posts 
+//                 // kotas.value.splice(kotas.value.indexOf(id), 1);
+         
+//              }).catch(error => {
+//                  console.log(error.response.data)
+//              })
+         
+//          }   
+//     },
     components: {
         navbar
     }
