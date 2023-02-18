@@ -15,23 +15,31 @@
                         <hr>
 
                         <form @submit.prevent="update">
+                            <!-- <div class="form-group">
+                                    <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
+                                    <input type="text" class="form-control" v-model="post.jenis"
+                                        placeholder="Masukkan Judul Post">
+                                </div> -->
                             <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
-                                <input type="text" class="form-control" v-model="post.jenis"
-                                    placeholder="Masukkan Judul Post">
-                                <!-- validation -->
-                                <div v-if="validation.title" class="mt-2 alert alert-danger">
-                                    {{ validation.title[0] }}
-                                </div>
+                                <label for="provinsi" class="font-weight-bold">Jenis Paket</label>
+                                <br />
+                                <select class="form-select" aria-label="Jenis Paket" v-model="post.jenis">
+                                    <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tjp_kode }}-{{
+                                        data.tjp_deskripsi }}</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Trip</label>
-                                <input type="text" class="form-control" v-model="post.trip"
+                            <!-- <div class="form-group">
+                                    <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Trip</label>
+                                    <input type="text" class="form-control" v-model="post.trip"
                                     placeholder="Masukkan Judul Post">
-                                <!-- validation -->
-                                <div v-if="validation.title" class="mt-2 alert alert-danger">
-                                    {{ validation.title[0] }}
-                                </div>
+                                </div> -->
+                            <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
+                                <br />
+                                <select class="form-select" aria-label="Jenis Paket" v-model="post.trip">
+                                    <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
+                                        data.tjt_nama }}</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Nama Paket</label>
@@ -60,23 +68,50 @@
                                     {{ validation.title[0] }}
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kota Destinasi</label>
                                 <input type="text" class="form-control" v-model="post.kotaDes"
                                     placeholder="Masukkan Judul Post">
-                                <!-- validation -->
-                                <div v-if="validation.title" class="mt-2 alert alert-danger">
-                                    {{ validation.title[0] }}
-                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kota Asal</label>
                                 <input type="text" class="form-control" v-model="post.kotaAs"
                                     placeholder="Masukkan Judul Post">
-                                <!-- validation -->
-                                <div v-if="validation.title" class="mt-2 alert alert-danger">
-                                    {{ validation.title[0] }}
-                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
+                                <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
+                                <br />
+                                <select class="form-select" v-model="post.tph_provinsi_asal"
+                                    v-on:change="getKota(post.tph_provinsi_asal)" aria-label="Provinsi Asal">
+                                    <!-- <option class="dropdown-item">Provinsi</option> -->
+                                    <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label for="nama" class="font-weight-bold">Kota Asal</label>
+                                <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
+                                <br />
+                                <select class="form-select" v-model="post.kotaAs" aria-label="Kota Asal">
+                                    <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
+                                <br />
+                                <select class="form-select" v-model="post.tph_provinsi_tujuan"
+                                    v-on:change="getKota2(post.tph_provinsi_tujuan)" aria-label="Provinsi Tujuan">
+                                    <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
+                                <br />
+                                <select class="form-select" v-model="post.kotaDes" aria-label="Kota Tujuan">
+                                    <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
+                                </select>
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
@@ -86,7 +121,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -96,6 +131,85 @@ import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 
 export default {
+
+    data() {
+        return {
+            jenis: [],
+            provs: [],
+            provs2: [],
+            kotas: [],
+            kotas2: [],
+            trips: []
+        }
+    },
+    methods: {
+        setProvs(data) {
+            this.provs = data;
+        },
+        setProvs2(data) {
+            this.provs2 = data;
+        },
+
+        setKotas(data) {
+            this.kotas = data;
+        },
+        setKotas2(data) {
+            this.kotas2 = data;
+        },
+        setJenis(data) {
+            this.jenis = data;
+        },
+        setTrips(data) {
+            this.trips = data;
+        },
+
+        getKota(id) {
+            let idProvinsi = id.split("-")[0]
+            axios.get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=' + idProvinsi)
+                .then(ress => {
+                    this.setKotas(ress.data.kota_kabupaten)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        },
+        getKota2(id) {
+            let idProvinsi = id.split("-")[0]
+            axios.get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=' + idProvinsi)
+                .then(ress => {
+                    this.setKotas2(ress.data.kota_kabupaten)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        }
+    },
+    mounted() {
+        axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
+            .then(ress => {
+                this.setProvs(ress.data.provinsi)
+                this.setProvs2(ress.data.provinsi)
+            })
+            .catch(error => {
+                console.log(error)
+            }),
+            axios.get('http://127.0.0.1:8000/api/jenisPaket')
+                .then(ress => {
+                    this.setJenis(ress.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                }),
+            axios.get('http://127.0.0.1:8000/api/jenisTrip')
+                .then(ress => {
+                    this.setTrips(ress.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+    },
 
     setup() {
 
@@ -129,8 +243,8 @@ export default {
 
                     //assign state posts with response data
                     post.kode = response.data[0].tph_kode
-                    post.jenis = response.data[0].tph_tjp_kode
-                    post.trip = response.data[0].tph_tjt_kode
+                    post.jenis = response.data[0].tjp_deskripsi
+                    post.trip = response.data[0].tjt_nama
                     post.nama = response.data[0].tph_nama
                     post.deskripsi = response.data[0].tph_deskripsi
                     post.harga = response.data[0].tph_harga
@@ -146,8 +260,8 @@ export default {
         //method update
         function update() {
 
-            let tph_tjp_kode = post.jenis
-            let tph_tjt_kode = post.trip
+            let tph_tjp_kode = post.jenis.split("-")[0]
+            let tph_tjt_kode = post.trip.split("-")[0]
             let tph_nama = post.nama
             let tph_kota_asal = post.kotaAs
             let tph_kota_tujuan = post.kotaDes
@@ -191,6 +305,8 @@ export default {
 }
 </script>
 
-<style>body {
+<style>
+body {
     background: lightgray;
-}</style>
+}
+</style>

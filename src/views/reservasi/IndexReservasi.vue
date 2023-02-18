@@ -1,8 +1,12 @@
 <template>
     <navbar />
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
+    <!-- <div class="container mt-5"> -->
+    <div class="row">
+        <!-- <div class="col-md-2 pr-5 left-align">
+            <sidebar />
+        </div> -->
+        <div class="col-md-12">
+            <div class="container mt-5">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <h4>DATA PAKET</h4>
@@ -38,37 +42,40 @@
 
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-</template>
+<!-- </div> --></template>
 
 <script>
 import axios from 'axios'
 // import { onMounted, ref } from 'vue'
 import navbar from '@/components/NavBar.vue'
+// import sidebar from '@/components/SideBar.vue'
 
 export default {
     data() {
-       return{
-          resers: [],
-          searchTar:''
-       }
-   },
-   methods:{
-       setResers(data){
-           this.resers = data;
-       }},
+        return {
+            resers: [],
+            searchTar: ''
+        }
+    },
+    methods: {
+        setResers(data) {
+            this.resers = data;
+        }
+    },
 
-    mounted(){
-       axios.get('http://localhost:8000/api/getRes')
-        .then(res => {
-          this.setResers(res.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-   },components: {
+    mounted() {
+        axios.get('http://localhost:8000/api/getRes')
+            .then(res => {
+                this.setResers(res.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, components: {
         navbar
     }
 
@@ -76,7 +83,7 @@ export default {
 </script>
 
 <style>
-    body{
-        background: lightgray;
-    }
+body {
+    background: lightgray;
+}
 </style>

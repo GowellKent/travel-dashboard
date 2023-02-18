@@ -25,6 +25,11 @@
                             <router-link :to="{ name: 'kota.index' }" class="nav-link"
                                 aria-current="page">Kota</router-link>
                         </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link" href="#">Link</a> -->
+                            <router-link :to="{ name: 'objek.index' }" class="nav-link"
+                                aria-current="page">Objek</router-link>
+                        </li>
                     </ul>
                     <form class="d-flex">
                         <a class="btn btn-outline-danger" v-on:click="logOut">Log Out</a>

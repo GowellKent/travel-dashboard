@@ -12,7 +12,7 @@
                         <table class="table table-striped table-bordered mt-4">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">JENIS</th>
+                                    <th scope="col">KELAS</th>
                                     <th scope="col">TRIP</th>
                                     <th scope="col">NAMA</th>
                                     <th scope="col">DESKRIPSI</th>
@@ -24,8 +24,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for="data in pakets" :key="data.tph_kode">
-                                    <td>{{ data.tph_tjp_kode }}</td>
-                                    <td>{{ data.tph_tjt_kode }}</td>
+                                    <td>{{ data.tjp_deskripsi }}</td>
+                                    <td>{{ data.tjt_nama }}</td>
+                                    <!-- <td><router-link :to="{ name: 'paket.edit', params: { id: data.tph_kode } }">{{ data.tph_nama }}</router-link></td> -->
                                     <td>{{ data.tph_nama }}</td>
                                     <td>{{ data.tph_deskripsi }}</td>
                                     <td>{{ data.tph_harga }}</td>

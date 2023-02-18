@@ -53,6 +53,21 @@ const routes = [
         name: 'paket.edit',
         component: () => import( /* webpackChunkName: "post.edit" */ '@/views/paket/EditPaket.vue')
     },
+    {
+        path: '/objek',
+        name: 'objek.index',
+        component: () => import( /* webpackChunkName: "post.edit" */ '@/views/objek/IndexObjek.vue')
+    },
+    {
+        path: '/editobjek/:id',
+        name: 'objek.edit',
+        component: () => import( /* webpackChunkName: "post.edit" */ '@/views/objek/EditObjek.vue')
+    },
+    {
+        path: '/createobjek',
+        name: 'objek.create',
+        component: () => import( /* webpackChunkName: "post.edit" */ '@/views/objek/CreateObjek.vue')
+    },
 ]
 
 //create router
