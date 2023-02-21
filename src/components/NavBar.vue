@@ -20,11 +20,10 @@
                             <router-link :to="{ name: 'paket.index' }" class="nav-link"
                                 aria-current="page">Paket</router-link>
                         </li>
-                        <li class="nav-item">
-                            <!-- <a class="nav-link" href="#">Link</a> -->
+                        <!-- <li class="nav-item">
                             <router-link :to="{ name: 'kota.index' }" class="nav-link"
                                 aria-current="page">Kota</router-link>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="#">Link</a> -->
                             <router-link :to="{ name: 'objek.index' }" class="nav-link"

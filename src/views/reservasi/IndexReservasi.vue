@@ -16,21 +16,25 @@
                         <table class="table table-striped table-bordered mt-4">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">Kode Paket</th>
+                                    <th scope="col">Kode Reservasi</th>
+                                    <th scope="col">Paket Perjalanan</th>
                                     <th scope="col">Tanggal Perjalanan</th>
                                     <th scope="col">Client</th>
                                     <th scope="col">Pax</th>
                                     <th scope="col">Tanggal Reservasi</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">OPTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="data in resers" :key="data.trh_kode">
-                                    <td>{{ data.trh_tph_kode }}</td>
+                                    <td>{{ data.trh_kode }}</td>
+                                    <td>{{ data.tph_nama}}</td>
                                     <td>{{ data.trh_tgl_perjalanan }}</td>
-                                    <td>{{ data.trh_tu_kode }}</td>
+                                    <td>{{ data.Nama }}</td>
                                     <td>{{ data.trh_pax }}</td>
                                     <td>{{ data.trh_tgl_reservasi }}</td>
+                                    <td>{{ data.tsr_deskripsi }}</td>
                                     <td class="text-center">
                                         <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
                                         &nbsp;&nbsp;
