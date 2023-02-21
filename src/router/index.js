@@ -14,6 +14,11 @@ const routes = [
         component: () => import( /* webpackChunkName: "post.index" */ '@/views/reservasi/IndexReservasi.vue')
     },
     {
+        path: '/editres/:id',
+        name: 'reservasi.edit',
+        component: () => import( /* webpackChunkName: "post.index" */ '@/views/reservasi/EditReservasi.vue')
+    },
+    {
         path: '/kota',
         name: 'kota.index',
         component: () => import( /* webpackChunkName: "post.index" */ '@/views/kota/IndexKota.vue')

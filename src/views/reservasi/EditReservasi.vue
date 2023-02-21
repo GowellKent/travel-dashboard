@@ -1,0 +1,187 @@
+<template>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-0 rounded shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-11">
+                                <h4>EDIT RESREVASI</h4>
+                            </div>
+                            <div class="col right-align">
+                                <router-link :to="{ name: 'reservasi.index' }"
+                                    class="btn btn-md btn-primary">BACK</router-link>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <form @submit.prevent="update">
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
+                                <input type="text" class="form-control" v-model="post.paket"
+                                    placeholder="Masukkan Judul Post">
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Client</label>
+                                <input type="text" class="form-control" v-model="post.client"
+                                    placeholder="Masukkan Judul Post">
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Whatsapp Client</label>
+                                <input type="text" class="form-control" v-model="post.whatsapp"
+                                    placeholder="Masukkan Judul Post">
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Tanggal Reservasi</label>
+                                <input type="text" class="form-control" v-model="post.tglRes"
+                                    placeholder="Masukkan Judul Post">
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
+                                <input type="text" class="form-control" v-model="post.tglJalan"
+                                    placeholder="Masukkan Judul Post">
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Pax</label>
+                                <input type="text" class="form-control" v-model="post.pax"
+                                    placeholder="Masukkan Judul Post">
+                            </div>
+                            <br /><br />
+                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+
+import { reactive, ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import axios from 'axios'
+
+export default {
+
+    data() {
+        return {
+            jenis: [],
+            trips: []
+        }
+    },
+    methods: {
+        setJenis(data) {
+            this.jenis = data
+        }
+    },
+    mounted() {
+        axios.get('http://localhost:8000/api/paketAll')
+            .then(ress => {
+                this.setJenis(ress.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+
+    setup() {
+
+        //state posts
+        const post = reactive({
+            kode: '',
+            paket: '',
+            paketName: '',
+            client: '',
+            whatsapp: '',
+            tglRes: '',
+            tglJalan: '',
+            pax: ''
+        })
+
+        //state validation
+        const validation = ref([])
+
+        //vue router
+        const router = useRouter()
+
+        //vue router
+        const route = useRoute()
+
+        //mounted
+        onMounted(() => {
+
+            //get API from Laravel Backend
+            axios.get(`http://localhost:8000/api/getDataRes?trh_kode=${route.params.id}`)
+                .then(response => {
+
+                    //assign state posts with response data
+                    post.kode = response.data[0][0].trh_kode
+                    post.paket = response.data[0][0].trh_tph_kode + " - " + response.data[0][0].tph_nama
+                    post.paketName = response.data[0][0].tph_nama
+                    post.client = response.data[0][0].trh_client
+                    post.whatsapp = response.data[0][0].tu_whatsapp
+                    post.tglRes = response.data[0][0].trh_tgl_reservasi
+                    post.tglJalan = response.data[0][0].trh_tgl_perjalanan
+                    post.pax = response.data[0][0].trh_pax
+
+                }).catch(error => {
+                    console.log(error.response.data)
+                })
+
+        })
+
+        //method update
+        function update() {
+
+            let tph_tjp_kode = post.jenis.split("-")[0]
+            let tph_tjt_kode = post.trip.split("-")[0]
+            let tph_nama = post.nama
+            let tph_kota_asal = post.kotaAs
+            let tph_kota_tujuan = post.kotaDes
+            let tph_harga = post.harga
+            let tph_deskripsi = post.deskripsi
+
+            axios.put(`http://localhost:8000/api/updPaket`, {
+                tph_kode: route.params.id,
+                tph_tjp_kode: tph_tjp_kode,
+                tph_tjt_kode: tph_tjt_kode,
+                tph_nama: tph_nama,
+                tph_kota_asal: tph_kota_asal,
+                tph_kota_destinasi: tph_kota_tujuan,
+                tph_harga: tph_harga,
+                tph_deskripsi: tph_deskripsi
+            }).then(() => {
+
+                //redirect ke post index
+                router.push({
+                    name: 'paket.index'
+                })
+
+            }).catch(error => {
+                //assign state validation with error 
+                // validation.value = error.response.data
+                console.log(error)
+            })
+
+        }
+
+        //return
+        return {
+            post,
+            validation,
+            router,
+            update
+        }
+
+    }
+
+}
+</script>
+
+<style>
+body {
+    background: lightgray;
+}
+</style>

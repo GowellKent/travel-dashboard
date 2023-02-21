@@ -28,7 +28,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="data in resers" :key="data.trh_kode">
-                                    <td>{{ data.trh_kode }}</td>
+                                    <td><router-link :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{ data.trh_kode }}</router-link></td>
                                     <td>{{ data.tph_nama}}</td>
                                     <td>{{ data.trh_tgl_perjalanan }}</td>
                                     <td>{{ data.Nama }}</td>
