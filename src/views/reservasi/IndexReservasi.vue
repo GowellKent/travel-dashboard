@@ -9,7 +9,7 @@
             <div class="container mt-5">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
-                        <h4>DATA PAKET</h4>
+                        <h4>DATA RESREVASI</h4>
                         <hr>
                         <!-- <router-link :to="{name: 'paket.create'}" class="btn btn-md btn-success">TAMBAH PAKET</router-link> -->
 

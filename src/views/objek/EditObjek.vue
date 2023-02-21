@@ -22,9 +22,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Objek Wisata</label>
-                                <input type="text" class="form-control" v-model="objek.tot_tjo_kode"
-                                    placeholder="Masukkan Jenis Objek Tujuan">
-                            </div>
+                                <!-- <input type="text" class="form-control" v-model="objek.tot_tjo_kode"
+                                    placeholder="Masukkan Jenis Objek Tujuan"> -->
+                                    <select class="form-select" v-model="objek.tot_tjo_kode">
+                                        <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_deskripsi }}</option>
+                                    </select>
+                                </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Nama Pimpinan</label>
                                 <input type="text" class="form-control" v-model="objek.tot_pimpinan"
@@ -42,13 +45,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Provinsi</label>
-                                <input type="text" class="form-control" v-model="objek.tot_provinsi"
-                                    placeholder="Masukkan Provinsi">
+                                <!-- <input type="text" class="form-control" v-model="objek.tot_provinsi"
+                                        placeholder="Masukkan Provinsi"> -->
+                                <select class="form-select" v-model="objek.tot_provinsi"
+                                    v-on:change="getKota(objek.tot_provinsi)" aria-label="Provinsi">
+                                    <!-- <option class="dropdown-item">Provinsi</option> -->
+                                    <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kota</label>
-                                <input type="text" class="form-control" v-model="objek.tot_kota"
-                                    placeholder="Masukkan Kota">
+                                <!-- <input type="text" class="form-control" v-model="objek.tot_kota"
+                                        placeholder="Masukkan Kota"> -->
+                                <select class="form-select" v-model="objek.tot_kota" aria-label="Kota/ Kabupaten">
+                                    <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
+                                </select>
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
@@ -104,12 +115,11 @@ export default {
         axios.get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
             .then(ress => {
                 this.setProvs(ress.data.provinsi)
-                this.setProvs2(ress.data.provinsi)
             })
             .catch(error => {
                 console.log(error)
             }),
-            axios.get('http://127.0.0.1:8000/api/jenisPaket')
+            axios.get('http://127.0.0.1:8000/api/jenisObjek')
                 .then(ress => {
                     this.setJenis(ress.data)
                 })
@@ -169,28 +179,29 @@ export default {
         //method update
         function update() {
 
-            let tph_tjp_kode = objek.jenis.split("-")[0]
-            let tph_tjt_kode = objek.trip.split("-")[0]
-            let tph_nama = objek.nama
-            let tph_kota_asal = objek.kotaAs
-            let tph_kota_tujuan = objek.kotaDes
-            let tph_harga = objek.harga
-            let tph_deskripsi = objek.deskripsi
+            let tot_nama= objek.tot_nama
+            let tot_tjo_kode= objek.tot_tjo_kode.split("-")[0]
+            let tot_pimpinan= objek.tot_pimpinan
+            let tot_telp= objek.tot_telp
+            let tot_alamat= objek.tot_alamat
+            let tot_provinsi= objek.tot_provinsi.split("-")[1]
+            let tot_kota= objek.tot_kota
+            // let tot_deskripsi = objek.tot_deskripsi
 
-            axios.put(`http://localhost:8000/api/updPaket`, {
-                tph_kode: route.params.id,
-                tph_tjp_kode: tph_tjp_kode,
-                tph_tjt_kode: tph_tjt_kode,
-                tph_nama: tph_nama,
-                tph_kota_asal: tph_kota_asal,
-                tph_kota_destinasi: tph_kota_tujuan,
-                tph_harga: tph_harga,
-                tph_deskripsi: tph_deskripsi
+            axios.put(`http://localhost:8000/api/updObjek`, {
+                tot_kode: route.params.id,
+                tot_nama: tot_nama,
+                tot_tjo_kode: tot_tjo_kode,
+                tot_pimpinan: tot_pimpinan,
+                tot_telp: tot_telp,
+                tot_alamat: tot_alamat,
+                tot_provinsi: tot_provinsi,
+                tot_kota: tot_kota,
             }).then(() => {
 
                 //redirect ke post index
                 router.push({
-                    name: 'paket.index'
+                    name: 'objek.index'
                 })
 
             }).catch(error => {

@@ -5,9 +5,15 @@
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
-                        <h4>DATA PAKET</h4>
+                        <div class="row">
+                            <div class="col-10">
+                                <h4>DATA PAKET</h4>
+                            </div>
+                            <div class="col-2">
+                                <router-link :to="{ name: 'paket.create' }" class="btn btn-md btn-success">TAMBAH PAKET</router-link>
+                            </div>
+                        </div>
                         <hr>
-                        <router-link :to="{ name: 'paket.create' }" class="btn btn-md btn-success">TAMBAH PAKET</router-link>
 
                         <table class="table table-striped table-bordered mt-4">
                             <thead class="thead-dark">

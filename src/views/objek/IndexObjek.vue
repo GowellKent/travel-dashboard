@@ -34,7 +34,7 @@
                                     <td>{{ data.tot_alamat }}</td>
                                     <td>{{ data.tot_kota }}, {{ data.tot_provinsi }}</td>
                                     <td>
-                                        <button @click.prevent="postDelete(data.tot_kota)" class="btn btn-sm btn-danger">DELETE</button>
+                                        <button @click.prevent="postDelete(data.tot_kode)" class="btn btn-sm btn-danger">DELETE</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -64,7 +64,22 @@ export default {
     methods: {
         setObjek(data) {
             this.objeks = data;
-        }
+        },
+        postDelete(id) {
+            
+            //delete data post by ID
+            axios.get('http://localhost:8000/api/delObjek?tot_kode='+id)
+            .then(() => {
+                       
+                //splice posts 
+                // kotas.value.splice(kotas.value.indexOf(id), 1);
+                location.reload()
+         
+             }).catch(error => {
+                 console.log(error.response.data)
+             })
+         
+         }
     },
 
     mounted() {
@@ -77,23 +92,6 @@ export default {
                 console.log(error)
             })
     },
-//     setup() {
-//         //method delete
-// function postDelete(id) {
-            
-//             //delete data post by ID
-//             axios.get('http://localhost:8000/api/delKota/tot_kota'+id)
-//             .then(() => {
-                       
-//                 //splice posts 
-//                 // kotas.value.splice(kotas.value.indexOf(id), 1);
-         
-//              }).catch(error => {
-//                  console.log(error.response.data)
-//              })
-         
-//          }   
-//     },
     components: {
         navbar
     }
