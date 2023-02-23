@@ -35,17 +35,17 @@
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Client</label>
                                 <input type="text" class="form-control" v-model="post.client"
-                                    placeholder="Masukkan Judul Post">
+                                    placeholder="Masukkan Judul Post" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Whatsapp Client</label>
                                 <input type="text" class="form-control" v-model="post.whatsapp"
-                                    placeholder="Masukkan Judul Post">
+                                    placeholder="Masukkan Judul Post" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Tanggal Reservasi</label>
                                 <input type="text" class="form-control" v-model="post.tglRes"
-                                    placeholder="Masukkan Judul Post">
+                                    placeholder="Masukkan Judul Post" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
@@ -146,28 +146,20 @@ export default {
         //method update
         function update() {
 
-            let tph_tjp_kode = post.jenis.split("-")[0]
-            let tph_tjt_kode = post.trip.split("-")[0]
-            let tph_nama = post.nama
-            let tph_kota_asal = post.kotaAs
-            let tph_kota_tujuan = post.kotaDes
-            let tph_harga = post.harga
-            let tph_deskripsi = post.deskripsi
+            let trh_tph_kode = post.paket.split("-")[0]
+            let trh_tgl_perjalanan = post.tglJalan
+            let trh_pax = post.pax
 
-            axios.put(`http://localhost:8000/api/updPaket`, {
-                tph_kode: route.params.id,
-                tph_tjp_kode: tph_tjp_kode,
-                tph_tjt_kode: tph_tjt_kode,
-                tph_nama: tph_nama,
-                tph_kota_asal: tph_kota_asal,
-                tph_kota_destinasi: tph_kota_tujuan,
-                tph_harga: tph_harga,
-                tph_deskripsi: tph_deskripsi
+            axios.put(`http://localhost:8000/api/updResHead`, {
+                trh_kode: route.params.id,
+                trh_tph_kode : trh_tph_kode,
+                trh_tgl_perjalanan: trh_tgl_perjalanan,
+                trh_pax : trh_pax
             }).then(() => {
 
                 //redirect ke post index
                 router.push({
-                    name: 'paket.index'
+                    name: 'reservasi.index'
                 })
 
             }).catch(error => {

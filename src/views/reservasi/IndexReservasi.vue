@@ -38,7 +38,7 @@
                                     <td class="text-center">
                                         <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                        <button class="btn btn-sm btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" >DELETE</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -68,7 +68,22 @@ export default {
     methods: {
         setResers(data) {
             this.resers = data;
-        }
+        },
+        postDelete(id) {
+            
+            //delete data post by ID
+            axios.get('http://localhost:8000/api/delResHead?trh_kode='+id)
+            .then(() => {
+                       
+                //splice posts 
+                // kotas.value.splice(kotas.value.indexOf(id), 1);
+                location.reload()
+         
+             }).catch(error => {
+                 console.log(error.response.data)
+             })
+         
+         }
     },
 
     mounted() {
