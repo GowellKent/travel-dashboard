@@ -17,9 +17,20 @@
 
                         <form @submit.prevent="update">
                             <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
-                                <input type="text" class="form-control" v-model="post.paket"
-                                    placeholder="Masukkan Judul Post">
+                                <div class="row">
+                                    <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="post.paket"
+                                            placeholder="Masukkan Judul Post" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="post.paket">
+                                            <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tph_kode }}-{{data.tph_nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Client</label>

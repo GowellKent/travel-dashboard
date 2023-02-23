@@ -15,31 +15,38 @@
                         <hr>
 
                         <form @submit.prevent="update">
-                            <!-- <div class="form-group">
-                                    <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
-                                    <input type="text" class="form-control" v-model="post.jenis"
-                                        placeholder="Masukkan Judul Post">
-                                </div> -->
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Paket</label>
                                 <br />
-                                <select class="form-select" aria-label="Jenis Paket" v-model="post.jenis">
-                                    <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tjp_kode }}-{{
-                                        data.tjp_deskripsi }}</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col">
+
+                                        <input type="text" class="form-control" v-model="post.jenis"
+                                            placeholder="Masukkan Judul Post" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" aria-label="Jenis Paket" v-model="post.jenis">
+                                            <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tjp_kode }}-{{
+                                                data.tjp_deskripsi }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- <div class="form-group">
-                                    <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Trip</label>
-                                    <input type="text" class="form-control" v-model="post.trip"
-                                    placeholder="Masukkan Judul Post">
-                                </div> -->
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
                                 <br />
-                                <select class="form-select" aria-label="Jenis Paket" v-model="post.trip">
-                                    <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
-                                        data.tjt_nama }}</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="post.trip"
+                                            placeholder="Masukkan Judul Post" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" aria-label="Jenis Paket" v-model="post.trip">
+                                            <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
+                                                data.tjt_nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Nama Paket</label>
@@ -91,11 +98,18 @@
                             <br />
                             <div class="form-group">
                                 <label for="nama" class="font-weight-bold">Kota Asal</label>
-                                <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
                                 <br />
-                                <select class="form-select" v-model="post.kotaAs" aria-label="Kota Asal">
-                                    <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col">    
+                                        <input type="text" class="form-control" v-model="post.kotaAs" placeholder="Masukkan Kota" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="post.kotaAs" aria-label="Kota Asal">
+                                            <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
@@ -109,9 +123,16 @@
                             <div class="form-group">
                                 <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
                                 <br />
-                                <select class="form-select" v-model="post.kotaDes" aria-label="Kota Tujuan">
-                                    <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="post.kotaDes" placeholder="Masukkan Kota" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="post.kotaDes" aria-label="Kota Tujuan">
+                                            <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
@@ -243,8 +264,8 @@ export default {
 
                     //assign state posts with response data
                     post.kode = response.data[0].tph_kode
-                    post.jenis = response.data[0].tjp_deskripsi
-                    post.trip = response.data[0].tjt_nama
+                    post.jenis = response.data[0].tph_tjp_kode
+                    post.trip = response.data[0].tph_tjt_kode
                     post.nama = response.data[0].tph_nama
                     post.deskripsi = response.data[0].tph_deskripsi
                     post.harga = response.data[0].tph_harga
