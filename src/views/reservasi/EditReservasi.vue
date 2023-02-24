@@ -1,16 +1,20 @@
 <template>
     <div class="container mt-5">
         <div class="row">
+
+            <h3>EDIT RESREVASI</h3>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-11">
-                                <h4>EDIT RESREVASI</h4>
-                            </div>
-                            <div class="col right-align">
+                            <div class="col-2">
                                 <router-link :to="{ name: 'reservasi.index' }"
-                                    class="btn btn-md btn-primary">BACK</router-link>
+                                    class="btn btn-md btn-success">
+                                    <vue-feather type="arrow-left" size="14" class="color-white"/>
+                                    BACK
+                                </router-link>
                             </div>
                         </div>
                         <hr>
@@ -74,7 +78,12 @@
                                 </div>
                             </div>
                             <br /><br />
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-xl btn-primary text-right">SIMPAN</button>
+                                </div>
+                            </div>
                         </form>
                         <br/><br/>
 
@@ -101,12 +110,9 @@
                                     <td>{{ data.kota }}, {{ data.provinsi }}</td>
                                     <!-- <td>{{ data.provinsi }}</td> -->
                                     <!-- <td>{{ data.tsr_deskripsi }}</td> -->
-                                    <td class="text-center">
-                                        <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
-                                        &nbsp;&nbsp;
+                                    <td style="width: fit-content; text-align: center; vertical-align: middle;">
                                         <div class="form-group">
-                                            <vue-feather type="compass" class="color-white"/>
-                                            <button class="btn btn-sm btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" >DELETE</button>
+                                            <button class="btn btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" > <vue-feather type="trash-2" size="16" class="color-white"/></button>
                                         </div>
                                     </td>
                                 </tr>

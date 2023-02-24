@@ -6,11 +6,11 @@
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-10">
+                            <div class="col-11">
                                 <h4>DATA PAKET</h4>
                             </div>
-                            <div class="col-2">
-                                <router-link :to="{ name: 'paket.create' }" class="btn btn-md btn-success">TAMBAH PAKET</router-link>
+                            <div class="col-1">
+                                <router-link :to="{ name: 'paket.create' }" class="btn btn-md btn-success"><vue-feather type="plus" size="24" class="color-white pt-1"/></router-link>
                             </div>
                         </div>
                         <hr>
@@ -41,12 +41,12 @@
                                     <td class="text-center">
                                         <!-- <button @click.prevent="detailPaket(data.tph_kode)" class="btn btn-sm btn-success ml-1">Detail</button> -->
                                         <router-link :to="{ name: 'paket.detail', params: { id: data.tph_kode } }"
-                                            class="btn btn-sm btn-success mr-1">DETAIL</router-link>
+                                            class="btn btn-sm btn-secondary mr-1"><vue-feather type="list" size="16" class="color-white pt-1"/> </router-link>
                                         &nbsp;&nbsp;
                                         <router-link :to="{ name: 'paket.edit', params: { id: data.tph_kode } }"
-                                            class="btn btn-sm btn-primary mr-1">EDIT</router-link>
+                                            class="btn btn-sm btn-info mr-1"><vue-feather type="edit" size="16" class="color-white pt-1"/></router-link>
                                         &nbsp;&nbsp;
-                                        <button @click.prevent="postDelete(data.tph_kode)" class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                        <button @click.prevent="postDelete(data.tph_kode)" class="btn btn-sm btn-danger ml-1"><vue-feather type="trash-2" size="16" class="color-white pt-1"/></button>
                                     </td>
                                 </tr>
                             </tbody>

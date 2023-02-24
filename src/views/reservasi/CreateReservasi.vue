@@ -15,42 +15,7 @@
                         </div>
                         <hr>
 
-                        <form @submit.prevent="store">
-
-                            <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Jenis Paket</label>
-                                <br />
-                                <select class="form-select" aria-label="Jenis Paket" v-model="paket.tph_tjp_kode">
-                                    <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tjp_kode }}-{{
-                                        data.tjp_deskripsi }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
-                                <br />
-                                <select class="form-select" aria-label="Jenis Trip" v-model="paket.tph_tjt_kode">
-                                    <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
-                                        data.tjt_nama }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Nama Paket</label>
-                                <input type="text" class="form-control" v-model="paket.tph_nama"
-                                    placeholder="Masukkan Nama Paket">
-                                <!-- validation -->
-                                <div v-if="validation.title" class="mt-2 alert alert-danger">
-                                    {{ validation.title[0] }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                    <label for="content" class="font-weight-bold mt-2 mb-1">Deskripsi</label>
-                                    <textarea class="form-control" rows="4" v-model="paket.tph_deskripsi"
-                                        placeholder="Masukkan Deskripsi Paket"></textarea>
-                                    <!-- validation -->
-                                    <div v-if="validation.content" class="mt-2 alert alert-danger">
-                                        {{ validation.content[0] }}
-                                    </div>
-                                </div>
+                        <form @submit.prevent="check">
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
                                 <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
@@ -88,8 +53,50 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Harga</label>
-                                <input type="text" class="form-control" v-model="paket.tph_harga"
+                                <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
+                                <br />
+                                <select class="form-select" aria-label="Jenis Trip" v-model="paket.tph_tjt_kode">
+                                    <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
+                                        data.tjt_nama }}</option>
+                                </select>
+                            </div>
+                            <br><br>
+                            <button type="submit" class="btn btn-primary">SEARCH</button>
+                        </form>
+
+                        <hr><br>
+                        <form @submit.prevent="store">
+
+                            <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold">Paket Wisata</label>
+                                <br />
+                                <select class="form-select" aria-label="Jenis Paket" v-model="paket.trh_tph_kode">
+                                    <option v-for="data in paket.pakets" :key="data.tph_kode">{{ data.tph_kode }}-{{
+                                        data.tph_nama }}</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Kode Client</label>
+                                <input type="text" class="form-control" v-model="paket.trh_tu_kode"
+                                    placeholder="Masukkan Nama Paket">
+                                <!-- validation -->
+                                <div v-if="validation.title" class="mt-2 alert alert-danger">
+                                    {{ validation.title[0] }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="content" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
+                                    <input class="form-control" rows="4" v-model="paket.trh_tgl_perjalanan"
+                                        placeholder="Masukkan Deskripsi Paket">
+                                    <!-- validation -->
+                                    <div v-if="validation.content" class="mt-2 alert alert-danger">
+                                        {{ validation.content[0] }}
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Pax</label>
+                                <input type="text" class="form-control" v-model="paket.trh_pax"
                                     placeholder="Masukkan Harga">
                                 <!-- validation -->
                                 <div v-if="validation.title" class="mt-2 alert alert-danger">
@@ -180,15 +187,11 @@ export default {
 
         //state posts
         const paket = reactive({
-            tph_tjp_kode: '',
-            tph_nama:'',
-            tph_provinsi_asal: '',
-            tph_kota_asal: '',
-            tph_provinsi_tujuan: '',
-            tph_kota_tujuan: '',
-            tph_harga:'',
-            tph_deskripsi:'',
-            tph_tjt_kode:''
+            trh_tph_kode: '',
+            trh_tu_kode:'',
+            trh_tgl_perjalanan:'',
+            trh_pax:'',
+            pakets:[]
         })
 
         //state validation
@@ -200,23 +203,15 @@ export default {
         //method store
         function store() {
 
-
-            let tph_tjp_kode = paket.tph_tjp_kode.split("-")[0]
-            let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
-            let tph_nama = paket.tph_nama
-            let tph_kota_asal = paket.tph_kota_asal
-            let tph_kota_tujuan = paket.tph_kota_tujuan
-            let tph_harga = paket.tph_harga
-            let tph_deskripsi = paket.tph_deskripsi
-
-            axios.post('http://localhost:8000/api/addPaket', {
-                tph_tjp_kode: tph_tjp_kode,
-                tph_tjt_kode: tph_tjt_kode,
-                tph_nama: tph_nama,
-                tph_kota_asal: tph_kota_asal,
-                tph_kota_destinasi: tph_kota_tujuan,
-                tph_harga: tph_harga,
-                tph_deskripsi: tph_deskripsi
+            let trh_tph_kode = paket.trh_tph_kode.split("-")[0]
+            let trh_tu_kode = paket.trh_tu_kode
+            let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
+            let trh_pax = paket.trh_pax
+            axios.post('http://localhost:8000/api/addRes', {
+                trh_tph_kode: trh_tph_kode,
+                trh_tu_kode: trh_tu_kode,
+                trh_tgl_perjalanan: trh_tgl_perjalanan,
+                trh_pax:trh_pax
 
                 
             }).then((resp) => {
@@ -233,12 +228,28 @@ export default {
 
         }
 
+        function check() {
+            let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
+            let tph_kota_asal = paket.tph_kota_asal
+            let tph_kota_tujuan = paket.tph_kota_tujuan
+            axios.get("http://localhost:8000/api/searchPaket?tph_tjt_kode="+tph_tjt_kode+"&tph_kota_asal="+tph_kota_asal+"&tph_kota_destinasi="+tph_kota_tujuan)
+            .then((resp)=>{
+                // console.log(resp.data)
+                paket.pakets=resp.data
+                // console.log(paket.pakets[0])
+            }).catch(error => {
+                //assign state validation with error 
+                console.log(error)
+            })
+        }
+
         //return
         return {
             paket,
             validation,
             router,
-            store
+            store,
+            check
         }
 
     },
@@ -251,13 +262,13 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get('http://127.0.0.1:8000/api/jenisPaket')
-                .then(ress => {
-                    this.setJenis(ress.data)
-                })
-                .catch(error => {
-                    console.log(error)
-                }),
+            // axios.get('http://127.0.0.1:8000/api/jenisPaket')
+            //     .then(ress => {
+            //         this.setJenis(ress.data)
+            //     })
+            //     .catch(error => {
+            //         console.log(error)
+            //     }),
             axios.get('http://127.0.0.1:8000/api/jenisTrip')
                 .then(ress => {
                     this.setTrips(ress.data)
