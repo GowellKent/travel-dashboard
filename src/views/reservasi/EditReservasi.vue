@@ -60,6 +60,40 @@
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
                         </form>
+                        <br/><br/>
+
+                        <div class="row">
+                            <h4>DETAIL RESREVASI</h4>
+                        <hr>
+                        <table class="table table-striped table-bordered mt-4 px-1">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Kode Objek</th>
+                                    <th scope="col">Objek Wisata</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Kota, Provinsi</th>
+                                    <!-- <th scope="col">provinsi</th> -->
+                                    <th scope="col">OPTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="data in post.detail" :key="data.trd_kode">
+                                    <!-- <td><router-link :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{ data.trh_kode }}</router-link></td> -->
+                                    <td>{{ data.tpd_kode}}</td>
+                                    <td>{{ data.nama }}</td>
+                                    <td style="width: 45%;">{{ data.alamat }}</td>
+                                    <td>{{ data.kota }}, {{ data.provinsi }}</td>
+                                    <!-- <td>{{ data.provinsi }}</td> -->
+                                    <!-- <td>{{ data.tsr_deskripsi }}</td> -->
+                                    <td class="text-center">
+                                        <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
+                                        &nbsp;&nbsp;
+                                        <button class="btn btn-sm btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" >DELETE</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
 
                     </div>
                 </div>
@@ -108,7 +142,8 @@ export default {
             whatsapp: '',
             tglRes: '',
             tglJalan: '',
-            pax: ''
+            pax: '',
+            detail:[]
         })
 
         //state validation
@@ -128,6 +163,7 @@ export default {
                 .then(response => {
 
                     //assign state posts with response data
+                    console.log(response.data[1])
                     post.kode = response.data[0][0].trh_kode
                     post.paket = response.data[0][0].trh_tph_kode + " - " + response.data[0][0].tph_nama
                     post.paketName = response.data[0][0].tph_nama
@@ -136,6 +172,7 @@ export default {
                     post.tglRes = response.data[0][0].trh_tgl_reservasi
                     post.tglJalan = response.data[0][0].trh_tgl_perjalanan
                     post.pax = response.data[0][0].trh_pax
+                    post.detail = response.data[1]
 
                 }).catch(error => {
                     console.log(error.response.data)

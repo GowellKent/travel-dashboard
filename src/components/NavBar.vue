@@ -2,14 +2,23 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">Tenta Tour</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <!-- <vue-feather type="star"></vue-feather> -->
+                <!-- <vue-feather :type="star"></vue-feather> -->
+                <!-- <span>{{ star }}</span> -->
+                <!-- <a class="navbar-brand" href="">Tenta Tour</a> -->
+                <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button> -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-2">
+                        <li class="nav-item">
+                            <span>
+                                <vue-feather type="compass" class="mx-1"/>
+                                <a class="navbar-brand">Tenta Tour</a>
+                            </span>
+                        </li>
                         <li class="nav-item">
                             <!-- <a class="nav-link active" aria-current="page" href="#">Reservasi</a> -->
                             <router-link :to="{ name: 'reservasi.index' }" class="nav-link active"
@@ -37,24 +46,21 @@
             </div>
         </nav>
         <!-- ... -->
-</div>
+    </div>
 </template>
    
 <script>
-
-// import axios from 'axios'
-
 export default {
     name: "App",
     data() {
         return {
-
         };
     },
     methods: {
-        logOut() {
-            this.$router.push('/');
-        }
+    logOut() {
+        this.$router.push('/');
     }
 }
+}
+
 </script>

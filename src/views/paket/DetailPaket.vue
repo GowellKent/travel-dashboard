@@ -115,7 +115,7 @@
                                         <tr v-for="data in post.details" :key="data.tpd_kode">
                                             <!-- <td>{{ data.tph_tjp_kode }}</td> -->
                                             <td>{{ data.tot_nama }}</td>
-                                            <td>{{ data.tot_alamat }}</td>
+                                            <td style="width: 45%;">{{ data.tot_alamat }}</td>
                                             <td>{{ data.tot_kota }}</td>
                                             <td>{{ data.tot_provinsi }}</td>
                                             <td>
