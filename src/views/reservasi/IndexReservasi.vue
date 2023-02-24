@@ -9,9 +9,17 @@
             <div class="container mt-5">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
-                        <h4>DATA RESREVASI</h4>
+                        <div class="row">
+                            <div class="col-11">
+                                <h4>DATA RESREVASI</h4>
+                            </div>
+                            <div class="col-1 align-right" >
+                                <router-link :to="{name: 'reservasi.create'}" class="btn btn-md btn-success">
+                                    <vue-feather type="plus" size="24" class="color-white pt-1"></vue-feather>
+                                </router-link>
+                            </div>
+                        </div>
                         <hr>
-                        <!-- <router-link :to="{name: 'paket.create'}" class="btn btn-md btn-success">TAMBAH PAKET</router-link> -->
 
                         <table class="table table-striped table-bordered mt-4">
                             <thead class="thead-dark">
@@ -38,7 +46,10 @@
                                     <td class="text-center">
                                         <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" >DELETE</button>
+                                        <button class="btn btn-sm ml-1 btn-danger" @click.prevent="postDelete(data.trh_kode)" >
+                                            <vue-feather type="trash-2" size="14" class="color-white pt-1-md"/> 
+                                            DELETE
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -104,5 +115,23 @@ export default {
 <style>
 body {
     background: lightgray;
+    color: #39393A;
+}
+.color-prime{
+    background-color: #297373;
+    color: antiquewhite;
+}
+.color-second{
+    background-color: #85FFC7;
+}
+.color-triple{
+    background-color: #FF8552;
+    color: white;
+}
+.color-triple:hover{
+    outline-color: #FF8552;
+    color: #FF8552;
+    border: 1em;
+    border-color: #FF8552;
 }
 </style>

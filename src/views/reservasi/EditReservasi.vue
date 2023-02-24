@@ -57,6 +57,22 @@
                                 <input type="text" class="form-control" v-model="post.pax"
                                     placeholder="Masukkan Judul Post">
                             </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="title" class="font-weight-bold mt-2 mb-1">Status Reservasi</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="post.status"
+                                            placeholder="Masukkan" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="post.status">
+                                            <option v-for="data in status" :key="data.tsr_kode">{{ data.tsr_kode }}-{{data.tsr_deskripsi }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
                         </form>
@@ -88,7 +104,10 @@
                                     <td class="text-center">
                                         <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" >DELETE</button>
+                                        <div class="form-group">
+                                            <vue-feather type="compass" class="color-white"/>
+                                            <button class="btn btn-sm btn-danger ml-1" @click.prevent="postDelete(data.trh_kode)" >DELETE</button>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -113,18 +132,28 @@ export default {
     data() {
         return {
             jenis: [],
-            trips: []
+            status: []
         }
     },
     methods: {
         setJenis(data) {
             this.jenis = data
+        },
+        setStatus(data) {
+            this.status = data
         }
     },
     mounted() {
         axios.get('http://localhost:8000/api/paketAll')
             .then(ress => {
                 this.setJenis(ress.data)
+            })
+            .catch(error => {
+                console.log(error)
+            }),
+        axios.get('http://localhost:8000/api/jenisStatus')
+            .then(ress => {
+                this.setStatus(ress.data)
             })
             .catch(error => {
                 console.log(error)
@@ -143,6 +172,7 @@ export default {
             tglRes: '',
             tglJalan: '',
             pax: '',
+            status:'',
             detail:[]
         })
 
@@ -163,7 +193,7 @@ export default {
                 .then(response => {
 
                     //assign state posts with response data
-                    console.log(response.data[1])
+                    console.log(response.data[0][0])
                     post.kode = response.data[0][0].trh_kode
                     post.paket = response.data[0][0].trh_tph_kode + " - " + response.data[0][0].tph_nama
                     post.paketName = response.data[0][0].tph_nama
@@ -172,6 +202,7 @@ export default {
                     post.tglRes = response.data[0][0].trh_tgl_reservasi
                     post.tglJalan = response.data[0][0].trh_tgl_perjalanan
                     post.pax = response.data[0][0].trh_pax
+                    post.status = response.data[0][0].trh_tsr_kode
                     post.detail = response.data[1]
 
                 }).catch(error => {
@@ -186,12 +217,14 @@ export default {
             let trh_tph_kode = post.paket.split("-")[0]
             let trh_tgl_perjalanan = post.tglJalan
             let trh_pax = post.pax
+            let trh_tsr_kode = post.status
 
             axios.put(`http://localhost:8000/api/updResHead`, {
                 trh_kode: route.params.id,
                 trh_tph_kode : trh_tph_kode,
                 trh_tgl_perjalanan: trh_tgl_perjalanan,
-                trh_pax : trh_pax
+                trh_pax : trh_pax,
+                trh_tsr_kode: trh_tsr_kode
             }).then(() => {
 
                 //redirect ke post index
@@ -223,5 +256,22 @@ export default {
 <style>
 body {
     background: lightgray;
+    color: #39393A;
+}
+.color-prime{
+    background-color: #297373;
+    color: antiquewhite;
+}
+.color-second{
+    background-color: #85FFC7;
+}
+.color-triple{
+    background-color: #FF8552;
+}
+.color-triple:hover{
+    outline-color: #FF8552;
+    color: #FF8552;
+    border: 1em;
+    border-color: #FF8552;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg color-prime">
             <div class="container-fluid">
                 <!-- <vue-feather type="star"></vue-feather> -->
                 <!-- <vue-feather :type="star"></vue-feather> -->
@@ -15,18 +15,18 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-2">
                         <li class="nav-item">
                             <span>
-                                <vue-feather type="compass" class="mx-1"/>
-                                <a class="navbar-brand">Tenta Tour</a>
+                                <vue-feather type="compass" size="18" class="mx-1 color-white"/>
+                                <a class="navbar-brand color-white">Tenta Tour</a>
                             </span>
                         </li>
                         <li class="nav-item">
                             <!-- <a class="nav-link active" aria-current="page" href="#">Reservasi</a> -->
-                            <router-link :to="{ name: 'reservasi.index' }" class="nav-link active"
+                            <router-link :to="{ name: 'reservasi.index' }" class="nav-link color-white"
                                 aria-current="page">Reservasi</router-link>
                         </li>
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="#">Link</a> -->
-                            <router-link :to="{ name: 'paket.index' }" class="nav-link"
+                            <router-link :to="{ name: 'paket.index' }" class="nav-link color-white"
                                 aria-current="page">Paket</router-link>
                         </li>
                         <!-- <li class="nav-item">
@@ -35,12 +35,13 @@
                         </li> -->
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="#">Link</a> -->
-                            <router-link :to="{ name: 'objek.index' }" class="nav-link"
+                            <router-link :to="{ name: 'objek.index' }" class="nav-link color-white"
                                 aria-current="page">Objek</router-link>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <a class="btn btn-outline-danger" v-on:click="logOut">Log Out</a>
+                    <form class="d-flex"> 
+                        <a class="btn color-white logout" v-on:click="logOut">
+                            Log Out <vue-feather type="log-out" size="14" class="color-white"/></a>
                     </form>
                 </div>
             </div>
@@ -64,3 +65,21 @@ export default {
 }
 
 </script>
+<style>
+
+.color-prime{
+    background-color: #297373;
+    color: antiquewhite;
+}
+.color-white {
+    color: floralwhite;
+}
+.logout:hover{
+    color:aliceblue
+}
+/* 
+a{
+    color: floralwhite;
+} */
+
+</style>
