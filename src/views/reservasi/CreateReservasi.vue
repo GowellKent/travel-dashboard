@@ -125,6 +125,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 import navbar from '@/components/NavBar.vue'
+import {baseURL} from '@/config.js'
 
 export default {
 
@@ -207,7 +208,7 @@ export default {
             let trh_tu_kode = paket.trh_tu_kode
             let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
             let trh_pax = paket.trh_pax
-            axios.post('http://localhost:8000/api/addRes', {
+            axios.post(baseURL+'addRes', {
                 trh_tph_kode: trh_tph_kode,
                 trh_tu_kode: trh_tu_kode,
                 trh_tgl_perjalanan: trh_tgl_perjalanan,

@@ -1,0 +1,1 @@
+export var baseURL = "https://tentaapi.000webhostapp.com/api/"

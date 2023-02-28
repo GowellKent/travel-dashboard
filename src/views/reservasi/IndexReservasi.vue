@@ -68,6 +68,7 @@ import axios from 'axios'
 // import { onMounted, ref } from 'vue'
 import navbar from '@/components/NavBar.vue'
 // import sidebar from '@/components/SideBar.vue'
+import {baseURL} from '@/config.js'
 
 export default {
     data() {
@@ -83,7 +84,7 @@ export default {
         postDelete(id) {
             
             //delete data post by ID
-            axios.get('http://localhost:8000/api/delResHead?trh_kode='+id)
+            axios.get(baseURL+'delResHead?trh_kode='+id)
             .then(() => {
                        
                 //splice posts 
@@ -98,7 +99,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8000/api/getRes')
+        axios.get(baseURL+'getRes')
             .then(res => {
                 this.setResers(res.data)
             })
