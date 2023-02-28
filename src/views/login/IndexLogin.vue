@@ -42,7 +42,7 @@
 
 import axios from 'axios'
 // import toast from '@/components/ToastNotif.vue'
-import {baseURL} from '@/config.js'
+// import {baseURL} from '@/config.js'
 
 export default {
     name: 'LogIn',
@@ -60,7 +60,7 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            axios.post(baseURL+'LoginAPI', data)
+            axios.post('http://localhost:8000/api/LoginAPI', data)
                 .then(
                     res => {
                         console.log(res),
