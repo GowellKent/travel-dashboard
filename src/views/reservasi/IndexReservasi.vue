@@ -84,7 +84,7 @@ export default {
         postDelete(id) {
             
             //delete data post by ID
-            axios.get(baseURL+'delResHead?trh_kode='+id)
+            axios.get('http://localhost:8000/api/delResHead?trh_kode='+id)
             .then(() => {
                        
                 //splice posts 

@@ -60,7 +60,9 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            axios.post('http://localhost:8000/api/LoginAPI', data)
+
+            console.log(data)
+            axios.post('http://localhost:8000/api/loginAPI',data)
                 .then(
                     res => {
                         console.log(res),
