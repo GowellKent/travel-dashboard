@@ -13,8 +13,8 @@
                             <div class="col-11">
                                 <h4>DATA RESREVASI</h4>
                             </div>
-                            <div class="col-1 align-right" >
-                                <router-link :to="{name: 'reservasi.create'}" class="btn btn-md btn-success">
+                            <div class="col-1" >
+                                <router-link :to="{name: 'reservasi.create'}" class="btn btn-md btn-success float-end">
                                     <vue-feather type="plus" size="24" class="color-white pt-1"></vue-feather>
                                 </router-link>
                             </div>
@@ -44,11 +44,8 @@
                                     <td>{{ data.trh_tgl_reservasi }}</td>
                                     <td>{{ data.tsr_deskripsi }}</td>
                                     <td class="text-center">
-                                        <!-- <router-link :to="{name: 'paket.edit', params:{id: data.tph_kode }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link> -->
-                                        &nbsp;&nbsp;
                                         <button class="btn btn-sm ml-1 btn-danger" @click.prevent="postDelete(data.trh_kode)" >
-                                            <vue-feather type="trash-2" size="14" class="color-white pt-1-md"/> 
-                                            DELETE
+                                            <vue-feather type="trash-2" size="20" class="color-white pt-1"/>
                                         </button>
                                     </td>
                                 </tr>
@@ -115,7 +112,7 @@ export default {
 
 <style>
 body {
-    background: lightgray;
+    background: #F2f4ff;
     color: #39393A;
 }
 .color-prime{

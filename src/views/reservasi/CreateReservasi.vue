@@ -1,16 +1,15 @@
 <template>
     <navbar />
     <div class="container mt-5">
+        <h4>TAMBAH RESERVASI</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-11">
-                                <h4>TAMBAH RESERVASI</h4>
-                            </div>
-                            <div class="col right-align">
-                                <router-link :to="{ name: 'reservasi.index' }" class="btn btn-md btn-primary">BACK</router-link>
+                            <div class="col">
+                                <router-link :to="{ name: 'reservasi.index' }"
+                                    class="btn btn-md btn-primary"><vue-feather type="chevron-left" size="20" class="color-white pt-1 pl-5"/></router-link>
                             </div>
                         </div>
                         <hr>
@@ -19,14 +18,12 @@
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
                                 <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
-                                <br />
                                 <select class="form-select" v-model="paket.tph_provinsi_asal"
                                     v-on:change="getKota(paket.tph_provinsi_asal)" aria-label="Provinsi Asal">
                                     <!-- <option class="dropdown-item">Provinsi</option> -->
                                     <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
                                 </select>
                             </div>
-                            <br />
                             <div class="form-group">
                                 <label for="nama" class="font-weight-bold">Kota Asal</label>
                                 <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
@@ -35,6 +32,7 @@
                                     <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
                                 </select>
                             </div>
+                            <br>
                             <div class="form-group">
                                 <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
                                 <br />
@@ -43,7 +41,6 @@
                                     <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
                                 </select>
                             </div>
-                            <br />
                             <div class="form-group">
                                 <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
                                 <br />
@@ -51,7 +48,7 @@
                                     <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
                                 </select>
                             </div>
-
+                            <br>
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
                                 <br />
@@ -61,7 +58,12 @@
                                 </select>
                             </div>
                             <br><br>
-                            <button type="submit" class="btn btn-primary">SEARCH</button>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success float-end">SEARCH</button>
+
+                                </div>
+                            </div>
                         </form>
 
                         <hr><br>
@@ -75,29 +77,23 @@
                                         data.tph_nama }}</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kode Client</label>
                                 <input type="text" class="form-control" v-model="paket.trh_tu_kode"
-                                    placeholder="Masukkan Nama Paket">
+                                    placeholder="Masukkan Kode Client">
                                 <!-- validation -->
                                 <div v-if="validation.title" class="mt-2 alert alert-danger">
                                     {{ validation.title[0] }}
                                 </div>
                             </div>
                             <div class="form-group">
-                                    <label for="content" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
-                                    <input class="form-control" rows="4" v-model="paket.trh_tgl_perjalanan"
-                                        placeholder="Masukkan Deskripsi Paket">
-                                    <!-- validation -->
-                                    <div v-if="validation.content" class="mt-2 alert alert-danger">
-                                        {{ validation.content[0] }}
-                                    </div>
-                                </div>
+                                <label for="content" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
+                                <VueDatePicker v-model="paket.trh_tgl_perjalanan" :enable-time-picker="false" class="mb-2"></VueDatePicker>
+                            </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Pax</label>
-                                <input type="text" class="form-control" v-model="paket.trh_pax"
-                                    placeholder="Masukkan Harga">
+                                <input type="text" class="form-control" v-model="paket.trh_pax" placeholder="Masukkan Pax">
                                 <!-- validation -->
                                 <div v-if="validation.title" class="mt-2 alert alert-danger">
                                     {{ validation.title[0] }}
@@ -114,7 +110,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -125,7 +121,9 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 import navbar from '@/components/NavBar.vue'
-import {baseURL} from '@/config.js'
+import { baseURL } from '@/config.js'
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 export default {
 
@@ -136,7 +134,7 @@ export default {
             provs2: [],
             kotas: [],
             kotas2: [],
-            trips:[]
+            trips: []
         }
     },
     methods: {
@@ -189,10 +187,10 @@ export default {
         //state posts
         const paket = reactive({
             trh_tph_kode: '',
-            trh_tu_kode:'',
-            trh_tgl_perjalanan:'',
-            trh_pax:'',
-            pakets:[]
+            trh_tu_kode: '',
+            trh_tgl_perjalanan: '',
+            trh_pax: '',
+            pakets: []
         })
 
         //state validation
@@ -206,25 +204,28 @@ export default {
 
             let trh_tph_kode = paket.trh_tph_kode.split("-")[0]
             let trh_tu_kode = paket.trh_tu_kode
-            let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
+            // let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
+            let trh_tgl_perjalanan = paket.trh_tgl_perjalanan.toISOString().split('T')[0]
             let trh_pax = paket.trh_pax
-            axios.post(baseURL+'addRes', {
+            axios.post(baseURL + 'addRes', {
                 trh_tph_kode: trh_tph_kode,
                 trh_tu_kode: trh_tu_kode,
                 trh_tgl_perjalanan: trh_tgl_perjalanan,
-                trh_pax:trh_pax
+                trh_pax: trh_pax
 
-                
+
             }).then((resp) => {
 
                 //redirect ke post index
+                console.log(resp.data)
                 router.push({
-                    name: 'paket.detail', params:{id:resp.data.data.tph_kode}
+                    name: 'reservasi.edit', params: { id: resp.data.data.trh_kode }
                 })
 
             }).catch(error => {
                 //assign state validation with error 
-                validation.value = error.response.data
+                // validation.value = error.response.data
+                console.log(error)
             })
 
         }
@@ -233,15 +234,15 @@ export default {
             let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
             let tph_kota_asal = paket.tph_kota_asal
             let tph_kota_tujuan = paket.tph_kota_tujuan
-            axios.get("http://localhost:8000/api/searchPaket?tph_tjt_kode="+tph_tjt_kode+"&tph_kota_asal="+tph_kota_asal+"&tph_kota_destinasi="+tph_kota_tujuan)
-            .then((resp)=>{
-                // console.log(resp.data)
-                paket.pakets=resp.data
-                // console.log(paket.pakets[0])
-            }).catch(error => {
-                //assign state validation with error 
-                console.log(error)
-            })
+            axios.get("http://localhost:8000/api/searchPaket?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_destinasi=" + tph_kota_tujuan)
+                .then((resp) => {
+                    // console.log(resp.data)
+                    paket.pakets = resp.data
+                    // console.log(paket.pakets[0])
+                }).catch(error => {
+                    //assign state validation with error 
+                    console.log(error)
+                })
         }
 
         //return
@@ -279,7 +280,7 @@ export default {
                 })
     },
     components: {
-        navbar
+        navbar, VueDatePicker
     }
 
 }
