@@ -139,6 +139,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
+import { baseURL } from '@/config.js'
 
 export default {
 
@@ -146,7 +147,7 @@ export default {
         postDelete(id) {
             
             //delete data post by ID
-            axios.get('http://localhost:8000/api/delPaketDet?tpd_kode='+id)
+            axios.get(baseURL+'/delPaketDet?tpd_kode='+id)
             .then(() => {
                        
                 //splice posts 
@@ -190,7 +191,7 @@ export default {
 
 
             //get API from Laravel Backend
-            axios.get(`http://localhost:8000/api/findPaket?tph_kode=${route.params.id}`)
+            axios.get(baseURL+`/findPaket?tph_kode=${route.params.id}`)
                 .then(response => {
 
                     //assign state posts with response data
@@ -206,7 +207,7 @@ export default {
                 }).catch(error => {
                     console.log(error.response.data)
                 })
-            axios.get(`http://localhost:8000/api/paketDet?tpd_tipe=D&tpd_tph_kode=${route.params.id}`)
+            axios.get(baseURL+'/paketDet?tpd_tipe=D&tpd_tph_kode=${route.params.id}')
                 .then(response => {
 
                     //assign state posts with response data

@@ -54,6 +54,7 @@
 import axios from 'axios'
 // import { onMounted, ref } from 'vue'
 import navbar from '@/components/NavBar.vue'
+import { baseURL } from '@/config.js'
 
 export default {
     data() {
@@ -68,7 +69,7 @@ export default {
         postDelete(id) {
             
             //delete data post by ID
-            axios.get('http://localhost:8000/api/delObjek?tot_kode='+id)
+            axios.get(baseURL+'/delObjek?tot_kode='+id)
             .then(() => {
                        
                 //splice posts 
@@ -83,7 +84,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8000/api/objekAll')
+        axios.get(baseURL+'/objekAll')
             .then(res => {
                 this.setObjek(res.data)
                 //   console.log(res.data)

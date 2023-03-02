@@ -45,7 +45,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
-
+import { baseURL } from '@/config.js'
 import navbar from '@/components/NavBar.vue'
 
 export default {
@@ -88,7 +88,7 @@ export default {
             let tpd_tph_kode = route.params.id
             let tpd_tot_kode = detail.tpd_tot_kode.split("-")[0]
 
-            axios.post('http://localhost:8000/api/addPaketDet', {
+            axios.post(baseURL+'/addPaketDet', {
                 tpd_tph_kode: tpd_tph_kode,
                 tpd_tot_kode: tpd_tot_kode,
                 tpd_tipe:'D'
@@ -122,10 +122,10 @@ export default {
         const route = useRoute()
         this.tph_kode = route.params.id
 
-        axios.get('http://localhost:8000/api/findPaket?tph_kode=' + this.tph_kode)
+        axios.get(baseURL+'/findPaket?tph_kode=' + this.tph_kode)
             .then(ress => {
                 this.setPaket(ress.data[0])
-                axios.get('http://localhost:8000/api/objekByKota?tot_kota=' + this.pakets.tph_kota_destinasi)
+                axios.get(baseURL+'/objekByKota?tot_kota=' + this.pakets.tph_kota_destinasi)
                     .then(resp => {
                         this.setObjs(resp.data)
                     }).catch(error => {

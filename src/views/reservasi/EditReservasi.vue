@@ -155,6 +155,7 @@ import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { baseURL } from '@/config.js'
 
 export default {
 
@@ -178,14 +179,14 @@ export default {
         
     },
     mounted() {
-        axios.get('http://localhost:8000/api/paketAll')
+        axios.get(baseURL+'/paketAll')
             .then(ress => {
                 this.setJenis(ress.data)
             })
             .catch(error => {
                 console.log(error)
             }),
-            axios.get('http://localhost:8000/api/jenisStatus')
+            axios.get(baseURL+'/jenisStatus')
                 .then(ress => {
                     this.setStatus(ress.data)
                 })
@@ -229,7 +230,7 @@ export default {
             //get API from Laravel Backend
             axios.get(`http://localhost:8000/api/getDataRes?trh_kode=${route.params.id}`)
                 .then(response => {
-                    axios.get('http://localhost:8000/api/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
+                    axios.get(baseURL+'/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
                         .then(ress => {
                             post.buses = ress.data
                         })
@@ -265,7 +266,7 @@ export default {
             let trh_tsr_kode = post.status.split("-")[0]
             let trh_tb_kode = post.bus.split("-")[0]
 
-            axios.put('http://localhost:8000/api/updResHead', {
+            axios.put(baseURL+'/updResHead', {
                 trh_kode: route.params.id,
                 trh_tph_kode: trh_tph_kode,
                 trh_tgl_perjalanan: trh_tgl_perjalanan,

@@ -77,6 +77,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
+import { baseURL } from '@/config.js'
 
 export default {
 
@@ -119,7 +120,7 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get('http://127.0.0.1:8000/api/jenisObjek')
+            axios.get(baseURL+'/jenisObjek')
                 .then(ress => {
                     this.setJenis(ress.data)
                 })

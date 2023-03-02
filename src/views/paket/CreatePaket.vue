@@ -116,7 +116,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-
+import { baseURL } from '@/config.js'
 import navbar from '@/components/NavBar.vue'
 
 export default {
@@ -209,7 +209,7 @@ export default {
             let tph_harga = paket.tph_harga
             let tph_deskripsi = paket.tph_deskripsi
 
-            axios.post('http://localhost:8000/api/addPaket', {
+            axios.post(baseURL+'/addPaket', {
                 tph_tjp_kode: tph_tjp_kode,
                 tph_tjt_kode: tph_tjt_kode,
                 tph_nama: tph_nama,
@@ -251,14 +251,14 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get('http://127.0.0.1:8000/api/jenisPaket')
+            axios.get(baseURL+'/jenisPaket')
                 .then(ress => {
                     this.setJenis(ress.data)
                 })
                 .catch(error => {
                     console.log(error)
                 }),
-            axios.get('http://127.0.0.1:8000/api/jenisTrip')
+            axios.get(baseURL+'/jenisTrip')
                 .then(ress => {
                     this.setTrips(ress.data)
                 })

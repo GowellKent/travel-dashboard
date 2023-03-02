@@ -64,6 +64,7 @@
 import axios from 'axios'
 import navbar from '@/components/NavBar.vue'
 // import { onMounted, ref } from 'vue'
+import { baseURL } from '@/config.js'
 
 export default {
     data() {
@@ -78,7 +79,7 @@ export default {
         },
         detailPaket(kode){
             //delete data post by ID
-            axios.get('http://localhost:8000/api/paketDet?tpd_tipe=D&tpd_tph_kode='+kode)
+            axios.get(baseURL+'/paketDet?tpd_tipe=D&tpd_tph_kode='+kode)
             .then(() => {
                        
                 //splice posts 
@@ -93,7 +94,7 @@ export default {
         postDelete(id) {
             
             //delete data post by ID
-            axios.get('http://localhost:8000/api/delPaket?tph_kode='+id)
+            axios.get(baseURL+'/delPaket?tph_kode='+id)
             .then(() => {
                        
                 //splice posts 
@@ -108,7 +109,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8000/api/paketAll')
+        axios.get(baseURL+'/paketAll')
             .then(res => {
                 this.setpakets(res.data)
             })

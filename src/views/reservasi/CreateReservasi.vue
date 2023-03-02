@@ -220,7 +220,7 @@ export default {
             // let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
             let trh_tgl_perjalanan = paket.trh_tgl_perjalanan.toISOString().split('T')[0]
             let trh_pax = paket.trh_pax
-            axios.post(baseURL + 'addRes', {
+            axios.post(baseURL + '/addRes', {
                 trh_tph_kode: trh_tph_kode,
                 trh_tb_kode: trh_tb_kode,
                 trh_tu_kode: trh_tu_kode,
@@ -248,7 +248,7 @@ export default {
             let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
             let tph_kota_asal = paket.tph_kota_asal
             let tph_kota_tujuan = paket.tph_kota_tujuan
-            axios.get("http://localhost:8000/api/searchPaket?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_destinasi=" + tph_kota_tujuan)
+            axios.get(baseURL+"/searchPaket?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_destinasi=" + tph_kota_tujuan)
                 .then((resp) => {
                     // console.log(resp.data)
                     paket.pakets = resp.data
@@ -263,7 +263,7 @@ export default {
             paket.buses = []
             let tph_kode = paket.trh_tph_kode.split("-")[0]
             let tph_pax = paket.trh_pax
-            axios.get("http://localhost:8000/api/getBuses?tb_pax=" + tph_pax + "&tph_kode=" + tph_kode)
+            axios.get(baseURL+"/getBuses?tb_pax=" + tph_pax + "&tph_kode=" + tph_kode)
                 .then((resp) => {
                     // console.log(resp.data)
                     paket.buses = resp.data

@@ -59,6 +59,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { baseURL } from '@/config.js'
 
 import navbar from '@/components/NavBar.vue'
 
@@ -116,7 +117,7 @@ export default {
             let tot_kota = kota.tot_nama
             let tot_provinsi = kota.tot_provinsi.split("-")[1]
 
-            axios.post('http://localhost:8000/api/addObjek', {
+            axios.post(baseURL+'/addObjek', {
                 tot_tjo_kode: tot_tjo_kode,
                 tot_nama: tot_nama,
                 tot_provinsi: tot_provinsi,

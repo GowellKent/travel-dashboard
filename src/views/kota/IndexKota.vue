@@ -61,6 +61,7 @@
 import axios from 'axios'
 // import { onMounted, ref } from 'vue'
 import navbar from '@/components/NavBar.vue'
+import { baseURL } from '@/config.js'
 
 export default {
     data() {
@@ -80,7 +81,7 @@ export default {
         postDelete(id) {
             
             //delete data post by ID
-            axios.get('http://localhost:8000/api/delKota?tot_kota='+id)
+            axios.get(baseURL+'/delKota?tot_kota='+id)
             .then(() => {
                        
                 //splice posts 
@@ -95,7 +96,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8000/api/listKota')
+        axios.get(baseURL+'/listKota')
             .then(res => {
                 this.setkotas(res.data)
                 //   console.log(res.data)
@@ -118,7 +119,7 @@ export default {
 // function postDelete(id) {
             
 //             //delete data post by ID
-//             axios.get('http://localhost:8000/api/delKota/tot_kota'+id)
+//             axios.get(baseURL+'/api/delKota/tot_kota'+id)
 //             .then(() => {
                        
 //                 //splice posts 

@@ -47,7 +47,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
-
+import { baseURL } from '@/config.js'
 export default {
 
     setup() {
@@ -71,7 +71,7 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(`http://localhost:8000/api/post/${route.params.id}`)
+            axios.get(baseURL+'/post/${route.params.id}')
             .then(response => {
               
               //assign state posts with response data
