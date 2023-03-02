@@ -11,8 +11,6 @@ import 'popper.js/dist/popper.min'
 import 'bootstrap/dist/js/bootstrap.min'
 import VueFeather from 'vue-feather';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
-
 // import Toasted from 'vue-toasted';
 
 const app = createApp(App)

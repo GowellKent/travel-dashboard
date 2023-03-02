@@ -8,8 +8,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <router-link :to="{ name: 'reservasi.index' }"
-                                    class="btn btn-md btn-primary"><vue-feather type="chevron-left" size="20" class="color-white pt-1 pl-5"/></router-link>
+                                <router-link :to="{ name: 'reservasi.index' }" class="btn btn-md btn-primary"><vue-feather
+                                        type="chevron-left" size="20" class="color-white pt-1 pl-5" /></router-link>
                             </div>
                         </div>
                         <hr>
@@ -89,15 +89,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="content" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
-                                <VueDatePicker v-model="paket.trh_tgl_perjalanan" :enable-time-picker="false" class="mb-2"></VueDatePicker>
+                                <VueDatePicker v-model="paket.trh_tgl_perjalanan" :enable-time-picker="false" class="mb-2">
+                                </VueDatePicker>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Pax</label>
-                                <input type="text" class="form-control" v-model="paket.trh_pax" placeholder="Masukkan Pax">
-                                <!-- validation -->
-                                <div v-if="validation.title" class="mt-2 alert alert-danger">
-                                    {{ validation.title[0] }}
-                                </div>
+                                <input type="text" class="form-control" v-model="paket.trh_pax" placeholder="Masukkan Pax"
+                                    v-on:blur="getBus()">
+                            </div>
+                            <!-- <a class="btn btn-sm btn-success" v-on:click="getBus()">Test</a> -->
+
+                            <div class="form-group">
+                                <label for="bus" class="font-weight-bold">Bus</label>
+                                <br />
+                                <select class="form-select" aria-label="Pilihan Bus" v-model="paket.trh_tb_kode">
+                                    <option v-for="data in paket.buses" :key="data.tb_kode">{{ data.tb_kode }}-{{
+                                        data.tb_nama }}</option>
+                                </select>
                             </div>
 
 
@@ -190,7 +198,9 @@ export default {
             trh_tu_kode: '',
             trh_tgl_perjalanan: '',
             trh_pax: '',
-            pakets: []
+            trh_tb_kode: '',
+            pakets: [],
+            buses: []
         })
 
         //state validation
@@ -202,13 +212,17 @@ export default {
         //method store
         function store() {
 
+            // console.log(paket.trh_tb_kode)
+
             let trh_tph_kode = paket.trh_tph_kode.split("-")[0]
+            let trh_tb_kode = paket.trh_tb_kode.split("-")[0]
             let trh_tu_kode = paket.trh_tu_kode
             // let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
             let trh_tgl_perjalanan = paket.trh_tgl_perjalanan.toISOString().split('T')[0]
             let trh_pax = paket.trh_pax
             axios.post(baseURL + 'addRes', {
                 trh_tph_kode: trh_tph_kode,
+                trh_tb_kode: trh_tb_kode,
                 trh_tu_kode: trh_tu_kode,
                 trh_tgl_perjalanan: trh_tgl_perjalanan,
                 trh_pax: trh_pax
@@ -245,13 +259,29 @@ export default {
                 })
         }
 
+        function getBus() {
+            paket.buses = []
+            let tph_kode = paket.trh_tph_kode.split("-")[0]
+            let tph_pax = paket.trh_pax
+            axios.get("http://localhost:8000/api/getBuses?tb_pax=" + tph_pax + "&tph_kode=" + tph_kode)
+                .then((resp) => {
+                    // console.log(resp.data)
+                    paket.buses = resp.data
+                    // console.log(paket.pakets[0])
+                }).catch(error => {
+                    //assign state validation with error 
+                    console.log(error)
+                })
+        }
+
         //return
         return {
             paket,
             validation,
             router,
             store,
-            check
+            check,
+            getBus
         }
 
     },

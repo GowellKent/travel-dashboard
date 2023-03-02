@@ -53,7 +53,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Tanggal Perjalanan</label>
-                                <VueDatePicker v-model="post.tglJalan" :enable-time-picker="false" class="mb-2"></VueDatePicker>
+                                <VueDatePicker v-model="post.tglJalan" :enable-time-picker="false" class="mb-2">
+                                </VueDatePicker>
                             </div>
                             <!-- <h5>{{ post.tglJalanNew }}</h5> -->
                             <div class="form-group">
@@ -74,6 +75,23 @@
                                         <select class="form-select" v-model="post.status">
                                             <option v-for="data in status" :key="data.tsr_kode">{{ data.tsr_kode
                                             }}-{{ data.tsr_deskripsi }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="title" class="font-weight-bold mt-2 mb-1">Reservasi Bus</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="post.bus" placeholder="Masukkan"
+                                            disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="post.bus">
+                                            <option v-for="data in post.buses" :key="data.tb_kode">{{ data.tb_kode
+                                            }}-{{ data.tb_nama }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -157,6 +175,7 @@ export default {
         setStatus(data) {
             this.status = data
         }
+        
     },
     mounted() {
         axios.get('http://localhost:8000/api/paketAll')
@@ -173,6 +192,7 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
+
     },
 
     setup() {
@@ -189,6 +209,8 @@ export default {
             tglJalanNew: '',
             pax: '',
             status: '',
+            bus: '',
+            buses:[],
             detail: []
         })
 
@@ -207,7 +229,13 @@ export default {
             //get API from Laravel Backend
             axios.get(`http://localhost:8000/api/getDataRes?trh_kode=${route.params.id}`)
                 .then(response => {
-
+                    axios.get('http://localhost:8000/api/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
+                        .then(ress => {
+                            post.buses = ress.data
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
                     //assign state posts with response data
                     // console.log(response.data[0][0])
                     post.kode = response.data[0][0].trh_kode
@@ -219,6 +247,7 @@ export default {
                     post.tglJalan = response.data[0][0].trh_tgl_perjalanan
                     post.pax = response.data[0][0].trh_pax
                     post.status = response.data[0][0].trh_tsr_kode + " - " + response.data[0][0].tsr_deskripsi
+                    post.bus = response.data[0][0].tb_kode + " - " + response.data[0][0].tb_nama
                     post.detail = response.data[1]
 
                 }).catch(error => {
@@ -234,13 +263,15 @@ export default {
             let trh_tgl_perjalanan = post.tglJalan.toISOString().split('T')[0]
             let trh_pax = post.pax
             let trh_tsr_kode = post.status.split("-")[0]
+            let trh_tb_kode = post.bus.split("-")[0]
 
             axios.put('http://localhost:8000/api/updResHead', {
                 trh_kode: route.params.id,
                 trh_tph_kode: trh_tph_kode,
                 trh_tgl_perjalanan: trh_tgl_perjalanan,
                 trh_pax: trh_pax,
-                trh_tsr_kode: trh_tsr_kode
+                trh_tsr_kode: trh_tsr_kode,
+                trh_tb_kode: trh_tb_kode,
             }).then(() => {
 
                 //redirect ke post index
@@ -255,7 +286,7 @@ export default {
             })
 
         }
-        
+
         return {
             post,
             validation,
