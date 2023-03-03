@@ -6,7 +6,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-11">
-                                <h4>CREATE BUS</h4>
+                                <h4>EDIT DATA BUS</h4>
                             </div>
                             <div class="col right-align">
                                 <router-link :to="{ name: 'bus.index' }" class="btn btn-md btn-primary">BACK</router-link>
@@ -14,46 +14,57 @@
                         </div>
                         <hr>
 
-                        <form @submit.prevent="store">
+                        <form @submit.prevent="update">
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Nama Bus</label>
                                 <input type="text" class="form-control" v-model="bus.tb_nama"
                                     placeholder="Masukkan Nama Bus">
                             </div>
+                            <br>
                             <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
+                                <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
+                                <select class="form-select" v-model="bus.tph_provinsi_asal"
+                                    v-on:change="getKota(bus.tph_provinsi_asal)" aria-label="Provinsi Asal">
+                                    <!-- <option class="dropdown-item">Provinsi</option> -->
+                                    <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama" class="font-weight-bold">Kota Asal</label>
+                                <br />
                                 <div class="row">
-                                    <div class="col form-group">
-                                        <label for="title" class="font-weight-bold mt-2 mb-1">Provinsi Asal</label>
-                                        <select class="form-select" v-model="bus.tot_provinsi_asal"
-                                            v-on:change="getKota(bus.tot_provinsi_asal)" aria-label="Provinsi">
-                                            <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}
-                                            </option>
-                                        </select>
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="bus.tb_kota_asal"
+                                            placeholder="Masukkan Kota" disabled>
                                     </div>
-                                    <div class="col form-group">
-                                        <label for="title" class="font-weight-bold mt-2 mb-1">Kota Asal</label>
-                                        <select class="form-select" v-model="bus.tb_kota_asal" aria-label="Kota/ Kabupaten">
+                                    <div class="col">
+                                        <select class="form-select" v-model="bus.tb_kota_asal" aria-label="Kota Asal">
                                             <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold">Provinsi Tujuan</label>
+                                <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
+                                <select class="form-select" v-model="bus.tph_provinsi"
+                                    v-on:change="getKota2(bus.tph_provinsi)" aria-label="Provinsi Tujuan">
+                                    <!-- <option class="dropdown-item">Provinsi</option> -->
+                                    <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama" class="font-weight-bold">Kota Tujuan</label>
+                                <br />
                                 <div class="row">
-                                    <div class="col form-group">
-                                        <label for="title" class="font-weight-bold mt-2 mb-1">Provinsi Tujuan</label>
-                                        <select class="form-select" v-model="bus.tot_provinsi"
-                                            v-on:change="getKota2(bus.tot_provinsi)" aria-label="Provinsi Tujuan">
-                                            <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}
-                                            </option>
-                                        </select>
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="bus.tb_kota_destinasi"
+                                            placeholder="Masukkan Kota" disabled>
                                     </div>
-                                    <div class="col form-group">
-                                        <label for="title" class="font-weight-bold mt-2 mb-1">Kota Tujuan</label>
-                                        <!-- <input type="text" class="form-control" v-model="bus.tot_kota"
-                                        placeholder="Masukkan Kota"> -->
-                                        <select class="form-select" v-model="bus.tb_kota_destinasi"
-                                            aria-label="Kota/ Kabupaten">
+                                    <div class="col">
+                                        <select class="form-select" v-model="bus.tb_kota_destinasi" aria-label="Kota Asal">
                                             <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
                                         </select>
                                     </div>
@@ -76,8 +87,8 @@
 
 <script>
 
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { reactive, ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import { baseURL } from '@/config.js'
 
@@ -157,16 +168,39 @@ export default {
         //vue router
         const router = useRouter()
 
-        //method store
-        function store() {
+        //vue router
+        const route = useRoute()
+
+        //mounted
+        onMounted(() => {
+
+            //get API from Laravel Backend
+            axios.get(baseURL + `/findBus?tb_kode=${route.params.id}`)
+                .then(response => {
+
+                    //assign state posts with response data
+                    bus.tb_nama = response.data[0].tb_nama
+                    bus.tb_kota_asal = response.data[0].tb_kota_asal
+                    bus.tb_kota_destinasi = response.data[0].tb_kota_destinasi
+                    bus.tb_pax = response.data[0].tb_pax
+
+                }).catch(error => {
+                    console.log(error.response.data)
+                })
+
+        })
+
+        //method update
+        function update() {
 
             let tb_nama = bus.tb_nama
             let tb_kota_asal = bus.tb_kota_asal
             let tb_kota_destinasi = bus.tb_kota_destinasi
             let tb_pax = bus.tb_pax
 
-            axios.get(baseURL + '/addBus', {
+            axios.get(baseURL+`/updBus`, {
                 params: {
+                    tb_kode: route.params.id,
                     tb_nama: tb_nama,
                     tb_kota_asal: tb_kota_asal,
                     tb_kota_destinasi: tb_kota_destinasi,
@@ -181,7 +215,8 @@ export default {
 
             }).catch(error => {
                 //assign state validation with error 
-                validation.value = error.response.data
+                // validation.value = error.response.data
+                console.log(error)
             })
 
         }
@@ -191,7 +226,7 @@ export default {
             bus,
             validation,
             router,
-            store
+            update
         }
 
     }
@@ -202,4 +237,5 @@ export default {
 <style>
 body {
     background: lightgray;
-}</style>
+}
+</style>

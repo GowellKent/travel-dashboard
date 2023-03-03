@@ -28,7 +28,7 @@
                             </thead>
                             <tbody >
                                 <tr v-for="data in objeks" :key="data.tb_kode">
-                                    <td><router-link :to="{ name: 'objek.edit', params: { id: data.tb_kode } }">{{ data.tb_kode }}</router-link></td>
+                                    <td><router-link :to="{ name: 'bus.edit', params: { id: data.tb_kode } }">{{ data.tb_kode }}</router-link></td>
                                     <td>{{ data.tb_nama }}</td>
                                     <td>{{ data.tb_kota_asal }}</td>
                                     <td>{{ data.tb_kota_destinasi }}</td>

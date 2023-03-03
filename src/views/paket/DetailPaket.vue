@@ -207,7 +207,7 @@ export default {
                 }).catch(error => {
                     console.log(error.response.data)
                 })
-            axios.get(baseURL+'/paketDet?tpd_tipe=D&tpd_tph_kode=${route.params.id}')
+            axios.get(baseURL+`/paketDet?tpd_tipe=D&tpd_tph_kode=${route.params.id}`)
                 .then(response => {
 
                     //assign state posts with response data

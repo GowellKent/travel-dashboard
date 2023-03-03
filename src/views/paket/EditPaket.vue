@@ -260,7 +260,7 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(`http://localhost:8000/api/findPaket?tph_kode=${route.params.id}`)
+            axios.get(baseURL+`/findPaket?tph_kode=${route.params.id}`)
                 .then(response => {
 
                     //assign state posts with response data
@@ -290,7 +290,7 @@ export default {
             let tph_harga = post.harga
             let tph_deskripsi = post.deskripsi
 
-            axios.put(`http://localhost:8000/api/updPaket`, {
+            axios.put(baseURL+'/updPaket', {
                 tph_kode: route.params.id,
                 tph_tjp_kode: tph_tjp_kode,
                 tph_tjt_kode: tph_tjt_kode,
