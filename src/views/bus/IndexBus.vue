@@ -10,7 +10,7 @@
                                 <h4>DATA BUS</h4>
                             </div>
                             <div class="col-2 align-right">
-                                <router-link :to="{ name: 'bus.index' }" class="btn btn-md btn-success">TAMBAH</router-link>
+                                <router-link :to="{ name: 'bus.create' }" class="btn btn-md btn-success">TAMBAH</router-link>
                             </div>
                         </div>
                         <hr>
