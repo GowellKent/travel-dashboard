@@ -78,6 +78,11 @@ const routes = [
         name: 'objek.create',
         component: () => import( /* webpackChunkName: "post.edit" */ '@/views/objek/CreateObjek.vue')
     },
+    {
+        path: '/indexbus',
+        name: 'bus.index',
+        component: () => import( /* webpackChunkName: "post.edit" */ '@/views/bus/IndexBus.vue')
+    },
 ]
 
 //create router

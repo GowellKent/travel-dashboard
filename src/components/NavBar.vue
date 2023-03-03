@@ -38,6 +38,11 @@
                             <router-link :to="{ name: 'objek.index' }" class="nav-link color-white"
                                 aria-current="page">Objek</router-link>
                         </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link" href="#">Link</a> -->
+                            <router-link :to="{ name: 'bus.index' }" class="nav-link color-white"
+                                aria-current="page">Bus</router-link>
+                        </li>
                     </ul>
                     <form class="d-flex"> 
                         <a class="btn color-white logout" v-on:click="logOut">

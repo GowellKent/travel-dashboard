@@ -22,11 +22,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Objek Wisata</label>
-                                <!-- <input type="text" class="form-control" v-model="objek.tot_tjo_kode"
-                                    placeholder="Masukkan Jenis Objek Tujuan"> -->
-                                    <select class="form-select" v-model="objek.tot_tjo_kode">
-                                        <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_deskripsi }}</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="objek.tot_tjo_kode"
+                                            placeholder="Masukkan Jenis Objek Tujuan" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="objek.tot_tjo_kode">
+                                            <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_deskripsi }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Nama Pimpinan</label>
@@ -55,11 +61,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kota</label>
-                                <!-- <input type="text" class="form-control" v-model="objek.tot_kota"
-                                        placeholder="Masukkan Kota"> -->
-                                <select class="form-select" v-model="objek.tot_kota" aria-label="Kota/ Kabupaten">
-                                    <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="objek.tot_kota"
+                                                placeholder="Masukkan Kota" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="objek.tot_kota" aria-label="Kota/ Kabupaten">
+                                            <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
@@ -162,7 +174,7 @@ export default {
 
                     //assign state posts with response data
                     objek.tot_kode = response.data[0].tot_kode
-                    objek.tot_tjo_kode = response.data[0].tot_tjo_kode
+                    objek.tot_tjo_kode = response.data[0].tot_tjo_kode + " - "+ response.data[0].tjo_deskripsi
                     objek.tjo_deskripsi = response.data[0].tjo_deskripsi
                     objek.tot_nama = response.data[0].tot_nama
                     objek.tot_pimpinan = response.data[0].tot_pimpinan
