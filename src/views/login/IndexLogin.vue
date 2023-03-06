@@ -67,7 +67,7 @@ export default {
                     res => {
                         console.log(res),
                             // localStorage.setItem("token", res.data.access_token),
-                            this.$router.push('/reservasi');
+                            this.$router.push('/dashboard');
                     }
 
                 ).catch(

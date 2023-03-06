@@ -11,8 +11,7 @@
                         <div class="row">
                             <div class="col-2">
                                 <router-link :to="{ name: 'reservasi.index' }" class="btn btn-md btn-success">
-                                    <vue-feather type="arrow-left" size="14" class="color-white" />
-                                    BACK
+                                    <vue-feather type="chevron-left" size="20" class="color-white pt-1" />
                                 </router-link>
                             </div>
                         </div>
