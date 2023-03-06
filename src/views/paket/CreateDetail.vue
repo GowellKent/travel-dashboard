@@ -22,7 +22,8 @@
                                 <label for="objek" class="font-weight-bold">Objek Wisata</label>
                                 <br />
                                 <select class="form-select" v-model="detail.tpd_tot_kode" aria-label="Kota Tujuan">
-                                    <option v-for="data in objs" :key="data.tot_kode">{{data.tot_kode}}-{{ data.tot_nama }}</option>
+                                    <option v-for="data in objs" :key="data.tot_kode">{{ data.tot_kode }}-{{ data.tot_nama }}
+                                    </option>
                                 </select>
                             </div>
 
@@ -35,7 +36,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -70,7 +71,7 @@ export default {
 
         //state posts
         const detail = reactive({
-            tpd_tot_kode:''
+            tpd_tot_kode: ''
         })
 
         //state validation
@@ -88,12 +89,12 @@ export default {
             let tpd_tph_kode = route.params.id
             let tpd_tot_kode = detail.tpd_tot_kode.split("-")[0]
 
-            axios.post(baseURL+'/addPaketDet', {
-                tpd_tph_kode: tpd_tph_kode,
-                tpd_tot_kode: tpd_tot_kode,
-                tpd_tipe:'D'
-
-
+            axios.get(baseURL + '/addPaketDet', {
+                params: {
+                    tpd_tph_kode: tpd_tph_kode,
+                    tpd_tot_kode: tpd_tot_kode,
+                    tpd_tipe: 'D'
+                }
             }).then(() => {
 
                 //redirect ke post index
@@ -122,24 +123,24 @@ export default {
         const route = useRoute()
         this.tph_kode = route.params.id
 
-        axios.get(baseURL+'/findPaket?tph_kode=' + this.tph_kode)
+        axios.get(baseURL + '/findPaket?tph_kode=' + this.tph_kode)
             .then(ress => {
                 this.setPaket(ress.data[0])
-                axios.get(baseURL+'/objekByKota?tot_kota=' + this.pakets.tph_kota_destinasi)
+                axios.get(baseURL + '/objekByKota?tot_kota=' + this.pakets.tph_kota_destinasi)
                     .then(resp => {
                         this.setObjs(resp.data)
                     }).catch(error => {
                         console.log(error)
-                })
+                    })
 
-    })
-        .catch(error => {
-        console.log(error)
-    })
-},
-components: {
-    navbar
-}
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+    components: {
+        navbar
+    }
 
 }
 </script>

@@ -1,15 +1,13 @@
 <template>
     <div class="container mt-5">
+        <h4>EDIT PAKET</h4> 
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-11">
-                                <h4>EDIT PAKET</h4>
-                            </div>
-                            <div class="col right-align">
-                                <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary">BACK</router-link>
+                            <div class="col float-start">
+                                <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary"><vue-feather type="chevron-left" size="24" class="color-white pt-1"/></router-link>
                             </div>
                         </div>
                         <hr>
@@ -100,8 +98,9 @@
                                 <label for="nama" class="font-weight-bold">Kota Asal</label>
                                 <br />
                                 <div class="row">
-                                    <div class="col">    
-                                        <input type="text" class="form-control" v-model="post.kotaAs" placeholder="Masukkan Kota" disabled>
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="post.kotaAs"
+                                            placeholder="Masukkan Kota" disabled>
                                     </div>
                                     <div class="col">
                                         <select class="form-select" v-model="post.kotaAs" aria-label="Kota Asal">
@@ -125,7 +124,8 @@
                                 <br />
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control" v-model="post.kotaDes" placeholder="Masukkan Kota" disabled>
+                                        <input type="text" class="form-control" v-model="post.kotaDes"
+                                            placeholder="Masukkan Kota" disabled>
                                     </div>
                                     <div class="col">
                                         <select class="form-select" v-model="post.kotaDes" aria-label="Kota Tujuan">
@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                             <br /><br />
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                            <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
                         </form>
 
                     </div>
@@ -217,14 +217,14 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get(baseURL+'/jenisPaket')
+            axios.get(baseURL + '/jenisPaket')
                 .then(ress => {
                     this.setJenis(ress.data)
                 })
                 .catch(error => {
                     console.log(error)
                 }),
-            axios.get(baseURL+'/jenisTrip')
+            axios.get(baseURL + '/jenisTrip')
                 .then(ress => {
                     this.setTrips(ress.data)
                 })
@@ -260,7 +260,7 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(baseURL+`/findPaket?tph_kode=${route.params.id}`)
+            axios.get(baseURL + `/findPaket?tph_kode=${route.params.id}`)
                 .then(response => {
 
                     //assign state posts with response data
@@ -290,15 +290,17 @@ export default {
             let tph_harga = post.harga
             let tph_deskripsi = post.deskripsi
 
-            axios.put(baseURL+'/updPaket', {
-                tph_kode: route.params.id,
-                tph_tjp_kode: tph_tjp_kode,
-                tph_tjt_kode: tph_tjt_kode,
-                tph_nama: tph_nama,
-                tph_kota_asal: tph_kota_asal,
-                tph_kota_destinasi: tph_kota_tujuan,
-                tph_harga: tph_harga,
-                tph_deskripsi: tph_deskripsi
+            axios.get(baseURL + '/updPaket', {
+                params: {
+                    tph_kode: route.params.id,
+                    tph_tjp_kode: tph_tjp_kode,
+                    tph_tjt_kode: tph_tjt_kode,
+                    tph_nama: tph_nama,
+                    tph_kota_asal: tph_kota_asal,
+                    tph_kota_destinasi: tph_kota_tujuan,
+                    tph_harga: tph_harga,
+                    tph_deskripsi: tph_deskripsi
+                }
             }).then(() => {
 
                 //redirect ke post index
@@ -330,5 +332,4 @@ export default {
 <style>
 body {
     background: lightgray;
-}
-</style>
+}</style>

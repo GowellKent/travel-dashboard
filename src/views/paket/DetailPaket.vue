@@ -1,16 +1,14 @@
 <template>
     <div class="container mt-5">
+        <h4>Detail Paket</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-11">
-                                <h4>Detail Paket</h4>
-                            </div>
-                            <div class="col right-align">
+                            <div class="col float-start">
                                 <router-link :to="{ name: 'paket.index', params:{id:post.kode}}"
-                                    class="btn btn-sm btn-success mr-1">Back</router-link>
+                                    class="btn btn-sm btn-success mr-1"><vue-feather type="chevron-left" size="24" class="color-white pt-1"/></router-link>
                             </div>
                         </div>
                         <hr>
@@ -95,7 +93,7 @@
                                         <h2>LIST OBJEK WISATA</h2>
                                     </div>
                                     <div class="col">
-                                        <router-link :to="{ name: 'detail.create', params:{id:post.kode} }" class="btn btn-sm btn-primary mr-1">Add
+                                        <router-link :to="{ name: 'detail.create', params:{id:post.kode} }" class="btn btn-sm btn-primary mr-1"><vue-feather type="plus" size="24" class="color-white pt-1"/>
                                         </router-link>
                                     </div>
                                 </div>

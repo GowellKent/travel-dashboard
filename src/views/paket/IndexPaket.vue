@@ -25,7 +25,7 @@
                                     <th scope="col">HARGA</th>
                                     <th scope="col">ASAL</th>
                                     <th scope="col">TUJUAN</th>
-                                    <th scope="col">OPTIONS</th>
+                                    <th scope="col" class="text-center">OPTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,12 +41,12 @@
                                     <td class="text-center">
                                         <!-- <button @click.prevent="detailPaket(data.tph_kode)" class="btn btn-sm btn-success ml-1">Detail</button> -->
                                         <router-link :to="{ name: 'paket.detail', params: { id: data.tph_kode } }"
-                                            class="btn btn-sm btn-secondary mr-1"><vue-feather type="list" size="16" class="color-white pt-1"/> </router-link>
+                                            class="btn btn-sm btn-secondary mr-1"><vue-feather type="list" size="20" class="color-white pt-1"/> </router-link>
                                         &nbsp;&nbsp;
                                         <router-link :to="{ name: 'paket.edit', params: { id: data.tph_kode } }"
-                                            class="btn btn-sm btn-info mr-1"><vue-feather type="edit" size="16" class="color-white pt-1"/></router-link>
+                                            class="btn btn-sm btn-info mr-1"><vue-feather type="edit" size="20" class="color-white pt-1"/></router-link>
                                         &nbsp;&nbsp;
-                                        <button @click.prevent="postDelete(data.tph_kode)" class="btn btn-sm btn-danger ml-1"><vue-feather type="trash-2" size="16" class="color-white pt-1"/></button>
+                                        <button @click.prevent="postDelete(data.tph_kode)" class="btn btn-sm btn-danger ml-1"><vue-feather type="trash-2" size="20  " class="color-white pt-1"/></button>
                                     </td>
                                 </tr>
                             </tbody>

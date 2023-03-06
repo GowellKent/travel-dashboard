@@ -1,16 +1,15 @@
 <template>
     <navbar />
     <div class="container mt-5">
+        <h4>TAMBAH PAKET</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-11">
-                                <h4>TAMBAH PAKET</h4>
-                            </div>
-                            <div class="col right-align">
-                                <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary">BACK</router-link>
+                            <div class="col float-start">
+                                <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary"><vue-feather
+                                        type="chevron-left" size="24" class="color-white pt-1" /></router-link>
                             </div>
                         </div>
                         <hr>
@@ -51,42 +50,55 @@
                                     {{ validation.content[0] }}
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
-                                <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
-                                <br />
-                                <select class="form-select" v-model="paket.tph_provinsi_asal"
-                                    v-on:change="getKota(paket.tph_provinsi_asal)" aria-label="Provinsi Asal">
-                                    <!-- <option class="dropdown-item">Provinsi</option> -->
-                                    <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
-                                </select>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
+                                        <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
+                                        <br />
+                                        <select class="form-select" v-model="paket.tph_provinsi_asal"
+                                            v-on:change="getKota(paket.tph_provinsi_asal)" aria-label="Provinsi Asal">
+                                            <!-- <option class="dropdown-item">Provinsi</option> -->
+                                            <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nama" class="font-weight-bold">Kota Asal</label>
+                                        <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
+                                        <br />
+                                        <select class="form-select" v-model="paket.tph_kota_asal" aria-label="Kota Asal">
+                                            <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <br />
-                            <div class="form-group">
-                                <label for="nama" class="font-weight-bold">Kota Asal</label>
-                                <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
-                                <br />
-                                <select class="form-select" v-model="paket.tph_kota_asal" aria-label="Kota Asal">
-                                    <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
-                                </select>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
+                                        <select class="form-select" v-model="paket.tph_provinsi_tujuan"
+                                            v-on:change="getKota2(paket.tph_provinsi_tujuan)" aria-label="Provinsi Tujuan">
+                                            <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
+                                        <br />
+                                        <select class="form-select" v-model="paket.tph_kota_tujuan"
+                                            aria-label="Kota Tujuan">
+                                            <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
-                                <br />
-                                <select class="form-select" v-model="paket.tph_provinsi_tujuan"
-                                    v-on:change="getKota2(paket.tph_provinsi_tujuan)" aria-label="Provinsi Tujuan">
-                                    <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
-                                </select>
-                            </div>
-                            <br />
-                            <div class="form-group">
-                                <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
-                                <br />
-                                <select class="form-select" v-model="paket.tph_kota_tujuan" aria-label="Kota Tujuan">
-                                    <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
-                                </select>
-                            </div>
-
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Harga</label>
                                 <input type="text" class="form-control" v-model="paket.tph_harga"
@@ -96,10 +108,8 @@
                                     {{ validation.title[0] }}
                                 </div>
                             </div>
-
-
                             <br /><br />
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                            <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
 
                         </form>
 
