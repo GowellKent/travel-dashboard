@@ -61,8 +61,8 @@ export default {
                 password: this.password
             }
 
-            console.log(data)
-            axios.post(baseURL+'/loginAPI',data)
+            // console.log(data)
+            axios.get(baseURL+'/loginAPI',{params:data})
                 .then(
                     res => {
                         console.log(res),

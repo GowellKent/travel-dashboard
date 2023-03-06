@@ -43,14 +43,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                    <label for="content" class="font-weight-bold mt-2 mb-1">Deskripsi</label>
-                                    <textarea class="form-control" rows="4" v-model="paket.tph_deskripsi"
-                                        placeholder="Masukkan Deskripsi Paket"></textarea>
-                                    <!-- validation -->
-                                    <div v-if="validation.content" class="mt-2 alert alert-danger">
-                                        {{ validation.content[0] }}
-                                    </div>
+                                <label for="content" class="font-weight-bold mt-2 mb-1">Deskripsi</label>
+                                <textarea class="form-control" rows="4" v-model="paket.tph_deskripsi"
+                                    placeholder="Masukkan Deskripsi Paket"></textarea>
+                                <!-- validation -->
+                                <div v-if="validation.content" class="mt-2 alert alert-danger">
+                                    {{ validation.content[0] }}
                                 </div>
+                            </div>
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
                                 <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -128,7 +128,7 @@ export default {
             provs2: [],
             kotas: [],
             kotas2: [],
-            trips:[]
+            trips: []
         }
     },
     methods: {
@@ -181,14 +181,14 @@ export default {
         //state posts
         const paket = reactive({
             tph_tjp_kode: '',
-            tph_nama:'',
+            tph_nama: '',
             tph_provinsi_asal: '',
             tph_kota_asal: '',
             tph_provinsi_tujuan: '',
             tph_kota_tujuan: '',
-            tph_harga:'',
-            tph_deskripsi:'',
-            tph_tjt_kode:''
+            tph_harga: '',
+            tph_deskripsi: '',
+            tph_tjt_kode: ''
         })
 
         //state validation
@@ -209,21 +209,21 @@ export default {
             let tph_harga = paket.tph_harga
             let tph_deskripsi = paket.tph_deskripsi
 
-            axios.post(baseURL+'/addPaket', {
-                tph_tjp_kode: tph_tjp_kode,
-                tph_tjt_kode: tph_tjt_kode,
-                tph_nama: tph_nama,
-                tph_kota_asal: tph_kota_asal,
-                tph_kota_destinasi: tph_kota_tujuan,
-                tph_harga: tph_harga,
-                tph_deskripsi: tph_deskripsi
-
-                
+            axios.get(baseURL + '/addPaket', {
+                params: {
+                    tph_tjp_kode: tph_tjp_kode,
+                    tph_tjt_kode: tph_tjt_kode,
+                    tph_nama: tph_nama,
+                    tph_kota_asal: tph_kota_asal,
+                    tph_kota_destinasi: tph_kota_tujuan,
+                    tph_harga: tph_harga,
+                    tph_deskripsi: tph_deskripsi
+                }
             }).then((resp) => {
 
                 //redirect ke post index
                 router.push({
-                    name: 'paket.detail', params:{id:resp.data.data.tph_kode}
+                    name: 'paket.detail', params: { id: resp.data.data.tph_kode }
                 })
 
             }).catch(error => {
@@ -251,14 +251,14 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get(baseURL+'/jenisPaket')
+            axios.get(baseURL + '/jenisPaket')
                 .then(ress => {
                     this.setJenis(ress.data)
                 })
                 .catch(error => {
                     console.log(error)
                 }),
-            axios.get(baseURL+'/jenisTrip')
+            axios.get(baseURL + '/jenisTrip')
                 .then(ress => {
                     this.setTrips(ress.data)
                 })
