@@ -22,34 +22,35 @@
                                         </div>
                                     </div>
                                     <hr>
-
-                                    <table class="table table-striped table-bordered mt-4">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">NAMA</th>
-                                                <th scope="col">JENIS</th>
-                                                <th scope="col">TELP</th>
-                                                <th scope="col">ALAMAT</th>
-                                                <th scope="col">KOTA</th>
-                                                <th scope="col">OPTIONS</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="data in objeks" :key="data.tot_kode">
-                                                <td><router-link
-                                                        :to="{ name: 'objek.edit', params: { id: data.tot_kode } }">{{
-                                                            data.tot_nama }}</router-link></td>
-                                                <td>{{ data.tjo_deskripsi }}</td>
-                                                <td>{{ data.tot_telp }}</td>
-                                                <td>{{ data.tot_alamat }}</td>
-                                                <td>{{ data.tot_kota }}, {{ data.tot_provinsi }}</td>
-                                                <td>
-                                                    <button @click.prevent="postDelete(data.tot_kode)"
-                                                        class="btn btn-sm btn-danger">DELETE</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div style="height: 40em; overflow: auto;" class="mt-4">
+                                        <table class="table table-striped table-bordered">
+                                            <thead class="thead-dark">
+                                                <tr style="position: sticky; top: 0; z-index: 1; box-shadow: inset .1px .1px #000, 0 1px #000; background-color: #eee;">
+                                                    <th scope="col">NAMA</th>
+                                                    <th scope="col">JENIS</th>
+                                                    <th scope="col">TELP</th>
+                                                    <th scope="col">ALAMAT</th>
+                                                    <th scope="col">KOTA</th>
+                                                    <th scope="col">OPTIONS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="data in objeks" :key="data.tot_kode" style="box-shadow: inset .1px -.1px #000">
+                                                    <td><router-link
+                                                            :to="{ name: 'objek.edit', params: { id: data.tot_kode } }">{{
+                                                                data.tot_nama }}</router-link></td>
+                                                    <td>{{ data.tjo_deskripsi }}</td>
+                                                    <td>{{ data.tot_telp }}</td>
+                                                    <td>{{ data.tot_alamat }}</td>
+                                                    <td>{{ data.tot_kota }}, {{ data.tot_provinsi }}</td>
+                                                    <td>
+                                                        <button @click.prevent="postDelete(data.tot_kode)"
+                                                            class="btn btn-sm btn-danger text-center">DELETE</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                 </div>
                             </div>

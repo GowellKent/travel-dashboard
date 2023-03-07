@@ -3,12 +3,12 @@
         <nav class="navbar navbar-expand-lg color-prime">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-2">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-2 py-2">
                         <li class="nav-item">
                             <span>
                                 <vue-feather type="compass" size="18" class="mx-1 color-white"/>
                                 <!-- <a class="navbar-brand color-white">Tenta Tour</a> -->
-                                <router-link :to="{ name: 'dashboard' }" class="navbar-brand color-white"
+                                <router-link :to="{ name: 'dash.board' }" class="navbar-brand color-white"
                         aria-current="page">Tenta Tour</router-link>
                             </span>
                         </li>

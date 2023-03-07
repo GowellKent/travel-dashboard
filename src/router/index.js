@@ -10,7 +10,7 @@ const routes = [
     },
     {
         path: '/dashboard',
-        name: 'dashboard',
+        name: 'dash.board',
         component: () => import( /* webpackChunkName: "post.index" */ '@/views/DashBoard.vue')
     },
     {

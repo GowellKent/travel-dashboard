@@ -21,39 +21,40 @@
                                 </div>
                             </div>
                             <hr>
-
-                            <table class="table table-striped table-bordered mt-4">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Kode Reservasi</th>
-                                        <th scope="col">Paket Perjalanan</th>
-                                        <th scope="col">Tanggal Perjalanan</th>
-                                        <th scope="col">Client</th>
-                                        <th scope="col">Pax</th>
-                                        <th scope="col">Tanggal Reservasi</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">OPTIONS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="data in resers" :key="data.trh_kode">
-                                        <td><router-link :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{
-                                            data.trh_kode }}</router-link></td>
-                                        <td>{{ data.tph_nama }}</td>
-                                        <td>{{ data.trh_tgl_perjalanan }}</td>
-                                        <td>{{ data.Nama }}</td>
-                                        <td>{{ data.trh_pax }}</td>
-                                        <td>{{ data.trh_tgl_reservasi }}</td>
-                                        <td>{{ data.tsr_deskripsi }}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm ml-1 btn-danger"
-                                                @click.prevent="postDelete(data.trh_kode)">
-                                                <vue-feather type="trash-2" size="20" class="color-white pt-1" />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div style="height: 40em; overflow: auto;"  class="mt-4">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr style="position: sticky; top: 0; z-index: 1; box-shadow: inset .1px .1px #000, 0 1px #000; background-color: #eee;">
+                                            <th scope="col">Kode Reservasi</th>
+                                            <th scope="col">Paket Perjalanan</th>
+                                            <th scope="col">Tanggal Perjalanan</th>
+                                            <th scope="col">Client</th>
+                                            <th scope="col">Pax</th>
+                                            <th scope="col">Tanggal Reservasi</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">OPTIONS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="data in resers" :key="data.trh_kode" style="box-shadow: inset .1px -.1px #000">
+                                            <td><router-link :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{
+                                                data.trh_kode }}</router-link></td>
+                                            <td>{{ data.tph_nama }}</td>
+                                            <td>{{ data.trh_tgl_perjalanan }}</td>
+                                            <td>{{ data.Nama }}</td>
+                                            <td>{{ data.trh_pax }}</td>
+                                            <td>{{ data.trh_tgl_reservasi }}</td>
+                                            <td>{{ data.tsr_deskripsi }}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm ml-1 btn-danger"
+                                                    @click.prevent="postDelete(data.trh_kode)">
+                                                    <vue-feather type="trash-2" size="20" class="color-white pt-1" />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
                         </div>
                     </div>
