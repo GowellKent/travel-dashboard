@@ -62,6 +62,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Min. Pax</label>
+                                <input type="text" class="form-control" v-model="post.minPax"
+                                    placeholder="Masukkan Judul Post">
+                                <!-- validation -->
+                                <div v-if="validation.title" class="mt-2 alert alert-danger">
+                                    {{ validation.title[0] }}
+                                </div>
+                            </div>
+                                <div class="form-group">
                                     <label for="title" class="font-weight-bold mt-2 mb-1">Kota Destinasi</label>
                                     <input type="text" class="form-control" v-model="post.kotaDes"
                                         placeholder="Masukkan Judul Post">
@@ -172,6 +181,7 @@ export default {
             harga: '',
             kotaDes: '',
             kotaAs: '',
+            minPax:'',
             details: []
         })
 
@@ -201,6 +211,7 @@ export default {
                     post.harga = response.data[0].tph_harga
                     post.kotaDes = response.data[0].tph_kota_destinasi
                     post.kotaAs = response.data[0].tph_kota_asal
+                    post.minPax = response.data[0].tph_min_pax
 
                 }).catch(error => {
                     console.log(error.response.data)

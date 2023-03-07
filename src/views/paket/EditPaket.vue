@@ -73,16 +73,15 @@
                                     {{ validation.title[0] }}
                                 </div>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Kota Destinasi</label>
-                                <input type="text" class="form-control" v-model="post.kotaDes"
-                                    placeholder="Masukkan Judul Post">
-                            </div>
                             <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Kota Asal</label>
-                                <input type="text" class="form-control" v-model="post.kotaAs"
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Min. Pax</label>
+                                <input type="text" class="form-control" v-model="post.minPax"
                                     placeholder="Masukkan Judul Post">
-                            </div> -->
+                                <!-- validation -->
+                                <div v-if="validation.title" class="mt-2 alert alert-danger">
+                                    {{ validation.title[0] }}
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
                                 <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
@@ -244,7 +243,8 @@ export default {
             deskripsi: '',
             harga: '',
             kotaDes: '',
-            kotaAs: ''
+            kotaAs: '',
+            minPax:''
         })
 
         //state validation
@@ -272,6 +272,7 @@ export default {
                     post.harga = response.data[0].tph_harga
                     post.kotaDes = response.data[0].tph_kota_destinasi
                     post.kotaAs = response.data[0].tph_kota_asal
+                    post.minPax = response.data[0].tph_min_pax
 
                 }).catch(error => {
                     console.log(error.response.data)
@@ -289,6 +290,7 @@ export default {
             let tph_kota_tujuan = post.kotaDes
             let tph_harga = post.harga
             let tph_deskripsi = post.deskripsi
+            let tph_min_pax = post.minPax
 
             axios.get(baseURL + '/updPaket', {
                 params: {
@@ -299,7 +301,8 @@ export default {
                     tph_kota_asal: tph_kota_asal,
                     tph_kota_destinasi: tph_kota_tujuan,
                     tph_harga: tph_harga,
-                    tph_deskripsi: tph_deskripsi
+                    tph_deskripsi: tph_deskripsi,
+                    tph_min_pax: tph_min_pax
                 }
             }).then(() => {
 
