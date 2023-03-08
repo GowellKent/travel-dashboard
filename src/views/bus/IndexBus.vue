@@ -86,16 +86,16 @@ export default {
                     //splice posts 
                     // kotas.value.splice(kotas.value.indexOf(id), 1);
                     this.$router.go()
+                    // mounted()
 
                 }).catch(error => {
                     console.log(error.response.data)
                 })
 
-        }
-    },
-
-    mounted() {
-        axios.get(baseURL + '/listBus')
+        },
+        getData(){
+            this.setObjek([])
+            axios.get(baseURL + '/listBus')
             .then(res => {
                 this.setObjek(res.data)
                 //   console.log(res.data)
@@ -103,6 +103,11 @@ export default {
             .catch(error => {
                 console.log(error)
             })
+        }
+    },
+
+    mounted() {
+        this.getData()
     },
     components: {
         navbar, sideBar
