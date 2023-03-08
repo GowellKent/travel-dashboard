@@ -85,8 +85,9 @@ export default {
 
                     //splice posts 
                     // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    this.$router.go()
+                    // this.$router.go()
                     // mounted()
+                    this.getData()
 
                 }).catch(error => {
                     console.log(error.response.data)
