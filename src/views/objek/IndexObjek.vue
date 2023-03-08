@@ -88,19 +88,16 @@ export default {
             axios.get(baseURL + '/delObjek?tot_kode=' + id)
                 .then(() => {
 
-                    //splice posts 
-                    // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    this.$router.go()
+                    this.getData()
 
                 }).catch(error => {
                     console.log(error.response.data)
                 })
 
-        }
-    },
-
-    mounted() {
-        axios.get(baseURL + '/objekAll')
+        },
+        getData(){
+            this.setObjek([])
+            axios.get(baseURL + '/objekAll')
             .then(res => {
                 this.setObjek(res.data)
                 //   console.log(res.data)
@@ -108,6 +105,11 @@ export default {
             .catch(error => {
                 console.log(error)
             })
+        }
+    },
+
+    mounted() {
+        this.getData()
     },
     components: {
         navbar, sideBar

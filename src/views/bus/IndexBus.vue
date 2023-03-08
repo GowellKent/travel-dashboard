@@ -24,7 +24,8 @@
                             <div style="height: 40em; overflow: auto;" class="mt-4">
                                 <table class="table table-striped table-bordered">
                                     <thead class="thead-dark">
-                                        <tr style="position: sticky; top: 0; z-index: 1; box-shadow: inset .1px .1px #000, 0 1px #000; background-color: #eee;">
+                                        <tr
+                                            style="position: sticky; top: 0; z-index: 1; box-shadow: inset .1px .1px #000, 0 1px #000; background-color: #eee;">
                                             <th scope="col" class="text-center">KODE</th>
                                             <th scope="col">NAMA</th>
                                             <th scope="col">KOTA ASAL</th>
@@ -34,7 +35,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="data in objeks" :key="data.tb_kode" style="box-shadow: inset .1px -.1px #000">
+                                        <tr v-for="data in objeks" :key="data.tb_kode"
+                                            style="box-shadow: inset .1px -.1px #000">
                                             <td><router-link :to="{ name: 'bus.edit', params: { id: data.tb_kode } }">{{
                                                 data.tb_kode }}</router-link></td>
                                             <td>{{ data.tb_nama }}</td>
@@ -83,10 +85,6 @@ export default {
             axios.get(baseURL + '/delBus?tb_kode=' + id)
                 .then(() => {
 
-                    //splice posts 
-                    // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    // this.$router.go()
-                    // mounted()
                     this.getData()
 
                 }).catch(error => {
@@ -94,16 +92,16 @@ export default {
                 })
 
         },
-        getData(){
+        getData() {
             this.setObjek([])
             axios.get(baseURL + '/listBus')
-            .then(res => {
-                this.setObjek(res.data)
-                //   console.log(res.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+                .then(res => {
+                    this.setObjek(res.data)
+                    //   console.log(res.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     },
 

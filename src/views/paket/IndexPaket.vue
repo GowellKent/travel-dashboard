@@ -26,8 +26,9 @@
                                     <hr>
                                     <div style="height: 40em; overflow: auto;" class="mt-4">
                                         <table class="table table-striped table-bordered">
-                                            <thead class="thead-dark" >
-                                                <tr style="position: sticky; top: 0; z-index: 1; box-shadow: inset 0.1px 0.1px #000, 0 1px #000; background-color: #eee;">
+                                            <thead class="thead-dark">
+                                                <tr
+                                                    style="position: sticky; top: 0; z-index: 1; box-shadow: inset 0.1px 0.1px #000, 0 1px #000; background-color: #eee;">
                                                     <th scope="col">KELAS</th>
                                                     <th scope="col">TRIP</th>
                                                     <th scope="col">NAMA</th>
@@ -39,7 +40,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="data in pakets" :key="data.tph_kode" style="box-shadow: inset 0.1px -0.1px #000">
+                                                <tr v-for="data in pakets" :key="data.tph_kode"
+                                                    style="box-shadow: inset 0.1px -0.1px #000">
                                                     <td>{{ data.tjp_deskripsi }}</td>
                                                     <td>{{ data.tjt_nama }}</td>
                                                     <td>{{ data.tph_nama }}</td>
@@ -53,9 +55,10 @@
                                                             class="btn btn-sm btn-secondary mr-1"><vue-feather type="list"
                                                                 size="20" class="color-white pt-1" /> </router-link>
                                                         &nbsp;&nbsp;
-                                                        <router-link :to="{ name: 'paket.edit', params: { id: data.tph_kode } }"
-                                                            class="btn btn-sm btn-info mr-1"><vue-feather type="edit" size="20"
-                                                                class="color-white pt-1" /></router-link>
+                                                        <router-link
+                                                            :to="{ name: 'paket.edit', params: { id: data.tph_kode } }"
+                                                            class="btn btn-sm btn-info mr-1"><vue-feather type="edit"
+                                                                size="20" class="color-white pt-1" /></router-link>
                                                         &nbsp;&nbsp;
                                                         <button @click.prevent="postDelete(data.tph_kode)"
                                                             class="btn btn-sm btn-danger ml-1"><vue-feather type="trash-2"
@@ -114,26 +117,27 @@ export default {
             //delete data post by ID
             axios.get(baseURL + '/delPaket?tph_kode=' + id)
                 .then(() => {
-
-                    //splice posts 
-                    // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    location.reload()
+                    this.getData()
 
                 }).catch(error => {
                     console.log(error.response.data)
                 })
 
+        },
+        getData() {
+            this.setpakets([])
+            axios.get(baseURL + '/paketAll')
+                .then(res => {
+                    this.setpakets(res.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     },
 
     mounted() {
-        axios.get(baseURL + '/paketAll')
-            .then(res => {
-                this.setpakets(res.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        this.getData()
     },
     components: {
         navbar, sideBar
@@ -142,6 +146,8 @@ export default {
 }
 </script>
 
-<style>body {
+<style>
+body {
     background: lightgray;
-}</style>
+}
+</style>

@@ -15,16 +15,18 @@
                                     <h4>DATA RESREVASI</h4>
                                 </div>
                                 <div class="col-1">
-                                    <router-link :to="{ name: 'reservasi.create' }" class="btn btn-md btn-success float-end">
+                                    <router-link :to="{ name: 'reservasi.create' }"
+                                        class="btn btn-md btn-success float-end">
                                         <vue-feather type="plus" size="24" class="color-white pt-1"></vue-feather>
                                     </router-link>
                                 </div>
                             </div>
                             <hr>
-                            <div style="height: 40em; overflow: auto;"  class="mt-4">
+                            <div style="height: 40em; overflow: auto;" class="mt-4">
                                 <table class="table table-striped table-bordered">
                                     <thead class="thead-dark">
-                                        <tr style="position: sticky; top: 0; z-index: 1; box-shadow: inset .1px .1px #000, 0 1px #000; background-color: #eee;">
+                                        <tr
+                                            style="position: sticky; top: 0; z-index: 1; box-shadow: inset .1px .1px #000, 0 1px #000; background-color: #eee;">
                                             <th scope="col">Kode Reservasi</th>
                                             <th scope="col">Paket Perjalanan</th>
                                             <th scope="col">Tanggal Perjalanan</th>
@@ -36,9 +38,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="data in resers" :key="data.trh_kode" style="box-shadow: inset .1px -.1px #000">
-                                            <td><router-link :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{
-                                                data.trh_kode }}</router-link></td>
+                                        <tr v-for="data in resers" :key="data.trh_kode"
+                                            style="box-shadow: inset .1px -.1px #000">
+                                            <td><router-link
+                                                    :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{
+                                                        data.trh_kode }}</router-link></td>
                                             <td>{{ data.tph_nama }}</td>
                                             <td>{{ data.trh_tgl_perjalanan }}</td>
                                             <td>{{ data.Nama }}</td>
@@ -90,30 +94,29 @@ export default {
             axios.get(baseURL + '/delResHead?trh_kode=' + id)
                 .then(() => {
 
-                    //splice posts 
-                    // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    // location.reload()
-                    // const router = useRouter()
-                    // router.push({name: 'index.reservasi'})
-                    this.$router.go()
+                    this.getData()
 
                 }).catch(error => {
                     console.log(error.response.data)
                 })
 
+        },
+        getData() {
+            this.setResers([])
+            axios.get(baseURL + '/getRes')
+                .then(res => {
+                    this.setResers(res.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     },
 
     mounted() {
-        axios.get(baseURL + '/getRes')
-            .then(res => {
-                this.setResers(res.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        this.getData()
     }, components: {
-        navbar,sideBar
+        navbar, sideBar
     },
 
     // setup(){
