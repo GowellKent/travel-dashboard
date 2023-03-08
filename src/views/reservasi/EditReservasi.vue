@@ -227,7 +227,7 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(`http://localhost:8000/api/getDataRes?trh_kode=${route.params.id}`)
+            axios.get(baseURL+`/getDataRes?trh_kode=${route.params.id}`)
                 .then(response => {
                     axios.get(baseURL+'/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
                         .then(ress => {

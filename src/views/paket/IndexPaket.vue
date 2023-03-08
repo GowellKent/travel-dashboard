@@ -102,7 +102,7 @@ export default {
 
                     //splice posts 
                     // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    location.reload()
+                    this.$router.go()
 
                 }).catch(error => {
                     console.log(error.response.data)

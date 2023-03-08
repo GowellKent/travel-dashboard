@@ -68,6 +68,7 @@
 <script>
 import axios from 'axios'
 // import { onMounted, ref } from 'vue'
+// import { useRouter } from 'vue-router'
 import navbar from '@/components/NavBar.vue'
 import sideBar from '@/components/SideBar.vue'
 import { baseURL } from '@/config.js'
@@ -91,7 +92,10 @@ export default {
 
                     //splice posts 
                     // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    location.reload()
+                    // location.reload()
+                    // const router = useRouter()
+                    // router.push({name: 'index.reservasi'})
+                    this.$router.go()
 
                 }).catch(error => {
                     console.log(error.response.data)
@@ -110,7 +114,14 @@ export default {
             })
     }, components: {
         navbar,sideBar
-    }
+    },
+
+    // setup(){
+    //     const router = useRouter()
+    //     return {
+    //         router
+    //     }
+    // }
 
 }
 </script>
