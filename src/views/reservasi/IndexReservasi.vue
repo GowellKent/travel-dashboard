@@ -103,7 +103,7 @@ export default {
         },
         getData() {
             this.setResers([])
-            axios.get(baseURL + '/getRes')
+            axios.get(baseURL + '/reservasi/all')
                 .then(res => {
                     this.setResers(res.data)
                 })

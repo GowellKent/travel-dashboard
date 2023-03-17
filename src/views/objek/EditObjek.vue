@@ -29,16 +29,11 @@
                                     </div>
                                     <div class="col">
                                         <select class="form-select" v-model="objek.tot_tjo_kode">
-                                            <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_deskripsi }}</option>
+                                            <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_desc }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 </div>
-                            <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Nama Pimpinan</label>
-                                <input type="text" class="form-control" v-model="objek.tot_pimpinan"
-                                    placeholder="Masukkan Nama Pimpinan">
-                            </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Telepon</label>
                                 <input type="text" class="form-control" v-model="objek.tot_telp"
@@ -51,13 +46,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Provinsi</label>
-                                <!-- <input type="text" class="form-control" v-model="objek.tot_provinsi"
-                                        placeholder="Masukkan Provinsi"> -->
-                                <select class="form-select" v-model="objek.tot_provinsi"
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model="objek.tot_provinsi"
+                                                placeholder="Masukkan Kota" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" v-model="objek.tot_provinsi"
                                     v-on:change="getKota(objek.tot_provinsi)" aria-label="Provinsi">
-                                    <!-- <option class="dropdown-item">Provinsi</option> -->
-                                    <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
-                                </select>
+                                            <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kota</label>
@@ -72,6 +72,11 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Harga</label>
+                                <input type="text" class="form-control" v-model="objek.tot_harga"
+                                    placeholder="Masukkan Harga Objek Tujuan">
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
@@ -132,7 +137,7 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get(baseURL+'/jenisObjek')
+            axios.get(baseURL+'/objek/jenis')
                 .then(ress => {
                     this.setJenis(ress.data)
                 })
@@ -147,13 +152,14 @@ export default {
         const objek = reactive({
             tot_kode: '',
             tot_tjo_kode: '',
-            tjo_deskripsi: '',
+            tjo_desc: '',
             tot_nama: '',
             tot_pimpinan: '',
             tot_telp: '',
             tot_alamat: '',
             tot_provinsi: '',
-            tot_kota: ''
+            tot_kota: '',
+            tot_harga:''
         })
 
         //state validation
@@ -169,19 +175,19 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(`http://localhost:8000/api/findObjek?tot_kode=${route.params.id}`)
+            axios.get(baseURL+`/objek/find?tot_kode=${route.params.id}`)
                 .then(response => {
 
                     //assign state posts with response data
                     objek.tot_kode = response.data[0].tot_kode
-                    objek.tot_tjo_kode = response.data[0].tot_tjo_kode + " - "+ response.data[0].tjo_deskripsi
-                    objek.tjo_deskripsi = response.data[0].tjo_deskripsi
+                    objek.tot_tjo_kode = response.data[0].tot_tjo_kode + " - " + response.data[0].tjo_desc
+                    objek.tjo_desc = response.data[0].tjo_desc
                     objek.tot_nama = response.data[0].tot_nama
-                    objek.tot_pimpinan = response.data[0].tot_pimpinan
                     objek.tot_telp = response.data[0].tot_telp
                     objek.tot_alamat = response.data[0].tot_alamat
                     objek.tot_provinsi = response.data[0].tot_provinsi
                     objek.tot_kota = response.data[0].tot_kota
+                    objek.tot_harga = response.data[0].tot_harga
 
                 }).catch(error => {
                     console.log(error.response.data)
@@ -194,22 +200,22 @@ export default {
 
             let tot_nama= objek.tot_nama
             let tot_tjo_kode= objek.tot_tjo_kode.split("-")[0]
-            let tot_pimpinan= objek.tot_pimpinan
             let tot_telp= objek.tot_telp
             let tot_alamat= objek.tot_alamat
             let tot_provinsi= objek.tot_provinsi.split("-")[1]
             let tot_kota= objek.tot_kota
-            // let tot_deskripsi = objek.tot_deskripsi
+            let tot_harga = objek.tot_harga
 
-            axios.put(`http://localhost:8000/api/updObjek`, {
-                tot_kode: route.params.id,
+            axios.get(baseURL+'/objek/update', {
+                params : {tot_kode: route.params.id,
                 tot_nama: tot_nama,
                 tot_tjo_kode: tot_tjo_kode,
-                tot_pimpinan: tot_pimpinan,
                 tot_telp: tot_telp,
                 tot_alamat: tot_alamat,
                 tot_provinsi: tot_provinsi,
                 tot_kota: tot_kota,
+                tot_harga: tot_harga
+            }
             }).then(() => {
 
                 //redirect ke post index

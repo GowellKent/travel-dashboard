@@ -31,6 +31,7 @@
                                                     <th scope="col">TELP</th>
                                                     <th scope="col">ALAMAT</th>
                                                     <th scope="col">KOTA</th>
+                                                    <th scope="col">HARGA</th>
                                                     <th scope="col">OPTIONS</th>
                                                 </tr>
                                             </thead>
@@ -39,10 +40,11 @@
                                                     <td><router-link
                                                             :to="{ name: 'objek.edit', params: { id: data.tot_kode } }">{{
                                                                 data.tot_nama }}</router-link></td>
-                                                    <td>{{ data.tjo_deskripsi }}</td>
+                                                    <td>{{ data.tjo_desc }}</td>
                                                     <td>{{ data.tot_telp }}</td>
                                                     <td>{{ data.tot_alamat }}</td>
                                                     <td>{{ data.tot_kota }}, {{ data.tot_provinsi }}</td>
+                                                    <td>{{ data.tot_harga }}</td>
                                                     <td>
                                                         <button @click.prevent="postDelete(data.tot_kode)"
                                                             class="btn btn-sm btn-danger text-center">DELETE</button>
@@ -85,7 +87,7 @@ export default {
         postDelete(id) {
 
             //delete data post by ID
-            axios.get(baseURL + '/delObjek?tot_kode=' + id)
+            axios.get(baseURL + '/objek/delete?tot_kode=' + id)
                 .then(() => {
 
                     this.getData()
@@ -97,7 +99,7 @@ export default {
         },
         getData(){
             this.setObjek([])
-            axios.get(baseURL + '/objekAll')
+            axios.get(baseURL + '/objek/all')
             .then(res => {
                 this.setObjek(res.data)
                 //   console.log(res.data)

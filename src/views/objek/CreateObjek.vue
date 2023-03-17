@@ -25,14 +25,9 @@
                                 <!-- <input type="text" class="form-control" v-model="objek.tot_tjo_kode"
                                     placeholder="Masukkan Jenis Objek Tujuan"> -->
                                     <select class="form-select" v-model="objek.tot_tjo_kode">
-                                        <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_deskripsi }}</option>
+                                        <option v-for="data in jenis" :key="data.tjo_kode">{{ data.tjo_kode }}-{{ data.tjo_desc }}</option>
                                     </select>
                                 </div>
-                            <div class="form-group">
-                                <label for="title" class="font-weight-bold mt-2 mb-1">Nama Pimpinan</label>
-                                <input type="text" class="form-control" v-model="objek.tot_pimpinan"
-                                    placeholder="Masukkan Nama Pimpinan">
-                            </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Telepon</label>
                                 <input type="text" class="form-control" v-model="objek.tot_telp"
@@ -60,6 +55,11 @@
                                 <select class="form-select" v-model="objek.tot_kota" aria-label="Kota/ Kabupaten">
                                     <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Harga</label>
+                                <input type="text" class="form-control" v-model="objek.tot_harga"
+                                    placeholder="Masukkan Harga Objek Tujuan">
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary">SIMPAN</button>
@@ -120,7 +120,7 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get('http://127.0.0.1:8000/api/jenisObjek')
+            axios.get(baseURL+'/objek/jenis')
                 .then(ress => {
                     this.setJenis(ress.data)
                     // console.log(this.jenis)
@@ -142,6 +142,8 @@ export default {
             tot_telp: '',
             tot_alamat: '',
             tot_provinsi: '',
+            tot_harga: '',
+            tot_foto: '',
             tot_kota: ''
         })
 
@@ -156,20 +158,21 @@ export default {
 
             let tot_nama= objek.tot_nama
             let tot_tjo_kode= objek.tot_tjo_kode.split("-")[0]
-            let tot_pimpinan= objek.tot_pimpinan
             let tot_telp= objek.tot_telp
             let tot_alamat= objek.tot_alamat
+            let tot_harga= objek.tot_harga
             let tot_provinsi= objek.tot_provinsi.split("-")[1]
             let tot_kota= objek.tot_kota
 
-            axios.post(baseURL+'/addObjek', {
-                tot_nama: tot_nama,
+            axios.get(baseURL+'/objek/add', {
+                params :{tot_nama: tot_nama,
                 tot_tjo_kode: tot_tjo_kode,
-                tot_pimpinan: tot_pimpinan,
                 tot_telp: tot_telp,
                 tot_alamat: tot_alamat,
                 tot_provinsi: tot_provinsi,
-                tot_kota: tot_kota,
+                tot_harga: tot_harga,
+                tot_foto: 'https://docs.google.com/uc?id=1hTEApOQK5ZZnzQz1TLtswes3sRBKPbCm',
+                tot_kota: tot_kota}
             }).then(() => {
 
                 //redirect ke post index
