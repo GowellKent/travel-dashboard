@@ -29,26 +29,28 @@
                                             <thead class="thead-dark">
                                                 <tr
                                                     style="position: sticky; top: 0; z-index: 1; box-shadow: inset 0.1px 0.1px #000, 0 1px #000; background-color: #eee;">
-                                                    <th scope="col">KELAS</th>
+                                                    <th scope="col">KODE</th>
                                                     <th scope="col">TRIP</th>
                                                     <th scope="col">NAMA</th>
-                                                    <th scope="col">DESKRIPSI</th>
+                                                    <th scope="col">DURASI</th>
                                                     <th scope="col">HARGA</th>
                                                     <th scope="col">ASAL</th>
                                                     <th scope="col">TUJUAN</th>
+                                                    <th scope="col">BUS</th>
                                                     <th scope="col" class="text-center">OPTIONS</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="data in pakets" :key="data.tph_kode"
                                                     style="box-shadow: inset 0.1px -0.1px #000">
-                                                    <td>{{ data.tjp_deskripsi }}</td>
-                                                    <td>{{ data.tjt_nama }}</td>
+                                                    <td>{{ data.tph_kode }}</td>
+                                                    <td>{{ data.tjt_desc }}</td>
                                                     <td>{{ data.tph_nama }}</td>
-                                                    <td>{{ data.tph_deskripsi }}</td>
+                                                    <td>{{ data.tph_durasi}}</td>
                                                     <td>{{ data.tph_harga }}</td>
-                                                    <td>{{ data.tph_kota_asal }}</td>
-                                                    <td>{{ data.tph_kota_destinasi }}</td>
+                                                    <td>{{ data.tph_kota_asal }}, {{ data.tph_provinsi_asal }}</td>
+                                                    <td>{{ data.tph_kota_tujuan }}, {{ data.tph_provinsi_tujuan }}</td>
+                                                    <td>{{ data.tb_nama }}</td>
                                                     <td class="text-center">
                                                         <router-link
                                                             :to="{ name: 'paket.detail', params: { id: data.tph_kode } }"
@@ -126,7 +128,7 @@ export default {
         },
         getData() {
             this.setpakets([])
-            axios.get(baseURL + '/paketAll')
+            axios.get(baseURL + '/paket/all')
                 .then(res => {
                     this.setpakets(res.data)
                 })

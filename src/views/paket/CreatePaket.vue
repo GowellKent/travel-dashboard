@@ -17,19 +17,11 @@
                         <form @submit.prevent="store">
 
                             <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Jenis Paket</label>
-                                <br />
-                                <select class="form-select" aria-label="Jenis Paket" v-model="paket.tph_tjp_kode">
-                                    <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tjp_kode }}-{{
-                                        data.tjp_deskripsi }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
                                 <br />
                                 <select class="form-select" aria-label="Jenis Trip" v-model="paket.tph_tjt_kode">
                                     <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
-                                        data.tjt_nama }}</option>
+                                        data.tjt_desc }}</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -42,9 +34,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="content" class="font-weight-bold mt-2 mb-1">Deskripsi</label>
-                                <textarea class="form-control" rows="4" v-model="paket.tph_deskripsi"
-                                    placeholder="Masukkan Deskripsi Paket"></textarea>
+                                <label for="content" class="font-weight-bold mt-2 mb-1">Durasi Wisata (Hari)</label>
+                                <input type="text" class="form-control" v-model="paket.tph_durasi"
+                                    placeholder="Masukkan Durasi Wisata ">
                                 <!-- validation -->
                                 <div v-if="validation.content" class="mt-2 alert alert-danger">
                                     {{ validation.content[0] }}
@@ -102,11 +94,39 @@
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Harga</label>
                                 <input type="text" class="form-control" v-model="paket.tph_harga"
-                                    placeholder="Masukkan Harga">
+                                    placeholder="Masukkan Harga" disabled>
                                 <!-- validation -->
                                 <div v-if="validation.title" class="mt-2 alert alert-danger">
                                     {{ validation.title[0] }}
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Min. Pax</label>
+                                <input type="text" class="form-control" v-model="paket.tph_min_pax"
+                                    placeholder="Masukkan Pax Minimum">
+                                <!-- validation -->
+                                <div v-if="validation.title" class="mt-2 alert alert-danger">
+                                    {{ validation.title[0] }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Max. Pax</label>
+                                <input type="text" class="form-control" v-model="paket.tph_max_pax"
+                                    placeholder="Masukkan Pax Maximum">
+                                <!-- validation -->
+                                <div v-if="validation.title" class="mt-2 alert alert-danger">
+                                    {{ validation.title[0] }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div>
+                            </div>
+                            <div class="form-group">
+                                <a class="btn btn-success float-start mb-2"  v-on:click="getBus(paket.tph_max_pax, paket.tph_kota_asal, paket.tph_kota_tujuan)">Cari Bus</a>
+                                <select class="form-select" v-model="paket.tph_tb_kode" aria-label="Bus">
+                                    <option v-for="data in buses" :key="data.tb_kode">{{ data.tb_kode }}-{{ data.tb_nama }}
+                                    </option>
+                                </select>
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
@@ -133,12 +153,12 @@ export default {
 
     data() {
         return {
-            jenis: [],
             provs: [],
             provs2: [],
             kotas: [],
             kotas2: [],
-            trips: []
+            trips: [],
+            buses: []
         }
     },
     methods: {
@@ -148,15 +168,14 @@ export default {
         setProvs2(data) {
             this.provs2 = data;
         },
-
+        setBuses(data) {
+            this.buses = data;
+        },
         setKotas(data) {
             this.kotas = data;
         },
         setKotas2(data) {
             this.kotas2 = data;
-        },
-        setJenis(data) {
-            this.jenis = data;
         },
         setTrips(data) {
             this.trips = data;
@@ -166,6 +185,7 @@ export default {
             let idProvinsi = id.split("-")[0]
             axios.get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=' + idProvinsi)
                 .then(ress => {
+                    // console.log(ress.data)
                     this.setKotas(ress.data.kota_kabupaten)
                 })
                 .catch(error => {
@@ -183,6 +203,19 @@ export default {
                     console.log(error)
                 })
 
+        },
+        getBus(pax, asal, tujuan) {
+            // console.log(pax, asal, tujuan)
+            axios.get(baseURL + '/bus/search', {
+                params: {
+                    tb_pax:pax,
+                    tb_kota_asal:asal,
+                    tb_kota_tujuan:tujuan
+                }
+            })
+                .then(ress => {
+                    this.setBuses(ress.data)
+                })
         }
     },
 
@@ -190,15 +223,17 @@ export default {
 
         //state posts
         const paket = reactive({
-            tph_tjp_kode: '',
+            tph_tb_kode: '',
             tph_nama: '',
             tph_provinsi_asal: '',
             tph_kota_asal: '',
             tph_provinsi_tujuan: '',
             tph_kota_tujuan: '',
             tph_harga: '',
-            tph_deskripsi: '',
-            tph_tjt_kode: ''
+            tph_durasi: '',
+            tph_tjt_kode: '',
+            tph_min_pax: '',
+            tph_max_pax: '',
         })
 
         //state validation
@@ -210,24 +245,31 @@ export default {
         //method store
         function store() {
 
-
-            let tph_tjp_kode = paket.tph_tjp_kode.split("-")[0]
             let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
             let tph_nama = paket.tph_nama
+            let tph_provinsi_asal = paket.tph_provinsi_asal.split("-")[1]
             let tph_kota_asal = paket.tph_kota_asal
+            let tph_provinsi_tujuan = paket.tph_provinsi_tujuan.split("-")[1]
             let tph_kota_tujuan = paket.tph_kota_tujuan
-            let tph_harga = paket.tph_harga
-            let tph_deskripsi = paket.tph_deskripsi
+            let tph_harga = 0
+            let tph_durasi = paket.tph_durasi
+            let tph_min_pax = paket.tph_min_pax
+            let tph_max_pax = paket.tph_max_pax
+            let tph_tb_kode = paket.tph_tb_kode.split("-")[0]
 
-            axios.get(baseURL + '/addPaket', {
+            axios.get(baseURL + '/paket/add', {
                 params: {
-                    tph_tjp_kode: tph_tjp_kode,
                     tph_tjt_kode: tph_tjt_kode,
                     tph_nama: tph_nama,
+                    tph_provinsi_asal: tph_provinsi_asal,
                     tph_kota_asal: tph_kota_asal,
-                    tph_kota_destinasi: tph_kota_tujuan,
+                    tph_provinsi_tujuan: tph_provinsi_tujuan,
+                    tph_kota_tujuan: tph_kota_tujuan,
                     tph_harga: tph_harga,
-                    tph_deskripsi: tph_deskripsi
+                    tph_durasi: tph_durasi,
+                    tph_min_pax: tph_min_pax,
+                    tph_max_pax: tph_max_pax,
+                    tph_tb_kode: tph_tb_kode
                 }
             }).then((resp) => {
 
@@ -242,6 +284,8 @@ export default {
             })
 
         }
+
+
 
         //return
         return {
@@ -261,20 +305,13 @@ export default {
             .catch(error => {
                 console.log(error)
             }),
-            axios.get(baseURL + '/jenisPaket')
-                .then(ress => {
-                    this.setJenis(ress.data)
-                })
-                .catch(error => {
-                    console.log(error)
-                }),
-            axios.get(baseURL + '/jenisTrip')
+            axios.get(baseURL + '/paket/trip')
                 .then(ress => {
                     this.setTrips(ress.data)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+                }).catch(error => {
+                console.log(error)
+            })
+
     },
     components: {
         navbar
