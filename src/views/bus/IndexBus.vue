@@ -31,6 +31,7 @@
                                             <th scope="col">KOTA ASAL</th>
                                             <th scope="col">KOTA TUJUAN</th>
                                             <th scope="col" class="text-end">PAX</th>
+                                            <th scope="col" class="text-end">HARGA</th>
                                             <th scope="col" class="text-center">OPTIONS</th>
                                         </tr>
                                     </thead>
@@ -41,8 +42,9 @@
                                                 data.tb_kode }}</router-link></td>
                                             <td>{{ data.tb_nama }}</td>
                                             <td>{{ data.tb_kota_asal }}</td>
-                                            <td>{{ data.tb_kota_destinasi }}</td>
+                                            <td>{{ data.tb_kota_tujuan }}</td>
                                             <td class="text-end">{{ data.tb_pax }}</td>
+                                            <td class="text-end">{{ data.tb_harga }}</td>
                                             <td class="text-center">
                                                 <button @click.prevent="postDelete(data.tb_kode)"
                                                     class="btn btn-sm btn-danger">DELETE</button>
@@ -82,7 +84,7 @@ export default {
         postDelete(id) {
 
             //delete data post by ID
-            axios.get(baseURL + '/delBus?tb_kode=' + id)
+            axios.get(baseURL + '/bus/delete?tb_kode=' + id)
                 .then(() => {
 
                     this.getData()
@@ -94,7 +96,7 @@ export default {
         },
         getData() {
             this.setObjek([])
-            axios.get(baseURL + '/listBus')
+            axios.get(baseURL + '/bus/all')
                 .then(res => {
                     this.setObjek(res.data)
                     //   console.log(res.data)
