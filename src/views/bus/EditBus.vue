@@ -60,11 +60,11 @@
                                 <br />
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control" v-model="bus.tb_kota_destinasi"
+                                        <input type="text" class="form-control" v-model="bus.tb_kota_tujuan"
                                             placeholder="Masukkan Kota" disabled>
                                     </div>
                                     <div class="col">
-                                        <select class="form-select" v-model="bus.tb_kota_destinasi" aria-label="Kota Asal">
+                                        <select class="form-select" v-model="bus.tb_kota_tujuan" aria-label="Kota Asal">
                                             <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
                                         </select>
                                     </div>
@@ -158,7 +158,7 @@ export default {
         const bus = reactive({
             tb_nama: '',
             tb_kota_asal: '',
-            tb_kota_destinasi: '',
+            tb_kota_tujuan: '',
             tb_pax: ''
         })
 
@@ -175,13 +175,13 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(baseURL + `/findBus?tb_kode=${route.params.id}`)
+            axios.get(baseURL + `/bus/find?tb_kode=${route.params.id}`)
                 .then(response => {
 
                     //assign state posts with response data
                     bus.tb_nama = response.data[0].tb_nama
                     bus.tb_kota_asal = response.data[0].tb_kota_asal
-                    bus.tb_kota_destinasi = response.data[0].tb_kota_destinasi
+                    bus.tb_kota_tujuan = response.data[0].tb_kota_tujuan
                     bus.tb_pax = response.data[0].tb_pax
 
                 }).catch(error => {
@@ -195,15 +195,15 @@ export default {
 
             let tb_nama = bus.tb_nama
             let tb_kota_asal = bus.tb_kota_asal
-            let tb_kota_destinasi = bus.tb_kota_destinasi
+            let tb_kota_tujuan = bus.tb_kota_tujuan
             let tb_pax = bus.tb_pax
 
-            axios.get(baseURL+`/updBus`, {
+            axios.get(baseURL+'/bus/update', {
                 params: {
                     tb_kode: route.params.id,
                     tb_nama: tb_nama,
                     tb_kota_asal: tb_kota_asal,
-                    tb_kota_destinasi: tb_kota_destinasi,
+                    tb_kota_tujuan: tb_kota_tujuan,
                     tb_pax: tb_pax
                 }
             }).then(() => {
