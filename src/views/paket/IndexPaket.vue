@@ -102,7 +102,7 @@ export default {
         },
         detailPaket(kode) {
             //delete data post by ID
-            axios.get(baseURL + '/paketDet?tpd_tipe=D&tpd_tph_kode=' + kode)
+            axios.get(baseURL + '/paket/det/find?tpd_tph_kode=' + kode)
                 .then(() => {
 
                     //splice posts 
@@ -117,7 +117,7 @@ export default {
         postDelete(id) {
 
             //delete data post by ID
-            axios.get(baseURL + '/delPaket?tph_kode=' + id)
+            axios.get(baseURL + '/paket/delete?tph_kode=' + id)
                 .then(() => {
                     this.getData()
 

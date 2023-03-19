@@ -170,7 +170,7 @@
                         </div>
 
                         <br /><br />
-                        <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
+                        <button type="submit" class="btn btn-primary float-end" data-bs-dismiss="modal">SIMPAN</button>
 
                     </form>
                 </div>
@@ -198,22 +198,24 @@ export default {
         setObjs(data) {
             this.objs = data;
         },
-        postDelete(id) {
+        // postDelete(id) {
 
-            //delete data post by ID
-            axios.get(baseURL + '/paket/det/delete?tpd_kode=' + id)
-                .then(() => {
+        //     //delete data post by ID
+        //     axios.get(baseURL + '/paket/det/delete?tpd_kode=' + id)
+        //         .then(() => {
 
-                    //splice posts 
-                    // kotas.value.splice(kotas.value.indexOf(id), 1);
-                    location.reload()
-                    // this.$router.push({name:'paket.detail', params:{id:this.$route.params.id}});
+        //             //splice posts 
+        //             // kotas.value.splice(kotas.value.indexOf(id), 1);
+        //             // location.reload()
+        //             this.getHead()
+        //             this.getDetail()
+        //             // this.$router.push({name:'paket.detail', params:{id:this.$route.params.id}});
 
-                }).catch(error => {
-                    console.log(error.response.data)
-                })
+        //         }).catch(error => {
+        //             console.log(error.response.data)
+        //         })
 
-        },
+        // },
         getObjeks(prov, kota) {
             axios.get(baseURL + '/objek/search', {
                 params: {
@@ -267,6 +269,13 @@ export default {
 
 
             //get API from Laravel Backend
+            getHead()
+
+            getDetail()
+
+        })
+
+        function getHead() {
             axios.get(baseURL + `/paket/find?tph_kode=${route.params.id}`)
                 .then(response => {
 
@@ -287,10 +296,7 @@ export default {
                 }).catch(error => {
                     console.log(error.response.data)
                 })
-
-            getDetail()
-
-        })
+        }
 
         function getDetail() {
             post.details = []
@@ -317,11 +323,7 @@ export default {
                 }
             }).then(() => {
 
-                //redirect ke post index
-                // router.push({
-                //     name: 'paket.detail', params: { id: route.params.id }
-                // })
-
+                getHead()
                 getDetail()
 
             }).catch(error => {
@@ -331,6 +333,27 @@ export default {
 
         }
 
+
+        function postDelete(id) {
+
+            //delete data post by ID
+            axios.get(baseURL + '/paket/det/delete?tpd_kode=' + id)
+                .then(() => {
+
+                    //splice posts 
+                    // kotas.value.splice(kotas.value.indexOf(id), 1);
+                    // location.reload()
+                    getHead()
+                    getDetail()
+                    // this.$router.push({name:'paket.detail', params:{id:this.$route.params.id}});
+
+                }).catch(error => {
+                    console.log(error.response.data)
+                })
+
+        }
+
+
         //return
         return {
             post,
@@ -338,7 +361,8 @@ export default {
             router,
             detail,
             storeDetail,
-            getDetail
+            getDetail,
+            postDelete
         }
 
     }
