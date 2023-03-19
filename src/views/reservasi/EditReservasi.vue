@@ -19,21 +19,9 @@
 
                         <form @submit.prevent="update">
                             <div class="form-group">
-                                <div class="row">
-                                    <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" v-model="post.paket"
-                                            placeholder="Masukkan Judul Post" disabled>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-select" v-model="post.paket">
-                                            <option v-for="data in jenis" :key="data.tjp_kode">{{ data.tph_kode
-                                            }}-{{ data.tph_nama }}</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Jenis Paket</label>
+                                <input type="text" class="form-control" v-model="post.paket"
+                                    placeholder="Masukkan Judul Post" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Client</label>
@@ -73,27 +61,19 @@
                                     <div class="col">
                                         <select class="form-select" v-model="post.status">
                                             <option v-for="data in status" :key="data.tsr_kode">{{ data.tsr_kode
-                                            }}-{{ data.tsr_deskripsi }}</option>
+                                            }}-{{ data.tsr_desc }}</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="row">
-                                    <label for="title" class="font-weight-bold mt-2 mb-1">Reservasi Bus</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" v-model="post.bus" placeholder="Masukkan"
-                                            disabled>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-select" v-model="post.bus">
-                                            <option v-for="data in post.buses" :key="data.tb_kode">{{ data.tb_kode
-                                            }}-{{ data.tb_nama }}</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Biaya (Rp)</label>
+                                <input type="text" class="form-control" v-model="post.harga"
+                                    placeholder="Masukkan Judul Post" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Reservasi Bus</label>
+                                <input type="text" class="form-control" v-model="post.bus" placeholder="Masukkan" disabled>
                             </div>
                             <br /><br />
                             <div class="row">
@@ -164,34 +144,23 @@ export default {
 
     data() {
         return {
-            jenis: [],
             status: []
         }
     },
     methods: {
-        setJenis(data) {
-            this.jenis = data
-        },
         setStatus(data) {
             this.status = data
         }
-        
+
     },
     mounted() {
-        axios.get(baseURL+'/paketAll')
+        axios.get(baseURL + '/reservasi/status')
             .then(ress => {
-                this.setJenis(ress.data)
+                this.setStatus(ress.data)
             })
             .catch(error => {
                 console.log(error)
-            }),
-            axios.get(baseURL+'/jenisStatus')
-                .then(ress => {
-                    this.setStatus(ress.data)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            })
 
     },
 
@@ -208,8 +177,9 @@ export default {
             tglJalan: '',
             tglJalanNew: '',
             pax: '',
+            harga: '',
             status: '',
-            buses:[],
+            buses: [],
             detail: []
         })
 
@@ -226,7 +196,7 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(baseURL+`/reservasi/find?trh_kode=${route.params.id}`)
+            axios.get(baseURL + `/reservasi/find?trh_kode=${route.params.id}`)
                 .then(response => {
                     // axios.get(baseURL+'/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
                     //     .then(ress => {
@@ -243,8 +213,9 @@ export default {
                     post.client = response.data[0][0].name
                     post.whatsapp = response.data[0][0].whatsapp
                     post.tglRes = response.data[0][0].trh_tgl_reservasi
-                    post.tglJalan = response.data[0][0].trh_tgl_jalan
+                    post.tglJalan = new Date(response.data[0][0].trh_tgl_jalan)
                     post.pax = response.data[0][0].trh_pax
+                    post.harga = response.data[0][0].trh_harga
                     post.status = response.data[0][0].trh_tsr_kode + " - " + response.data[0][0].tsr_desc
                     post.bus = response.data[0][0].tb_kode + " - " + response.data[0][0].tb_nama
                     post.detail = response.data[1]
@@ -257,18 +228,17 @@ export default {
 
         //method update
         function update() {
-
             let trh_tph_kode = post.paket.split("-")[0]
-            let trh_tgl_perjalanan = post.tglJalan.toISOString().split('T')[0]
+            let trh_tgl_jalan = post.tglJalan.toISOString().split('T')[0]
             let trh_pax = post.pax
             let trh_tsr_kode = post.status.split("-")[0]
             // let trh_tb_kode = post.bus.split("-")[0]
 
-            axios.get(baseURL+'/reservasi/update', {
-                params:{
+            axios.get(baseURL + '/reservasi/update', {
+                params: {
                     trh_kode: route.params.id,
                     trh_tph_kode: trh_tph_kode,
-                    trh_tgl_perjalanan: trh_tgl_perjalanan,
+                    trh_tgl_jalan: trh_tgl_jalan,
                     trh_pax: trh_pax,
                     trh_tsr_kode: trh_tsr_kode
                 }
