@@ -44,11 +44,11 @@
                                                     :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{
                                                         data.trh_kode }}</router-link></td>
                                             <td>{{ data.tph_nama }}</td>
-                                            <td>{{ data.trh_tgl_perjalanan }}</td>
-                                            <td>{{ data.Nama }}</td>
+                                            <td>{{ data.trh_tgl_jalan }}</td>
+                                            <td>{{ data.name }}</td>
                                             <td>{{ data.trh_pax }}</td>
                                             <td>{{ data.trh_tgl_reservasi }}</td>
-                                            <td>{{ data.tsr_deskripsi }}</td>
+                                            <td>{{ data.tsr_desc }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm ml-1 btn-danger"
                                                     @click.prevent="postDelete(data.trh_kode)">
@@ -91,7 +91,7 @@ export default {
         postDelete(id) {
 
             //delete data post by ID
-            axios.get(baseURL + '/delResHead?trh_kode=' + id)
+            axios.get(baseURL + '/reservasi/delete?trh_kode=' + id)
                 .then(() => {
 
                     this.getData()

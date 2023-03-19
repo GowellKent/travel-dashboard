@@ -54,7 +54,7 @@
                                 <br />
                                 <select class="form-select" aria-label="Jenis Trip" v-model="paket.tph_tjt_kode">
                                     <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
-                                        data.tjt_nama }}</option>
+                                        data.tjt_desc }}</option>
                                 </select>
                             </div>
                             <br><br>
@@ -94,19 +94,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Pax</label>
-                                <input type="text" class="form-control" v-model="paket.trh_pax" placeholder="Masukkan Pax"
-                                    v-on:blur="getBus()">
+                                <input type="text" class="form-control" v-model="paket.trh_pax" placeholder="Masukkan Pax">
                             </div>
                             <!-- <a class="btn btn-sm btn-success" v-on:click="getBus()">Test</a> -->
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="bus" class="font-weight-bold">Bus</label>
                                 <br />
                                 <select class="form-select" aria-label="Pilihan Bus" v-model="paket.trh_tb_kode">
                                     <option v-for="data in paket.buses" :key="data.tb_kode">{{ data.tb_kode }}-{{
                                         data.tb_nama }}</option>
                                 </select>
-                            </div>
+                            </div> -->
 
 
                             <br /><br />
@@ -198,7 +197,7 @@ export default {
             trh_tu_kode: '',
             trh_tgl_perjalanan: '',
             trh_pax: '',
-            trh_tb_kode: '',
+            // trh_tb_kode: '',
             pakets: [],
             buses: []
         })
@@ -215,18 +214,19 @@ export default {
             // console.log(paket.trh_tb_kode)
 
             let trh_tph_kode = paket.trh_tph_kode.split("-")[0]
-            let trh_tb_kode = paket.trh_tb_kode.split("-")[0]
+            // let trh_tb_kode = paket.trh_tb_kode.split("-")[0]
             let trh_tu_kode = paket.trh_tu_kode
             // let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
             let trh_tgl_perjalanan = paket.trh_tgl_perjalanan.toISOString().split('T')[0]
             let trh_pax = paket.trh_pax
-            axios.post(baseURL + '/addRes', {
-                trh_tph_kode: trh_tph_kode,
-                trh_tb_kode: trh_tb_kode,
-                trh_tu_kode: trh_tu_kode,
-                trh_tgl_perjalanan: trh_tgl_perjalanan,
-                trh_pax: trh_pax
+            axios.get(baseURL + '/reservasi/add', {
+                params: {
 
+                    trh_tph_kode: trh_tph_kode,
+                    trh_tu_kode: trh_tu_kode,
+                    trh_tgl_jalan: trh_tgl_perjalanan,
+                    trh_pax: trh_pax
+                }
 
             }).then((resp) => {
 
@@ -248,7 +248,7 @@ export default {
             let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
             let tph_kota_asal = paket.tph_kota_asal
             let tph_kota_tujuan = paket.tph_kota_tujuan
-            axios.get(baseURL+"/searchPaket?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_destinasi=" + tph_kota_tujuan)
+            axios.get(baseURL+"/paket/search?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_tujuan=" + tph_kota_tujuan)
                 .then((resp) => {
                     // console.log(resp.data)
                     paket.pakets = resp.data
@@ -259,20 +259,20 @@ export default {
                 })
         }
 
-        function getBus() {
-            paket.buses = []
-            let tph_kode = paket.trh_tph_kode.split("-")[0]
-            let tph_pax = paket.trh_pax
-            axios.get(baseURL+"/getBuses?tb_pax=" + tph_pax + "&tph_kode=" + tph_kode)
-                .then((resp) => {
-                    // console.log(resp.data)
-                    paket.buses = resp.data
-                    // console.log(paket.pakets[0])
-                }).catch(error => {
-                    //assign state validation with error 
-                    console.log(error)
-                })
-        }
+        // function getBus() {
+        //     paket.buses = []
+        //     let tph_kode = paket.trh_tph_kode.split("-")[0]
+        //     let tph_pax = paket.trh_pax
+        //     axios.get(baseURL+"/bus/search?tb_pax=" + tph_pax + "&tph_kode=" + tph_kode)
+        //         .then((resp) => {
+        //             // console.log(resp.data)
+        //             paket.buses = resp.data
+        //             // console.log(paket.pakets[0])
+        //         }).catch(error => {
+        //             //assign state validation with error 
+        //             console.log(error)
+        //         })
+        // }
 
         //return
         return {
@@ -280,8 +280,7 @@ export default {
             validation,
             router,
             store,
-            check,
-            getBus
+            check
         }
 
     },
@@ -301,7 +300,7 @@ export default {
             //     .catch(error => {
             //         console.log(error)
             //     }),
-            axios.get('http://127.0.0.1:8000/api/jenisTrip')
+            axios.get(baseURL+'/paket/trip')
                 .then(ress => {
                     this.setTrips(ress.data)
                 })

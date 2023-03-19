@@ -122,7 +122,7 @@
                                 <tbody>
                                     <tr v-for="data in post.detail" :key="data.trd_kode">
                                         <!-- <td><router-link :to="{ name: 'reservasi.edit', params: { id: data.trh_kode } }">{{ data.trh_kode }}</router-link></td> -->
-                                        <td>{{ data.tpd_kode }}</td>
+                                        <td>{{ data.tot_kode }}</td>
                                         <td>{{ data.nama }}</td>
                                         <td style="width: 45%;">{{ data.alamat }}</td>
                                         <td>{{ data.kota }}, {{ data.provinsi }}</td>
@@ -209,7 +209,6 @@ export default {
             tglJalanNew: '',
             pax: '',
             status: '',
-            bus: '',
             buses:[],
             detail: []
         })
@@ -227,26 +226,26 @@ export default {
         onMounted(() => {
 
             //get API from Laravel Backend
-            axios.get(baseURL+`/getDataRes?trh_kode=${route.params.id}`)
+            axios.get(baseURL+`/reservasi/find?trh_kode=${route.params.id}`)
                 .then(response => {
-                    axios.get(baseURL+'/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
-                        .then(ress => {
-                            post.buses = ress.data
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
+                    // axios.get(baseURL+'/getBuses?tb_pax='+response.data[0][0].trh_pax+'&tph_kode='+response.data[0][0].trh_tph_kode)
+                    //     .then(ress => {
+                    //         post.buses = ress.data
+                    //     })
+                    //     .catch(error => {
+                    //         console.log(error)
+                    //     })
                     //assign state posts with response data
                     // console.log(response.data[0][0])
                     post.kode = response.data[0][0].trh_kode
                     post.paket = response.data[0][0].trh_tph_kode + " - " + response.data[0][0].tph_nama
                     post.paketName = response.data[0][0].tph_nama
-                    post.client = response.data[0][0].trh_client
-                    post.whatsapp = response.data[0][0].tu_whatsapp
+                    post.client = response.data[0][0].name
+                    post.whatsapp = response.data[0][0].whatsapp
                     post.tglRes = response.data[0][0].trh_tgl_reservasi
-                    post.tglJalan = response.data[0][0].trh_tgl_perjalanan
+                    post.tglJalan = response.data[0][0].trh_tgl_jalan
                     post.pax = response.data[0][0].trh_pax
-                    post.status = response.data[0][0].trh_tsr_kode + " - " + response.data[0][0].tsr_deskripsi
+                    post.status = response.data[0][0].trh_tsr_kode + " - " + response.data[0][0].tsr_desc
                     post.bus = response.data[0][0].tb_kode + " - " + response.data[0][0].tb_nama
                     post.detail = response.data[1]
 
@@ -263,15 +262,16 @@ export default {
             let trh_tgl_perjalanan = post.tglJalan.toISOString().split('T')[0]
             let trh_pax = post.pax
             let trh_tsr_kode = post.status.split("-")[0]
-            let trh_tb_kode = post.bus.split("-")[0]
+            // let trh_tb_kode = post.bus.split("-")[0]
 
-            axios.put(baseURL+'/updResHead', {
-                trh_kode: route.params.id,
-                trh_tph_kode: trh_tph_kode,
-                trh_tgl_perjalanan: trh_tgl_perjalanan,
-                trh_pax: trh_pax,
-                trh_tsr_kode: trh_tsr_kode,
-                trh_tb_kode: trh_tb_kode,
+            axios.get(baseURL+'/reservasi/update', {
+                params:{
+                    trh_kode: route.params.id,
+                    trh_tph_kode: trh_tph_kode,
+                    trh_tgl_perjalanan: trh_tgl_perjalanan,
+                    trh_pax: trh_pax,
+                    trh_tsr_kode: trh_tsr_kode
+                }
             }).then(() => {
 
                 //redirect ke post index
