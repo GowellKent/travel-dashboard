@@ -9,10 +9,16 @@
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container mt-5">
                     <div class="card border-0 rounded shadow">
-                        <div class="card-body">
+                        <div class="card-header">
                             <div class="row">
-                                <div class="col-11">
-                                    <h4>DATA RESREVASI</h4>
+                                <div class="col-10 pt-2">
+                                    <h4><strong>DATA RESERVASI</strong></h4>
+                                </div>
+                                <div class="col-1">
+                                    <router-link :to="{ name: 'reservasi.custom' }"
+                                        class="btn btn-md btn-primary float-end py-xl-2 mt-1 font-w">
+                                        Custom
+                                    </router-link>
                                 </div>
                                 <div class="col-1">
                                     <router-link :to="{ name: 'reservasi.create' }"
@@ -21,7 +27,8 @@
                                     </router-link>
                                 </div>
                             </div>
-                            <hr>
+                        </div>
+                        <div class="card-body">
                             <div style="height: 40em; overflow: auto;" class="mt-4">
                                 <table class="table table-striped table-bordered">
                                     <thead class="thead-dark">

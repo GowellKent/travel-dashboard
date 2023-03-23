@@ -1,83 +1,125 @@
 <template>
     <navbar />
     <div class="container mt-5">
-        <h4>TAMBAH RESERVASI</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col">
                                 <router-link :to="{ name: 'reservasi.index' }" class="btn btn-md btn-primary"><vue-feather
                                         type="chevron-left" size="20" class="color-white pt-1 pl-5" /></router-link>
                             </div>
+                            <div class="col-11 float-start pt-2">
+                                <h4><strong>TAMBAH RESERVASI</strong></h4>
+                            </div>
                         </div>
-                        <hr>
-
+                    </div>
+                    <div class="card-body">
                         <form @submit.prevent="check">
-                            <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
-                                <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
-                                <select class="form-select" v-model="paket.tph_provinsi_asal"
-                                    v-on:change="getKota(paket.tph_provinsi_asal)" aria-label="Provinsi Asal">
-                                    <!-- <option class="dropdown-item">Provinsi</option> -->
-                                    <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="nama" class="font-weight-bold">Kota Asal</label>
-                                <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
-                                <br />
-                                <select class="form-select" v-model="paket.tph_kota_asal" aria-label="Kota Asal">
-                                    <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
-                                <br />
-                                <select class="form-select" v-model="paket.tph_provinsi_tujuan"
-                                    v-on:change="getKota2(paket.tph_provinsi_tujuan)" aria-label="Provinsi Tujuan">
-                                    <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
-                                <br />
-                                <select class="form-select" v-model="paket.tph_kota_tujuan" aria-label="Kota Tujuan">
-                                    <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
-                                <br />
-                                <select class="form-select" aria-label="Jenis Trip" v-model="paket.tph_tjt_kode">
-                                    <option v-for="data in trips" :key="data.tjt_kode">{{ data.tjt_kode }}-{{
-                                        data.tjt_desc }}</option>
-                                </select>
-                            </div>
-                            <br><br>
                             <div class="row">
                                 <div class="col">
-                                    <button type="submit" class="btn btn-success float-end">SEARCH</button>
-
+                                    <div class="form-group">
+                                        <label for="provinsi" class="font-weight-bold">Provinsi Asal</label>
+                                        <!-- <input class="form-control" v-model="kota.tot_provinsi" placeholder="Masukkan Provinsi"> -->
+                                        <select class="form-select" v-model="paket.tph_provinsi_asal"
+                                            v-on:change="getKota(paket.tph_provinsi_asal)" aria-label="Provinsi Asal">
+                                            <!-- <option class="dropdown-item">Provinsi</option> -->
+                                            <option v-for="data in provs" :key="data.id">{{ data.id }}-{{ data.nama }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nama" class="font-weight-bold">Kota Asal</label>
+                                        <!-- <input type="text" class="form-control" v-model="kota.tph_nama" placeholder="Masukkan Kota"> -->
+                                        <br />
+                                        <select class="form-select" v-model="paket.tph_kota_asal" aria-label="Kota Asal">
+                                            <option v-for="data in kotas" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="provinsi2" class="font-weight-bold">Provinsi Tujuan</label>
+                                        <br />
+                                        <select class="form-select" v-model="paket.tph_provinsi_tujuan"
+                                            v-on:change="getKota2(paket.tph_provinsi_tujuan)" aria-label="Provinsi Tujuan">
+                                            <option v-for="data in provs2" :key="data.id">{{ data.id }}-{{ data.nama }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nama2" class="font-weight-bold">Kota Tujuan</label>
+                                        <br />
+                                        <select class="form-select" v-model="paket.tph_kota_tujuan"
+                                            aria-label="Kota Tujuan">
+                                            <option v-for="data in kotas2" :key="data.id">{{ data.nama }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="provinsi" class="font-weight-bold mb-2">Jenis Trip</label>
+                                <br>
+                                <div class="form-check-inline" v-for="data in trips" :key="data.tjt_kode">
+                                    <div class="card card-default card-input mb-2" style="width: 10rem;">
+                                        <label>
+                                            <input type="radio" class="mx-2" v-model="paket.tph_tjt_kode"
+                                                :value="data.tjt_kode" v-on:change="check()">
+                                            <div class="card-body font-weight-bold">
+                                                <h5 class="text-center mb-3">{{ data.tjt_desc }}</h5>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+                            <!-- <div class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success float-end">Cari Paket</button>
+
+                                </div>
+                            </div> -->
                         </form>
 
                         <hr><br>
                         <form @submit.prevent="store">
 
                             <div class="form-group">
-                                <label for="provinsi" class="font-weight-bold">Paket Wisata</label>
+                                <label for="provinsi" class="font-weight-bold mb-2">Paket Wisata</label>
                                 <br />
-                                <select class="form-select" aria-label="Jenis Paket" v-model="paket.trh_tph_kode">
+                                <!-- <select class="form-select" aria-label="Jenis Paket" v-model="paket.trh_tph_kode">
                                     <option v-for="data in paket.pakets" :key="data.tph_kode">{{ data.tph_kode }}-{{
                                         data.tph_nama }}</option>
-                                </select>
+                                </select> -->
+                                <div class="form-check-inline" v-for="data in paket.pakets" :key="data.tph_kode">
+                                    <div class="card card-default card-input mb-2" style="width: 100%; min-width: 10rem;">
+                                        <label class="p-1">
+                                            <div class="card-header"><input type="radio" class="mx-2"
+                                                    v-model="paket.trh_tph_kode" :value="data.tph_kode">{{ data.tph_nama }}
+                                            </div>
+                                            <div class="card-body font-weight-bold">
+                                                <ul>
+                                                    <li>Durasi Wisata : {{ data.tph_durasi }}</li>
+                                                    <li>Bus : {{ data.tb_nama }}</li>
+                                                    <li>Min Pax: {{ data.tph_min_pax }}</li>
+                                                    <li>Max Pax: {{ data.tph_max_pax }}</li>
+                                                    <li>Harga : {{ data.tph_harga }}</li>
+                                                </ul>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-
+                            <hr>
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Kode Client</label>
                                 <input type="text" class="form-control" v-model="paket.trh_tu_kode"
@@ -109,7 +151,7 @@
 
 
                             <br /><br />
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                            <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
 
                         </form>
 
@@ -213,12 +255,13 @@ export default {
 
             // console.log(paket.trh_tb_kode)
 
-            let trh_tph_kode = paket.trh_tph_kode.split("-")[0]
+            let trh_tph_kode = paket.trh_tph_kode
             // let trh_tb_kode = paket.trh_tb_kode.split("-")[0]
             let trh_tu_kode = paket.trh_tu_kode
             // let trh_tgl_perjalanan = paket.trh_tgl_perjalanan
             let trh_tgl_perjalanan = paket.trh_tgl_perjalanan.toISOString().split('T')[0]
             let trh_pax = paket.trh_pax
+
             axios.get(baseURL + '/reservasi/add', {
                 params: {
 
@@ -245,17 +288,17 @@ export default {
         }
 
         function check() {
-            let tph_tjt_kode = paket.tph_tjt_kode.split("-")[0]
+            let tph_tjt_kode = paket.tph_tjt_kode
             let tph_kota_asal = paket.tph_kota_asal
             let tph_kota_tujuan = paket.tph_kota_tujuan
-            axios.get(baseURL+"/paket/search?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_tujuan=" + tph_kota_tujuan)
+            axios.get(baseURL + "/paket/search?tph_tjt_kode=" + tph_tjt_kode + "&tph_kota_asal=" + tph_kota_asal + "&tph_kota_tujuan=" + tph_kota_tujuan)
                 .then((resp) => {
                     // console.log(resp.data)
                     paket.pakets = resp.data
                     // console.log(paket.pakets[0])
                 }).catch(error => {
                     //assign state validation with error 
-                    console.log(error)
+                    alert(error)
                 })
         }
 
@@ -300,7 +343,7 @@ export default {
             //     .catch(error => {
             //         console.log(error)
             //     }),
-            axios.get(baseURL+'/paket/trip')
+            axios.get(baseURL + '/paket/trip')
                 .then(ress => {
                     this.setTrips(ress.data)
                 })
@@ -318,5 +361,13 @@ export default {
 <style>
 body {
     background: lightgray;
+}
+
+.card-input:hover {
+    cursor: pointer;
+}
+
+card-input:checked+.card-input {
+    box-shadow: 1 1 1px 1px #2ecc71;
 }
 </style>

@@ -1,21 +1,22 @@
 <template>
     <navbar />
     <div class="container mt-5">
-        <h4>TAMBAH PAKET</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col float-start">
                                 <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary"><vue-feather
                                         type="chevron-left" size="24" class="color-white pt-1" /></router-link>
                             </div>
+                            <div class="col-11 pt-2 float-start">
+                                <h4><strong>TAMBAH PAKET</strong></h4>
+                            </div>
                         </div>
-                        <hr>
-
+                    </div>
+                    <div class="card-body">
                         <form @submit.prevent="store">
-
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Trip</label>
                                 <br />
@@ -121,12 +122,28 @@
                             <hr>
                             <div>
                             </div>
+                            <a class="btn btn-success float-start mb-2"
+                                v-on:click="getBus(paket.tph_max_pax, paket.tph_kota_asal, paket.tph_kota_tujuan)">Cari
+                                Bus</a>
+                            <br><br>
                             <div class="form-group">
-                                <a class="btn btn-success float-start mb-2"  v-on:click="getBus(paket.tph_max_pax, paket.tph_kota_asal, paket.tph_kota_tujuan)">Cari Bus</a>
-                                <select class="form-select" v-model="paket.tph_tb_kode" aria-label="Bus">
+                                <!-- <select class="form-select" v-model="paket.tph_tb_kode" aria-label="Bus">
                                     <option v-for="data in buses" :key="data.tb_kode">{{ data.tb_kode }}-{{ data.tb_nama }}
                                     </option>
-                                </select>
+                                </select> -->
+                                <label for="provinsi" class="font-weight-bold mb-2">Pilihan Bus :</label>
+                                <br />
+                                <div class="form-check-inline" v-for="data in buses" :key="data.tb_kode">
+                                    <div class="card card-default card-input mb-2" style="width: 100%; min-width: 10rem;">
+                                        <label class="p-1">
+                                            <div class="card-header"><input type="radio" class="mx-2"
+                                                    v-model="paket.tph_tb_kode" :value="data.tb_kode">{{ data.tb_nama }}
+                                            </div>
+                                            <div class="card-body font-weight-bold">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
@@ -208,9 +225,9 @@ export default {
             // console.log(pax, asal, tujuan)
             axios.get(baseURL + '/bus/search', {
                 params: {
-                    tb_pax:pax,
-                    tb_kota_asal:asal,
-                    tb_kota_tujuan:tujuan
+                    tb_pax: pax,
+                    tb_kota_asal: asal,
+                    tb_kota_tujuan: tujuan
                 }
             })
                 .then(ress => {
@@ -255,7 +272,7 @@ export default {
             let tph_durasi = paket.tph_durasi
             let tph_min_pax = paket.tph_min_pax
             let tph_max_pax = paket.tph_max_pax
-            let tph_tb_kode = paket.tph_tb_kode.split("-")[0]
+            let tph_tb_kode = paket.tph_tb_kode
 
             axios.get(baseURL + '/paket/add', {
                 params: {
@@ -309,8 +326,8 @@ export default {
                 .then(ress => {
                     this.setTrips(ress.data)
                 }).catch(error => {
-                console.log(error)
-            })
+                    console.log(error)
+                })
 
     },
     components: {

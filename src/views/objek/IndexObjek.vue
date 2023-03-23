@@ -10,18 +10,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card rounded shadow">
-                                <div class="card-body">
+                                <div class="card-header">
                                     <div class="row mt-2">
-                                        <div class="col-10">
-                                            <h4>DATA OBJEK WISATA</h4>
+                                        <div class="col-11 pt-1">
+                                            <h4><strong>DATA OBJEK WISATA</strong></h4>
                                         </div>
-                                        <div class="col-2 align-right">
+                                        <div class="col float-end pb-2">
                                             <router-link :to="{ name: 'objek.create' }"
-                                                class="btn btn-md btn-success">TAMBAH
-                                                OBJEK</router-link>
+                                                class="btn btn-md btn-success"><vue-feather type="plus" size="24"
+                                                    class="color-white pt-1" /></router-link>
                                         </div>
                                     </div>
-                                    <hr>
+                                </div>
+                                <div class="card-body">
                                     <div style="height: 40em; overflow: auto;" class="mt-4">
                                         <table class="table table-striped table-bordered">
                                             <thead class="thead-dark">

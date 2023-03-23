@@ -29,19 +29,9 @@ const routes = [
         component: () => import( /* webpackChunkName: "post.index" */ '@/views/reservasi/CreateReservasi.vue')
     },
     {
-        path: '/kota',
-        name: 'kota.index',
-        component: () => import( /* webpackChunkName: "post.index" */ '@/views/kota/IndexKota.vue')
-    },
-    {
-        path: '/createkota',
-        name: 'kota.create',
-        component: () => import( /* webpackChunkName: "post.create" */ '@/views/kota/CreateKota.vue')
-    },
-    {
-        path: '/editkota/:id',
-        name: 'kota.edit',
-        component: () => import( /* webpackChunkName: "post.edit" */ '@/views/kota/EditKota.vue')
+        path: '/customres',
+        name: 'reservasi.custom',
+        component: () => import( /* webpackChunkName: "post.index" */ '@/views/reservasi/CustomReservasi.vue')
     },
     {
         path: '/paket',

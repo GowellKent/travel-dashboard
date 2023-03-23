@@ -1,17 +1,19 @@
 <template>
     <div class="container mt-5">
-        <h4>EDIT PAKET</h4> 
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col float-start">
                                 <router-link :to="{ name: 'paket.index' }" class="btn btn-md btn-primary"><vue-feather type="chevron-left" size="24" class="color-white pt-1"/></router-link>
                             </div>
+                            <div class="col-11 pt-2">
+                                <h4><strong>EDIT PAKET</strong></h4>
+                            </div>
                         </div>
-                        <hr>
-
+                    </div>
+                    <div class="card-body">
                         <form @submit.prevent="update">
                             <div class="form-group">
                                 <label for="provinsi" class="font-weight-bold">Jenis Trip</label>

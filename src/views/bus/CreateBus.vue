@@ -3,17 +3,18 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col-11">
-                                <h4>CREATE BUS</h4>
+                            <div class="col">
+                                <router-link :to="{ name: 'bus.index' }" class="btn btn-md btn-primary"><vue-feather
+                                        type="chevron-left" size="24" class="color-white pt-1" /></router-link>
                             </div>
-                            <div class="col right-align">
-                                <router-link :to="{ name: 'bus.index' }" class="btn btn-md btn-primary">BACK</router-link>
+                            <div class="col-11 pt-2">
+                                <h4><strong>TAMBAH DATA BUS</strong></h4>
                             </div>
                         </div>
-                        <hr>
-
+                    </div>
+                    <div class="card-body">
                         <form @submit.prevent="store">
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Nama Bus</label>
@@ -68,7 +69,7 @@
                                 <input type="text" class="form-control" v-model="bus.tb_harga" placeholder="Masukkan Harga Bus">
                             </div>
                             <br /><br />
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                            <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
                         </form>
 
                     </div>

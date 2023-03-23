@@ -1,21 +1,21 @@
 <template>
     <div class="container mt-5">
         <div class="row">
-
-            <h3>EDIT RESREVASI</h3>
-        </div>
-        <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
+                    <div class="card-header">
+                        <div class="row mt-2">
+                            <div class="col">
                                 <router-link :to="{ name: 'reservasi.index' }" class="btn btn-md btn-success">
                                     <vue-feather type="chevron-left" size="20" class="color-white pt-1" />
                                 </router-link>
                             </div>
+                            <div class="col-11 pt-1 float-start">
+                                <h3><strong>EDIT RESREVASI</strong></h3>
+                            </div>
                         </div>
-                        <hr>
+                    </div>
+                    <div class="card-body">
 
                         <form @submit.prevent="update">
                             <div class="form-group">

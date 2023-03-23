@@ -1,20 +1,21 @@
 <template>
     <div class="container mt-5">
-        <h4>Detail Paket</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col float-start">
                                 <router-link :to="{ name: 'paket.index', params: { id: post.kode } }"
                                     class="btn btn-sm btn-success mr-1"><vue-feather type="chevron-left" size="24"
                                         class="color-white pt-1" /></router-link>
                             </div>
+                            <div class="col-11 float-start pt-2">
+                                <h4><strong>Detail Paket</strong></h4>
+                            </div>
                         </div>
-                        <hr>
-                        <!-- <div class="row">
-                                            <div class="col"> -->
+                    </div>
+                    <div class="card-body">
                         <form>
                             <fieldset disabled>
                                 <div class="form-group">
@@ -86,32 +87,25 @@
                                 </div>
                                 <br /><br />
                                 <!-- <button type="submit" class="btn btn-primary">SIMPAN</button> -->
-
                             </fieldset>
                         </form>
-
                         <div class="card border-0 rounded shadow">
-
-                            <div class="card-body">
+                            <div class="card-header">
                                 <div class="row">
                                     <div class="col-11">
-                                        <h2>LIST OBJEK WISATA</h2>
+                                        <h4><strong>List Objek Wisata</strong></h4>
                                     </div>
                                     <div class="col">
-                                        <!-- <router-link :to="{ name: 'detail.create', params: { id: post.kode } }"
-                                            class="btn btn-sm btn-primary mr-1"><vue-feather type="plus" size="24"
-                                                class="color-white pt-1" />
-                                        </router-link> -->
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal"
                                             @click.prevent="getObjeks(post.provTujuan, post.kotaTujuan)">
                                             <vue-feather type="plus" size="24" class="color-white pt-1" />
                                         </button>
-
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-body">
                                 <hr />
-
                                 <table class="table table-striped table-bordered mt-4">
                                     <thead class="thead-dark">
                                         <tr>
@@ -143,7 +137,6 @@
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -198,24 +191,6 @@ export default {
         setObjs(data) {
             this.objs = data;
         },
-        // postDelete(id) {
-
-        //     //delete data post by ID
-        //     axios.get(baseURL + '/paket/det/delete?tpd_kode=' + id)
-        //         .then(() => {
-
-        //             //splice posts 
-        //             // kotas.value.splice(kotas.value.indexOf(id), 1);
-        //             // location.reload()
-        //             this.getHead()
-        //             this.getDetail()
-        //             // this.$router.push({name:'paket.detail', params:{id:this.$route.params.id}});
-
-        //         }).catch(error => {
-        //             console.log(error.response.data)
-        //         })
-
-        // },
         getObjeks(prov, kota) {
             axios.get(baseURL + '/objek/search', {
                 params: {

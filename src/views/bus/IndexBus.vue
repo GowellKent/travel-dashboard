@@ -8,19 +8,19 @@
             <sideBar />
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container mt-5">
-
                     <div class="card border-0 rounded shadow">
-                        <div class="card-body">
-                            <div class="row mt-2">
-                                <div class="col-11">
-                                    <h4>DATA BUS</h4>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-11 pt-2">
+                                    <h4><strong>DATA BUS</strong></h4>
                                 </div>
                                 <div class="col-1 float-end">
                                     <router-link :to="{ name: 'bus.create' }" class="btn btn-md btn-success"><vue-feather
                                             type="plus" size="24" class="color-white pt-1" /></router-link>
                                 </div>
                             </div>
-                            <hr>
+                        </div>
+                        <div class="card-body">
                             <div style="height: 40em; overflow: auto;" class="mt-4">
                                 <table class="table table-striped table-bordered">
                                     <thead class="thead-dark">

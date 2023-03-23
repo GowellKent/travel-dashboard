@@ -12,10 +12,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card border-0 rounded shadow">
-                                <div class="card-body">
+                                <div class="card-header">
                                     <div class="row">
-                                        <div class="col-11">
-                                            <h4>DATA PAKET</h4>
+                                        <div class="col-11 pt-2">
+                                            <h4><strong>DATA PAKET</strong></h4>
                                         </div>
                                         <div class="col-1">
                                             <router-link :to="{ name: 'paket.create' }"
@@ -23,7 +23,8 @@
                                                     class="color-white pt-1" /></router-link>
                                         </div>
                                     </div>
-                                    <hr>
+                                </div>
+                                <div class="card-body">
                                     <div style="height: 40em; overflow: auto;" class="mt-4">
                                         <table class="table table-striped table-bordered">
                                             <thead class="thead-dark">
@@ -37,7 +38,7 @@
                                                     <th scope="col">ASAL</th>
                                                     <th scope="col">TUJUAN</th>
                                                     <th scope="col">BUS</th>
-                                                    <th scope="col" class="text-center">OPTIONS</th>
+                                                    <th scope="col" class="text-center" style="min-width: 10rem;">OPTIONS</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -51,7 +52,7 @@
                                                     <td>{{ data.tph_kota_asal }}, {{ data.tph_provinsi_asal }}</td>
                                                     <td>{{ data.tph_kota_tujuan }}, {{ data.tph_provinsi_tujuan }}</td>
                                                     <td>{{ data.tb_nama }}</td>
-                                                    <td class="text-center">
+                                                    <td class="text-center" style="width:20%;">
                                                         <router-link
                                                             :to="{ name: 'paket.detail', params: { id: data.tph_kode } }"
                                                             class="btn btn-sm btn-secondary mr-1"><vue-feather type="list"
@@ -120,6 +121,11 @@ export default {
             axios.get(baseURL + '/paket/delete?tph_kode=' + id)
                 .then(() => {
                     this.getData()
+                //     axios.get(baseURL + '/paket/det/deleteAll?tph_kode=' + id)
+                //     .then(
+                //     ).catch(error => {
+                //     console.log(error.response.data)
+                // })
 
                 }).catch(error => {
                     console.log(error.response.data)
