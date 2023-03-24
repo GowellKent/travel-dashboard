@@ -88,6 +88,10 @@ const routes = [
         name: 'bus.edit',
         component: () => import( /* webpackChunkName: "post.edit" */ '@/views/bus/EditBus.vue')
     },
+    {
+        path: '/*',
+        component:404
+    }
 ]
 
 //create router
