@@ -75,6 +75,10 @@
                                 <label for="title" class="font-weight-bold mt-2 mb-1">Pax</label>
                                 <input type="text" class="form-control" v-model="bus.tb_pax" placeholder="Masukkan Pax Bus">
                             </div>
+                            <div class="form-group">
+                                <label for="title" class="font-weight-bold mt-2 mb-1">Harga</label>
+                                <input type="text" class="form-control" v-model="bus.tb_harga" placeholder="Masukkan Harga Bus">
+                            </div>
                             <br /><br />
                             <button type="submit" class="btn btn-primary float-end">SIMPAN</button>
                         </form>
@@ -160,7 +164,8 @@ export default {
             tb_nama: '',
             tb_kota_asal: '',
             tb_kota_tujuan: '',
-            tb_pax: ''
+            tb_pax: '',
+            tb_harga:''
         })
 
         //state validation
@@ -184,6 +189,7 @@ export default {
                     bus.tb_kota_asal = response.data[0].tb_kota_asal
                     bus.tb_kota_tujuan = response.data[0].tb_kota_tujuan
                     bus.tb_pax = response.data[0].tb_pax
+                    bus.tb_harga = response.data[0].tb_harga
 
                 }).catch(error => {
                     console.log(error.response.data)
@@ -198,6 +204,7 @@ export default {
             let tb_kota_asal = bus.tb_kota_asal
             let tb_kota_tujuan = bus.tb_kota_tujuan
             let tb_pax = bus.tb_pax
+            let tb_harga = bus.tb_harga
 
             axios.get(baseURL+'/bus/update', {
                 params: {
@@ -205,7 +212,8 @@ export default {
                     tb_nama: tb_nama,
                     tb_kota_asal: tb_kota_asal,
                     tb_kota_tujuan: tb_kota_tujuan,
-                    tb_pax: tb_pax
+                    tb_pax: tb_pax,
+                    tb_harga: tb_harga
                 }
             }).then(() => {
 
