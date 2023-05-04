@@ -62,7 +62,7 @@ export default {
             }
 
             // console.log(data)
-            axios.get(baseURL+'/login',{params:data})
+            axios.post(baseURL+'/login',{params:data})
                 .then(
                     res => {
                         console.log(res),
